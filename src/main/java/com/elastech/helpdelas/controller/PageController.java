@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("helpdelas")
-public class ConfigSiteController {
+public class PageController {
 
     @GetMapping("/index")
     public String loadSite(){
