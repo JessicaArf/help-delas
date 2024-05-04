@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -20,41 +20,61 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Criar uma conta</h3></div>
                                     <div class="card-body">
-                                        <form>
+                                        <form action="/salvar" method="post">
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputFirstName" type="text" placeholder="Digite seu nome" />
+                                                        <input class="form-control" id="inputFirstName" type="text" name="name" placeholder="Nome" />
                                                         <label for="inputFirstName">Nome</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating">
-                                                        <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                                        <input class="form-control" id="inputEmail" type="email" name="email" placeholder="name@example.com" />
                                                         <label for="inputEmail">Email</label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputAddress" type="text" placeholder="Digite seu endereço" />
-                                                <label for="inputAddress">Endereço</label>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputDepartament" type="text" name="departament" placeholder="Setor" />
+                                                        <label for="inputDepartament">Setor</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputSupervisor" type="text" name="supervisor" placeholder="Supervisor" />
+                                                        <label for="inputSupervisor">Supervisor</label>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPassword" type="password" placeholder="Criar uma senha" />
+                                                        <input class="form-control" id="inputPassword" type="password" name="password" placeholder="Criar uma senha" />
                                                         <label for="inputPassword">Senha</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirmar Senha" />
+                                                        <input class="form-control" id="inputPasswordConfirm" type="password" name="password" placeholder="Confirmar Senha" />
                                                         <label for="inputPasswordConfirm">Confirmar Senha</label>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row mb-3">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="id_role" id="inlineRadio1" value="2" />
+                                                    <label class="form-check-label" for="inlineRadio1">Técnico</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="id_role" id="inlineRadio2" value="3" />
+                                                    <label class="form-check-label" for="inlineRadio2">Usuário</label>
+                                                </div>
+                                            </div>
                                             <div class="mt-4 mb-0">
-                                                <div class="d-grid"><a class="btn btn-primary btn-block" href="../default/login.html">Criar Conta</a></div>
+                                                <div class="d-grid"><button class="btn btn-primary btn-block" type="submit">Criar Conta</button></div>
                                             </div>
                                         </form>
                                     </div>
@@ -83,6 +103,6 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="/js/scripts.js"></script>
     </body>
 </html>

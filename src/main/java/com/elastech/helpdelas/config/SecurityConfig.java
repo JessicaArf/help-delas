@@ -20,6 +20,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize //para poder configurar como as requisições são autorizadas
                         .requestMatchers( "**").permitAll()
+                        .requestMatchers( "/salvar").permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable);
         return http.build(); // aqui retorna o objeto HttpSecurityConfigurado, para criar a cadeia de filtros de segurança
