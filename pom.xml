@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.elastech</groupId>
-	<artifactId>help-delas                                                                                     </artifactId>
+	<artifactId>help-delas</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>help-delas                                                                                     </name>
+	<name>help-delas </name>
 	<description>Projeto Final do #ElasTech24</description>
 	<properties>
 		<java.version>17</java.version>
@@ -37,7 +37,6 @@
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>

@@ -34,5 +34,5 @@ public class SecurityConfig {
     public void configure (AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
-
+        
 }
