@@ -7,14 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class PageController {
 
-    @GetMapping("/index")
+    @GetMapping("/")
     public String loadSite(){
         return "index";
     }
 
-    @GetMapping("default/login")
+    @GetMapping("/login")
     public String loadSystem(){
         return "default/login";
     }
-
 }

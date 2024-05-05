@@ -13,7 +13,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/salvar")
+    @GetMapping("/salvar-usuario")
     public String register(){
         return "user/register";
     }
@@ -28,7 +28,7 @@ public class UserController {
         return "/user/dashboard-user";
     }
 
-    @PostMapping("/salvar")
+    @PostMapping("/salvar-usuario")
     public String register(UserModel userModel){
         userService.salvar(userModel);
         return "redirect:/default/login";
