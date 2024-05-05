@@ -2,10 +2,8 @@ package com.elastech.helpdelas.service;
 
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.model.RoleModel;
-import com.elastech.helpdelas.model.Sector;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.repositories.RoleRepository;
-import com.elastech.helpdelas.repositories.SectorRepository;
 import com.elastech.helpdelas.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;

@@ -26,7 +26,7 @@ public class UserModel {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_sector")
-    private Sector sector;
+    private SectorModel sector;
     private String supervisor;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

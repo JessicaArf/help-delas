@@ -1,6 +1,6 @@
 package com.elastech.helpdelas.dtos;
 
-import com.elastech.helpdelas.model.Sector;
+import com.elastech.helpdelas.model.SectorModel;
 
 public class SectorDTO {
 
@@ -17,7 +17,7 @@ public class SectorDTO {
         this.id = id;
     }
 
-    public SectorDTO(Sector sector) {
+    public SectorDTO(SectorModel sector) {
         this.id = sector.getId();
         this.nameSector = sector.getNameSector();
     }
@@ -38,8 +38,8 @@ public class SectorDTO {
         this.nameSector = nameSector;
     }
 
-    public static Sector convert(SectorDTO sectorDTO){
-        Sector sector = new Sector();
+    public static SectorModel convert(SectorDTO sectorDTO){
+        SectorModel sector = new SectorModel();
         sector.setId(sectorDTO.getId());
         sector.setNameSector(sectorDTO.getNameSector());
         return sector;
