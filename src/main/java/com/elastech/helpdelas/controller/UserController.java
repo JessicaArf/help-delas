@@ -44,7 +44,6 @@ public class UserController {
             return "redirect:/user/register";
         }
     }
-
     @GetMapping("user/dashboard-user")
     public String showClient(Model model){
         UserModel user = getUser();
@@ -65,5 +64,6 @@ public class UserController {
         UserModel userObject = userService.find(user);
         model.addAttribute("user", user);
         return userObject;
+
     }
 }
