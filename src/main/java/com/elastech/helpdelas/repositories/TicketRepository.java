@@ -1,4 +1,7 @@
 package com.elastech.helpdelas.repositories;
 
-public class CalledRepository {
+import com.elastech.helpdelas.model.TicketModel;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TicketRepository extends JpaRepository<TicketModel, Long> {
 }

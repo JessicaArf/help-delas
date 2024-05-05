@@ -1,4 +1,4 @@
-package com.elastech.helpdelas.model.dtos;
+package com.elastech.helpdelas.dtos;
 
 import com.elastech.helpdelas.model.Sector;
 

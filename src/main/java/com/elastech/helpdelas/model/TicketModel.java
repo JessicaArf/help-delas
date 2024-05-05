@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "TB_TICKETS")
-public class ticketsModel {
+public class TicketModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
