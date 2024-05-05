@@ -7,10 +7,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 // essa classe será responsável por personalizar o comportamento após um usuário ser autenticado com sucesso.
+@Service
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
     /* Esta anotação indica que o método onAuthenticationSuccess substitui o método da
