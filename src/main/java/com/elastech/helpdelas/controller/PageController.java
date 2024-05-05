@@ -16,15 +16,4 @@ public class PageController {
     public String loadSystem(){
         return "default/login";
     }
-
-    @GetMapping("/register")
-    public String register(){
-        return "/user/register";
-    }
-
-    @GetMapping("/dashboard-user")
-    public String dashboardUser(){
-        return "/user/dashboard-user";
-    }
-
 }
