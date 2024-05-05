@@ -1,24 +1,50 @@
 package com.elastech.helpdelas.service;
 
+import com.elastech.helpdelas.dtos.SectorDTO;
+import com.elastech.helpdelas.model.RoleModel;
 import com.elastech.helpdelas.model.UserModel;
+import com.elastech.helpdelas.repositories.RoleRepository;
 import com.elastech.helpdelas.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
-    public UserModel salvar(UserModel userModel){
-        return userRepository.save(userModel);
+    @Autowired
+    private SectorService sectorService;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    public UserModel salvar(UserModel userModel) throws Exception {
+
+        Optional<UserModel> byEmail = userRepository.findByEmail(userModel.getEmail());
+        if(!byEmail.isPresent()){
+            RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
+            userModel.setRole(role);
+            userModel.setSector(userModel.getSector());
+            userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+            return userRepository.save(userModel);
+        } else {
+            throw new Exception("Já existe um cliente cadastrado com esse e-mail.");
+        }
+    }
+
+    public List<SectorDTO> findAllSector(){
+        return sectorService.findAll();
     }
 
     public List<UserModel> userModelList(UserModel filtroUser){
@@ -52,5 +78,9 @@ public class UserService {
                     return usuario;
                 })
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+    }
+
+    public UserModel find(String user) {
+        return userRepository.findByName(user);
     }
 }
