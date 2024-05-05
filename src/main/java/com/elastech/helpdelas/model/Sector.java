@@ -1,8 +1,11 @@
 package com.elastech.helpdelas.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
+@Table(name = "TB_SECTORS")
 public class Sector {
 
     @Id

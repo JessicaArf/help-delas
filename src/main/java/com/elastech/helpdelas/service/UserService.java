@@ -1,8 +1,11 @@
 package com.elastech.helpdelas.service;
 
+import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.model.RoleModel;
+import com.elastech.helpdelas.model.Sector;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.repositories.RoleRepository;
+import com.elastech.helpdelas.repositories.SectorRepository;
 import com.elastech.helpdelas.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -22,17 +25,28 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private SectorService sectorService;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public UserModel salvar(UserModel userModel) throws ResponseStatusException {
+    public UserModel salvar(UserModel userModel) throws Exception {
 
-        Long idRole = userModel.getRole().getRoleId();
-        RoleModel role = roleRepository.findByName(RoleModel.Values.valueOf(userModel.getRole().getName()).name());
-        userModel.setRole(role);
-        userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
-        return userRepository.save(userModel);
+        Optional<UserModel> byEmail = userRepository.findByEmail(userModel.getEmail());
+        if(!byEmail.isPresent()){
+            RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
+            userModel.setRole(role);
+            userModel.setSector(userModel.getSector());
+            userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+            return userRepository.save(userModel);
+        } else {
+            throw new Exception("Já existe um cliente cadastrado com esse e-mail.");
+        }
+    }
 
+    public List<SectorDTO> findAllSector(){
+        return sectorService.findAll();
     }
 
     public List<UserModel> userModelList(UserModel filtroUser){
