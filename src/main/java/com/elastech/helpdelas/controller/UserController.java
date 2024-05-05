@@ -31,6 +31,6 @@ public class UserController {
     @PostMapping("/salvar-usuario")
     public String register(UserModel userModel){
         userService.salvar(userModel);
-        return "redirect:/default/login";
+        return "redirect:/login";
     }
 }
