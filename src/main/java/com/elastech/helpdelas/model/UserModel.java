@@ -23,7 +23,7 @@ public class UserModel {
     @Column(unique = true)
     private String email;
     private String password;
-    private String department;
+    private String departament;
     private String supervisor;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
