@@ -1,16 +1,19 @@
 package com.elastech.helpdelas.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // anotação para que seja uma única tabela
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING) // anotação para criar uma coluna discriminadora chamada user_type para poder guardar o tipo de cliente criado
+@Table(name = "TB_USERS")
 public class UserModel {
 
     @Id
@@ -20,6 +23,8 @@ public class UserModel {
     @Column(unique = true)
     private String email;
     private String password;
+    private String departament;
+    private String supervisor;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_role")
