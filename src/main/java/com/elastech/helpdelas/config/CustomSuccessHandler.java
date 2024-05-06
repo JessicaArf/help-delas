@@ -34,11 +34,12 @@ Authentication contém as informações do usuário autenticado (email e senha) 
 
         // verifica o tipo de role e redireciona
         if (roles.orElse("").equals("USER")){
-            response.sendRedirect("user/dashboard-user");
+            response.sendRedirect("/dashboard-usuario");
         } else if (roles.orElse("").equals("TECH")){
             response.sendRedirect("/dashboard-tecnico");
         } else if (roles.orElse("").equals("ADMIN")){
             response.sendRedirect("/dashboard-admin");
         }
     }
+
 }

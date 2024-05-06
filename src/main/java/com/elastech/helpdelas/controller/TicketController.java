@@ -17,8 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Controller
 public class TicketController {
+
 
     @Autowired
     private TicketService ticketService;
@@ -27,14 +29,14 @@ public class TicketController {
     private UserService userService;
 
     @GetMapping("/criar-chamado")
-    public String showPage(Model model){
+    public String showPage(Model model) {
         List<SectorDTO> sectors = userService.findAllSector();
         model.addAttribute("sectors", sectors);
-        return "ticket/register";
+        return "ticket/create-ticket";
     }
 
     @PostMapping("/criar-chamado")
-     public String createTicket(TicketDTO ticketDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) {
+    public String createTicket(TicketDTO ticketDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) {
         // pegando o usuário logado através do userdetails e puxando o usuário do banco de dados pelo email
         UserDTO basicUser = userService.getUserByEmail(userDetails.getUsername());
         System.out.println(basicUser);
@@ -45,11 +47,11 @@ public class TicketController {
     }
 
     @GetMapping("/dashboard-usuario")
-    public String showTicketsByUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showTicketsByUser(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         // pegando o usuário logado através do userdetails e puxando o usuário do banco de dados pelo email
         UserDTO basicUser = userService.getUserByEmail(userDetails.getUsername());
         // adicionando o usuário como modelo
-        model.addAttribute("basicUser" ,basicUser);
+        model.addAttribute("basicUser", basicUser);
         // pegando a lista de tickets pelo id do usuário
         List<TicketDTO> tickets = ticketService.showTicketsByUser(basicUser.getUserId());
 
@@ -64,5 +66,6 @@ public class TicketController {
         return "ticket/dashboard-user";
     }
 
-
 }
+
+
