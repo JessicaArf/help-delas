@@ -1,23 +1,19 @@
 package com.elastech.helpdelas.controller;
 
 import com.elastech.helpdelas.dtos.SectorDTO;
+import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.lang.reflect.Executable;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -38,9 +34,9 @@ public class UserController {
     }
 
     @PostMapping("/salvar-usuario")
-    public String register(UserModel userModel, RedirectAttributes redirectAttributes) throws Exception {
+    public String register(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
         try{
-            userService.salvar(userModel);
+            userService.salvar(userDTO);
             return "redirect:/login";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
@@ -90,7 +86,7 @@ public class UserController {
     }
 
     @PostMapping("/editar-usuario")
-    public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes, @ModelAttribute UserModel userModel) throws Exception {
+    public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
 
         UserModel userDb = userService.find(userDetails.getUsername());
         try {

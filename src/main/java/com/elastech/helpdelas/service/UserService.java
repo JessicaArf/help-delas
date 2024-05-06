@@ -1,6 +1,7 @@
 package com.elastech.helpdelas.service;
 
 import com.elastech.helpdelas.dtos.SectorDTO;
+import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.model.RoleModel;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.repositories.RoleRepository;
@@ -29,13 +30,14 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public UserModel salvar(UserModel userModel) throws Exception {
-        Optional<UserModel> byEmail = userRepository.findByEmail(userModel.getEmail());
+    public UserModel salvar(UserDTO userDTO) throws Exception {
+        Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
         if(!byEmail.isPresent()){
             RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
-            userModel.setRole(role);
-            userModel.setSector(userModel.getSector());
-            userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+            userDTO.setRole(role);
+            userDTO.setSector(userDTO.getSector());
+            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            UserModel userModel = UserDTO.convert(userDTO);
             return userRepository.save(userModel);
         } else {
             throw new Exception("Já existe um cliente cadastrado com esse e-mail.");
@@ -58,10 +60,11 @@ public class UserService {
         Example example = Example.of(filtroUser, matcher); //pegar as propriedas populadas e criar o objeto
         return userRepository.findAll(example);
     }
-    public UserModel updateUserById(UserModel userSession, UserModel userModel) throws Exception {
+    public UserModel updateUserById(UserModel userSession, UserDTO userDTO) throws Exception {
+        UserModel userModel = UserDTO.convert(userDTO);
         userRepository.findById(userSession.getUserId())
                 .map(userExistente -> {
-                    userModel.setUserId(userExistente.getUserId());
+                    userDTO.setUserId(userExistente.getUserId());
                     userRepository.save(userModel);
                     return userModel;
                 }).orElseThrow( () -> new Exception("Usuário não encontrado")); //supplier
