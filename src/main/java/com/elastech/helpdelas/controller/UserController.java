@@ -4,14 +4,20 @@ import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.lang.reflect.Executable;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -42,25 +48,61 @@ public class UserController {
         }
     }
     @GetMapping("user/dashboard-user")
-    public String showClient(Model model){
-        UserModel user = getUser();
-        if(user != null){
-            UserModel userObject = userService.userFindById(user.getUserId());
-            model.addAttribute("user", userObject);
+    public String showUserDashboard(Model model, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+        try {
+            UserModel userDb = userService.find(userDetails.getUsername());
+            if (userDb != null) {
+                model.addAttribute("user", userDb);
+            }
+            return "user/dashboard-user";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "redirect:/login";
         }
-        return "redirect:/user/dashboard-user";
     }
 
-    private UserModel getUser(){
-        String user = null;
-        Model model = null;
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null && authentication.isAuthenticated()){
-            user = authentication.getName();
+    @GetMapping("user/show-user")
+    public String showUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
+        try {
+            UserModel userDb = userService.find(userDetails.getUsername());
+            if (userDb != null) {
+                model.addAttribute("user", userDb);
+            }
+            return "/user/show-user";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "user/dashboard-user";
         }
-        UserModel userObject = userService.find(user);
-        model.addAttribute("user", user);
-        return userObject;
+    }
 
+    @GetMapping("user/edit-user")
+    public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
+        try {
+            UserModel userDb = userService.find(userDetails.getUsername());
+            List<SectorDTO> sectors = userService.findAllSector();
+            model.addAttribute("sectors", sectors);
+            model.addAttribute("user", userDb);
+            return "user/edit-user";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "user/dashboard-user";
+        }
+    }
+
+    @PostMapping("/editar-usuario")
+    public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes, @ModelAttribute UserModel userModel) throws Exception {
+
+        UserModel userDb = userService.find(userDetails.getUsername());
+        try {
+            if (userDb != null) {
+                UserModel userAtualizado = userService.updateUserById(userDb, userModel);
+                model.addAttribute("user", userAtualizado);
+            }
+            return "user/show-user";
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("error", true);
+            model.addAttribute("user", userDb);
+            return "user/edit-user";
+        }
     }
 }

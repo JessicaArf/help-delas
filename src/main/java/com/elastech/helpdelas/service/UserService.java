@@ -30,7 +30,6 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public UserModel salvar(UserModel userModel) throws Exception {
-
         Optional<UserModel> byEmail = userRepository.findByEmail(userModel.getEmail());
         if(!byEmail.isPresent()){
             RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
@@ -59,10 +58,15 @@ public class UserService {
         Example example = Example.of(filtroUser, matcher); //pegar as propriedas populadas e criar o objeto
         return userRepository.findAll(example);
     }
-    /*public UserModel updateUserById(Long id, UserModel userModel){
-
-    }*/
-
+    public UserModel updateUserById(UserModel userSession, UserModel userModel) throws Exception {
+        userRepository.findById(userSession.getUserId())
+                .map(userExistente -> {
+                    userModel.setUserId(userExistente.getUserId());
+                    userRepository.save(userModel);
+                    return userModel;
+                }).orElseThrow( () -> new Exception("Usuário não encontrado")); //supplier
+        return userModel;
+    }
     public UserModel userFindById(Long id){
         return userRepository.findById(id)
                 .orElseThrow( () ->
@@ -80,7 +84,8 @@ public class UserService {
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }
 
-    public UserModel find(String user) {
-        return userRepository.findByName(user);
+    public UserModel find(String user) throws Exception  {
+        return userRepository.findByEmail(user)
+                .orElseThrow(() -> new Exception("Usuário não encontrado"));
     }
 }
