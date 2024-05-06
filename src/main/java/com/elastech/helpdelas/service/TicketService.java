@@ -12,7 +12,11 @@ public class TicketService {
     @Autowired
     private TicketRepository ticketRepository;
 
-
+    public TicketDTO createTicket(TicketDTO ticketDTO){
+        TicketModel ticketModel = TicketDTO.convert(ticketDTO);
+        ticketRepository.save(ticketModel);
+        return ticketDTO;
+    }
 
 
 }

@@ -12,7 +12,10 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
-
-
+    @PostMapping("/criar-chamado")
+     public String createTicket(TicketDTO ticketDTO) {
+        ticketService.createTicket(ticketDTO);
+        return "redirect:/user/dashboard-user";
+    }
 
 }
