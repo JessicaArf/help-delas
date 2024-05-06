@@ -41,7 +41,8 @@ public class UserController {
             return "redirect:/user/register";
         }
     }
-    @GetMapping("user/dashboard-user")
+
+    /* @GetMapping("user/dashboard-user")
     public String showClient(Model model){
         UserModel user = getUser();
         if(user != null){
@@ -49,7 +50,7 @@ public class UserController {
             model.addAttribute("user", userObject);
         }
         return "redirect:/user/dashboard-user";
-    }
+    } */
 
     private UserModel getUser(){
         String user = null;
@@ -63,4 +64,5 @@ public class UserController {
         return userObject;
 
     }
+
 }
