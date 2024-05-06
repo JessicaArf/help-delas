@@ -1,7 +1,7 @@
 package com.elastech.helpdelas.service;
 
-import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.model.SectorModel;
+import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.repositories.SectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

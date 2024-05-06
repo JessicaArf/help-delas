@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -41,9 +41,12 @@
                                                 <input class="btn-login" type="submit" value="Log in">
                                             </div>
                                         </form>
+                                        <div th:if="${param.error}">
+                                            <p style="color: red;">Usuário ou senha inválidos.</p>
+                                        </div>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="./user/register">Não tem uma conta? Registre-se!</a></div>
+                                        <div class="small"><a href="/salvar-usuario">Não tem uma conta? Registre-se!</a></div>
                                     </div>
                                 </div>
                             </div>

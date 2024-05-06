@@ -13,7 +13,6 @@ public class SectorDTO {
     }
 
     public SectorDTO(Long id) {
-
         this.id = id;
     }
 

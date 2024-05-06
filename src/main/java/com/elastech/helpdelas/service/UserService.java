@@ -6,6 +6,7 @@ import com.elastech.helpdelas.model.RoleModel;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.repositories.RoleRepository;
 import com.elastech.helpdelas.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -91,4 +92,14 @@ public class UserService {
         return userRepository.findByEmail(user)
                 .orElseThrow(() -> new Exception("Usuário não encontrado"));
     }
+
+    public UserDTO getUserByEmail(String email){
+        Optional<UserModel> user = userRepository.findByEmail(email);
+        if(user.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Usuário não encontrado");
+        }
+        return new UserDTO(user.get());
+    }
+
 }

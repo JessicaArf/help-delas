@@ -154,33 +154,23 @@
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>Assunto</th>
+                                            <th>Número do chamado</th>
                                             <th>Descrição</th>
-                                            <th>Técnico Responsável</th>
-                                            <th>Data de Abertura</th>
-                                            <th>Data de Finalização</th>
+                                            <th>Setor</th>
                                             <th>Status</th>
+                                            <th>Data de Criação</th>
+                                            <th>Última atualização</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Assunto</th>
-                                            <th>Descrição</th>
-                                            <th>Técnico Responsável</th>
-                                            <th>Data de Abertura</th>
-                                            <th>Data de Finalização</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>Donna Snider</td>
-                                            <td>Customer Support</td>
-                                            <td>New York</td>
-                                            <td>27</td>
-                                            <td>2011/01/25</td>
-                                            <td>$112,000</td>
-                                        </tr>
+                                    <tr th:each="ticket : ${tickets}">
+                                        <td th:text="${ticket.ticketId}"></td>
+                                        <td th:text="${ticket.description}"></td>
+                                        <td th:text="${ticket.sector.nameSector}"></td>
+                                        <td th:text="${ticket.status.description}"></td>
+                                        <td th:text="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                                        <td th:text="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>

@@ -7,7 +7,6 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Registrar - HelpDelas</title>
-
         <link href="/css/styles.css" rel="stylesheet" />
         <link href="/css/helpdelas.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -25,17 +24,17 @@
                                         <a href="/"><img src="../portfolio/assets/img/logo.svg"  alt="logo" class="img-logo"/></a>
                                     </div>
                                     <div class="card-body">
-                                        <form action="/salvar-usuario" method="post" >
+                                        <form action="/salvar-usuario" method="post">
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputFirstName" type="text" name="name" placeholder="Nome" required />
+                                                        <input class="form-control" id="inputFirstName" type="text" name="name" placeholder="Nome" />
                                                         <label for="inputFirstName">Nome</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating">
-                                                        <input class="form-control" id="inputEmail" type="email" name="email" placeholder="name@example.com" required />
+                                                        <input class="form-control" id="inputEmail" type="email" name="email" placeholder="name@example.com" />
                                                         <label for="inputEmail">Email</label>
                                                     </div>
                                                 </div>
@@ -43,11 +42,7 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <select  class="form-control" id="inputDepartament" type="text" name="sector" placeholder="Setor"  >
-                                                            <option th:each="sector : ${sectors}"
-                                                            th:value="${sector.id}"
-                                                            th:text="${sector.nameSector}"></option>
-                                                        </select>
+                                                        <input class="form-control" id="inputDepartament" type="text" name="departament" placeholder="Setor" />
                                                         <label for="inputDepartament">Setor</label>
                                                     </div>
                                                 </div>
@@ -61,26 +56,28 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPassword" type="password" name="password"  placeholder="Criar uma senha" required/>
+                                                        <input class="form-control" id="inputPassword" type="password" name="password" placeholder="Criar uma senha" />
                                                         <label for="inputPassword">Senha</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPasswordConfirm" type="password" name="confirmPassword" placeholder="Confirmar Senha" />
+                                                        <input class="form-control" id="inputPasswordConfirm" type="password" name="password" placeholder="Confirmar Senha" />
                                                         <label for="inputPasswordConfirm">Confirmar Senha</label>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="id_role" id="inlineRadio1" value="2" />
+                                                    <label class="form-check-label" for="inlineRadio1">Técnico</label>
+                                                </div>
+
                                             </div>
                                             <div class="mt-4 mb-0">
                                                 <div class="d-flex align-items-center justify-content-center mt-4 mb-0"><button class="btn-login" type="submit">Criar Conta</button></div>
                                             </div>
                                         </form>
-                                    </div>
-                                    <div th:if="${param.error}">
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            E-mail já cadastrado.
-                                        </div>
                                     </div>
                                     <div class="card-footer text-center py-3">
                                         <div class="small"><a href="/login">Já possui uma conta? Voltar para o Login</a></div>

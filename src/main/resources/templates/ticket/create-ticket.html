@@ -98,8 +98,8 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputFirstName" type="text" name="name"  />
-                                        <label for="inputFirstName">Nome</label>
+                                        <input class="form-control" id="inputFirstName" type="text" name="description"  />
+                                        <label for="inputFirstName">Descrição</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -111,19 +111,15 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputDepartament" type="text" name="sector"  />
-                                        <label for="inputSupervisor">Setor</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputSupervisor" type="text" name="supervisor"  />
-                                        <label for="inputSupervisor">Supervisor</label>
-                                    </div>
+                                    <select  class="form-control" id="inputDepartament" type="text" name="sector" placeholder="Setor"  >
+                                        <option th:each="sector : ${sectors}"
+                                                th:value="${sector.id}"
+                                                th:text="${sector.nameSector}"></option>
+                                    </select>
+                                    <label for="inputDepartament">Setor</label>
                                 </div>
                                 <div class="mt-4 mb-0">
-                                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0"><button class="btn btn-primary" type="submit">Salvar</button></div>
+                                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0"><button class="btn btn-primary" type="submit">Criar</button></div>
                                 </div>
                             </div>
                         </form>

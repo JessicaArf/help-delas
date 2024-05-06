@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -18,8 +17,6 @@ public class TicketModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ticketId;
-    @Column
-    private String subject;
     private String description;
     private TicketStatus status;
 
@@ -29,10 +26,11 @@ public class TicketModel {
     @UpdateTimestamp
     private Instant updatedTimestamp;
 
-    /*@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_sector")
     private SectorModel sector;
 
+    /*
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_priority")
     private PriorityModel priority;
@@ -40,11 +38,11 @@ public class TicketModel {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_basic_user")
-    private UserModel basicUser;
+    private UserModel userBasic;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_tech_user")
-    private UserModel techUser;
+    private UserModel userTech;
 
     public enum TicketStatus {
         OPEN("Aguardando técnico"),
@@ -62,4 +60,5 @@ public class TicketModel {
             return description;
         }
     }
+
 }
