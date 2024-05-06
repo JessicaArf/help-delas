@@ -1,6 +1,7 @@
 package com.elastech.helpdelas.dtos;
 
 import com.elastech.helpdelas.model.RoleModel;
+import com.elastech.helpdelas.model.SectorModel;
 import com.elastech.helpdelas.model.UserModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ public class UserDTO {
     private String name;
     private String email;
     private String password;
-    private String department;
+    private SectorModel sector;
     private String supervisor;
     private RoleModel role;
 
@@ -25,7 +26,7 @@ public class UserDTO {
         this.email = userModel.getEmail();
         this.name = userModel.getName();
         this.password = userModel.getPassword();
-        this.department = userModel.getDepartment();
+        this.sector = userModel.getSector();
         this.supervisor = userModel.getSupervisor();
         this.role = userModel.getRole();
     }
@@ -36,7 +37,7 @@ public class UserDTO {
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
-        user.setDepartment(userDTO.getDepartment());
+        user.setSector(userDTO.getSector());
         user.setSupervisor(userDTO.getSupervisor());
         user.setRole(userDTO.getRole());
         return user;
