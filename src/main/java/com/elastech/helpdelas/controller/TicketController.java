@@ -1,4 +1,5 @@
 package com.elastech.helpdelas.controller;
 
-public class ticketsController {
+public class TicketController {
+
 }

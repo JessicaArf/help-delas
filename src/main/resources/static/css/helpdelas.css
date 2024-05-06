@@ -1,0 +1,34 @@
+.body {
+    --bs-bg-opacity: 1;
+    background-color: #FFC901 !important; /background-image: linear-gradient(to bottom, #FFC901, #FFFFFF); / Degradê vertical /
+    background-image: linear-gradient(to bottom right, #FFC901, #FFFFFF); / Degradê diagonal /
+    background-size: 100% 100%; / Isso fará com que o degradê cubra metade da altura do elemento pai */
+}
+.container-img-logo{
+    display: flex;
+    justify-content: center;
+}
+.img-logo {
+    width: 12rem;
+    display: inline-block;
+}
+
+.navbar-logo {
+    font-family: "Shrikhand", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.btn-login {
+    padding: 0.7rem 5rem;
+    background-color: #1bb99a;
+    border: 1px solid #1bb99a;
+    border-radius: 5px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.btn-login:hover {
+    background-color: #1fd7b2;
+    color: #ffffff;
+}

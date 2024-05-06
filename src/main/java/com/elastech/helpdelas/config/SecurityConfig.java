@@ -22,7 +22,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize //para poder configurar como as requisições são autorizadas
-                        .requestMatchers( "**").permitAll()
+                        .requestMatchers( "/", "/assets/*", "/css/*", "/js/*", "/portfolio/*").permitAll()
                         .requestMatchers("/salvar-usuario").permitAll()
                         .requestMatchers("/salvar-tecnico").permitAll()
                         .anyRequest().authenticated())

@@ -1,8 +1,8 @@
 package com.elastech.helpdelas.controller;
 
 
-import com.elastech.helpdelas.model.dtos.SectorDTO;
-import com.elastech.helpdelas.services.SectorService;
+import com.elastech.helpdelas.dtos.SectorDTO;
+import com.elastech.helpdelas.service.SectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

@@ -3,7 +3,7 @@ package com.elastech.helpdelas.model;
 import jakarta.persistence.*;
 
 @Entity
-public class Sector {
+public class SectorModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,7 +12,7 @@ public class Sector {
     @Column(nullable = false)
     private String nameSector;
 
-    public Sector() {
+    public SectorModel() {
 
     }
 
