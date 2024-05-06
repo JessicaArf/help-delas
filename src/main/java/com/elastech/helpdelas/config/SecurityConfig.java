@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize //para poder configurar como as requisições são autorizadas
                         .requestMatchers( "/", "/assets/*", "/css/*", "/js/*", "/portfolio/*").permitAll()
                         .requestMatchers("/salvar-usuario").permitAll()
-                        .requestMatchers("/salvar-tecnico").permitAll()
+                        .requestMatchers("/salvar-tech").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
                         .successHandler(customSuccessHandler).permitAll())

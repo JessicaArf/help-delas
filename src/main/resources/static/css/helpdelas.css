@@ -1,8 +1,14 @@
 .body {
     --bs-bg-opacity: 1;
+<<<<<<< HEAD
     background-color: #FFC901 !important; /background-image: linear-gradient(to bottom, #FFC901, #FFFFFF); / Degradê vertical /
     background-image: linear-gradient(to bottom right, #FFC901, #FFFFFF); / Degradê diagonal /
     background-size: 100% 100%; / Isso fará com que o degradê cubra metade da altura do elemento pai */
+=======
+    background-color: #FFC901 !important; /*background-image: linear-gradient(to bottom, #FFC901, #FFFFFF); /* Degradê vertical */
+    background-image: linear-gradient(to bottom right, #FFC901, #FFFFFF); /* Degradê diagonal */
+    background-size: 100% 100%; /* Isso fará com que o degradê cubra metade da altura do elemento pai */
+>>>>>>> 28ed294f42ffcf9b1ede90b7d8608fa096a57c49
 }
 .container-img-logo{
     display: flex;
