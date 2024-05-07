@@ -21,6 +21,8 @@ public class TechController {
 
     @Autowired
     private TechService techService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private UserService userService;
@@ -32,7 +34,6 @@ public class TechController {
         return "tech/register-tech";
     }
 
-    // Esse metodo chama a pagina de HTML
     @GetMapping("/dashboard-tecnico")
     public String showTech(){
         return "tech/dashboard-tech";
@@ -48,4 +49,5 @@ public class TechController {
             return "redirect:/salvar-tech";
         }
     }
+
 }

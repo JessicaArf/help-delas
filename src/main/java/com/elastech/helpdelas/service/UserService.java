@@ -3,10 +3,10 @@ package com.elastech.helpdelas.service;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.model.RoleModel;
+import com.elastech.helpdelas.model.SectorModel;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.repositories.RoleRepository;
 import com.elastech.helpdelas.repositories.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -31,7 +31,7 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public UserModel salvar(UserDTO userDTO) throws Exception {
+    public UserDTO salvar(UserDTO userDTO) throws Exception {
         Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
         if(!byEmail.isPresent()){
             RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
@@ -39,7 +39,8 @@ public class UserService {
             userDTO.setSector(userDTO.getSector());
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             UserModel userModel = UserDTO.convert(userDTO);
-            return userRepository.save(userModel);
+            userRepository.save(userModel);
+            return new UserDTO(userModel);
         } else {
             throw new Exception("Já existe um cliente cadastrado com esse e-mail.");
         }
@@ -61,36 +62,20 @@ public class UserService {
         Example example = Example.of(filtroUser, matcher); //pegar as propriedas populadas e criar o objeto
         return userRepository.findAll(example);
     }
-    public UserModel updateUserById(UserModel userSession, UserDTO userDTO) throws Exception {
-        UserModel userModel = UserDTO.convert(userDTO);
-        userRepository.findById(userSession.getUserId())
-                .map(userExistente -> {
-                    userDTO.setUserId(userExistente.getUserId());
-                    userRepository.save(userModel);
-                    return userModel;
-                }).orElseThrow( () -> new Exception("Usuário não encontrado")); //supplier
-        return userModel;
-    }
-    public UserModel userFindById(Long id){
-        return userRepository.findById(id)
-                .orElseThrow( () ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Usuário não encontrado"));
 
-    }
-
-    public UserModel delete(Long id){
-        return userRepository.findById(id)
-                .map( usuario -> {
-                    userRepository.delete(usuario);
-                    return usuario;
-                })
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
-    }
-
-    public UserModel find(String user) throws Exception  {
-        return userRepository.findByEmail(user)
-                .orElseThrow(() -> new Exception("Usuário não encontrado"));
+    public UserDTO updateUserById(Long id, UserDTO userDTO) throws Exception {
+        Optional<UserModel> userExistente =  userRepository.findById(id);
+        if(userExistente.isPresent()){
+            UserModel user = userExistente.get();
+            user.setEmail(userDTO.getEmail());
+            user.setName(userDTO.getName());
+            user.setSector(userDTO.getSector());
+            user.setSupervisor(userDTO.getSupervisor());
+            userRepository.save(user);
+            return new UserDTO(user);
+        } else {
+            return userDTO;
+        }
     }
 
     public UserDTO getUserByEmail(String email){
