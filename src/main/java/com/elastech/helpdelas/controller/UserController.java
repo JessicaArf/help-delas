@@ -38,7 +38,7 @@ public class UserController {
             return "redirect:/user/register";
         }
     }
-    @GetMapping("user/dashboard-user")
+    @GetMapping("/dashboard-usuario")
     public String showUserDashboard(Model model, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
         try {
             UserModel userDb = userService.find(userDetails.getUsername());
@@ -52,7 +52,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("user/show-user")
+    @GetMapping("/mostrar-usuario")
     public String showUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
         try {
             UserModel userDb = userService.find(userDetails.getUsername());
