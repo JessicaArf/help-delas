@@ -49,11 +49,12 @@ public class TicketController {
     @GetMapping("/dashboard-usuario")
     public String showTicketsByUser(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         // pegando o usuário logado através do userdetails e puxando o usuário do banco de dados pelo email
-        UserDTO basicUser = userService.getUserByEmail(userDetails.getUsername());
+        UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", userBasic.getName());
         // adicionando o usuário como modelo
-        model.addAttribute("basicUser", basicUser);
+        model.addAttribute("basicUser", userBasic);
         // pegando a lista de tickets pelo id do usuário
-        List<TicketDTO> tickets = ticketService.showTicketsByUser(basicUser.getUserId());
+        List<TicketDTO> tickets = ticketService.showTicketsByUser(userBasic.getUserId());
 
         // Verifica se a lista de tickets é nula ou vazia
         if (tickets == null || tickets.isEmpty()) {
@@ -63,7 +64,33 @@ public class TicketController {
 
         // Adiciona os tickets ao modelo
         model.addAttribute("tickets", tickets);
-        return "ticket/dashboard-user";
+        return "user/dashboard-user";
+    }
+
+    @GetMapping("/dashboard-tecnico")
+    public String showTicketsAvailable(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    List<TicketDTO> tickets = ticketService.showTicketsAvailable();
+
+        if (tickets == null || tickets.isEmpty()) {
+
+            tickets = new ArrayList<>();
+        }
+        model.addAttribute("ticketsAvailable", tickets);
+        return "tech/dashboard-tech";
+    }
+
+   @GetMapping("/dashboard-tecnico/meus-chamados")
+    public String showTicketsAssigned(Model model, @AuthenticationPrincipal UserDetails userDetails){
+        UserDTO techUser = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("techUser", techUser);
+        List<TicketDTO> tickets = ticketService.showTicketsAssigned(techUser.getUserId());
+
+        if (tickets == null || tickets.isEmpty()) {
+
+            tickets = new ArrayList<>();
+        }
+        model.addAttribute("ticketsAssigned", tickets);
+        return "tech/dashboard-tech-assigned";
     }
 
 }

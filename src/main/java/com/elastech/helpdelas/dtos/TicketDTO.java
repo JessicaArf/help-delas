@@ -20,8 +20,8 @@ public class TicketDTO {
     /*
     private PriorityModel priority;
      */
-    private UserModel basicUser;
-    private UserModel techUser;
+    private UserModel userBasic;
+    private UserModel userTech;
     private Instant creationTimestamp;
     private Instant updatedTimestamp;
 
@@ -34,8 +34,8 @@ public class TicketDTO {
         this.description = ticketModel.getDescription();
         this.status = ticketModel.getStatus();
         this.sector = ticketModel.getSector();
-        this.basicUser = ticketModel.getUserBasic();
-        this.techUser = ticketModel.getUserTech();
+        this.userBasic = ticketModel.getUserBasic();
+        this.userTech = ticketModel.getUserTech();
         this.creationTimestamp = ticketModel.getCreationTimestamp();
         this.updatedTimestamp = ticketModel.getUpdatedTimestamp();
     }
@@ -46,8 +46,8 @@ public class TicketDTO {
         ticket.setDescription(ticketDTO.getDescription());
         ticket.setStatus(ticketDTO.getStatus());
         ticket.setSector(ticketDTO.getSector());
-        ticket.setUserBasic(ticketDTO.getBasicUser());
-        ticket.setUserTech(ticketDTO.getTechUser());
+        ticket.setUserBasic(ticketDTO.getUserBasic());
+        ticket.setUserTech(ticketDTO.getUserTech());
         ticket.setCreationTimestamp(ticketDTO.getCreationTimestamp());
         ticket.setUpdatedTimestamp(ticketDTO.getUpdatedTimestamp());
         return ticket;

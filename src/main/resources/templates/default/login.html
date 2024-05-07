@@ -24,7 +24,7 @@
                                         <a href="/"><img src="../portfolio/assets/img/logo.svg"  alt="logo" class="img-logo"/></a>
                                     </div>
                                     <div class="card-body">
-                                        <form action="/login" method="post">
+                                        <form th:action="@{/login}" method="post">
                                             <div class="form-floating mb-3">
                                                 <input name="username" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
                                                 <label for="inputEmail">Email</label>

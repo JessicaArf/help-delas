@@ -23,7 +23,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests( authorize -> authorize //para poder configurar como as requisições são autorizadas
-                        .requestMatchers( "/", "/assets/**", "/css/**", "/js/**", "/portfolio/**", "/salvar-usuario", "/login").permitAll()
+                        .requestMatchers( "/", "/assets/**", "/css/**", "/js/**", "/portfolio/**").permitAll()
+                        .requestMatchers("/salvar-tech", "/salvar-usuario", "/login").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
                         .successHandler(customSuccessHandler).permitAll())
