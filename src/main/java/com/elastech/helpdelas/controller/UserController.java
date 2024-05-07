@@ -22,12 +22,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/salvar-usuario")
-    public String register(){
-        return "user/register";
-    }
-
-    @GetMapping("user/register")
-    public String registerData(Model model){
+    public String register(Model model){
         List<SectorDTO> sectors = userService.findAllSector();
         model.addAttribute("sectors", sectors);
         return "user/register";
@@ -64,14 +59,14 @@ public class UserController {
             if (userDb != null) {
                 model.addAttribute("user", userDb);
             }
-            return "/user/show-user";
+            return "user/show-user";
         } catch (Exception e) {
             System.out.println(e);
             return "user/dashboard-user";
         }
     }
 
-    @GetMapping("user/edit-user")
+    @GetMapping("/editar-usuario")
     public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
         try {
             UserModel userDb = userService.find(userDetails.getUsername());
@@ -81,25 +76,23 @@ public class UserController {
             return "user/edit-user";
         } catch (Exception e) {
             System.out.println(e);
-            return "user/dashboard-user";
+            return "user/edit-user";
         }
     }
 
     @PostMapping("/editar-usuario")
     public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
-
         UserModel userDb = userService.find(userDetails.getUsername());
         try {
             if (userDb != null) {
                 UserModel userAtualizado = userService.updateUserById(userDb, userModel);
                 model.addAttribute("user", userAtualizado);
+                return "user/show-user";
             }
-            return "user/show-user";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
             model.addAttribute("user", userDb);
-            return "user/edit-user";
         }
+        return "user/edit-user";
     }
-
 }

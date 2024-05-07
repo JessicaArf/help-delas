@@ -34,7 +34,7 @@ Authentication contém as informações do usuário autenticado (email e senha) 
 
         // verifica o tipo de role e redireciona
         if (roles.orElse("").equals("USER")){
-            response.sendRedirect("/dashboard-usuario");
+            response.sendRedirect("user/dashboard-user");
         } else if (roles.orElse("").equals("TECH")){
             response.sendRedirect("/dashboard-tecnico");
         } else if (roles.orElse("").equals("ADMIN")){

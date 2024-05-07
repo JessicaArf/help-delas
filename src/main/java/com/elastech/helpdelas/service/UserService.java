@@ -3,6 +3,7 @@ package com.elastech.helpdelas.service;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.model.RoleModel;
+import com.elastech.helpdelas.model.SectorModel;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.repositories.RoleRepository;
 import com.elastech.helpdelas.repositories.UserRepository;
@@ -62,15 +63,21 @@ public class UserService {
         return userRepository.findAll(example);
     }
     public UserModel updateUserById(UserModel userSession, UserDTO userDTO) throws Exception {
-        UserModel userModel = UserDTO.convert(userDTO);
-        userRepository.findById(userSession.getUserId())
-                .map(userExistente -> {
-                    userDTO.setUserId(userExistente.getUserId());
-                    userRepository.save(userModel);
-                    return userModel;
-                }).orElseThrow( () -> new Exception("Usuário não encontrado")); //supplier
-        return userModel;
+        Optional<UserModel> userExistente =  userRepository.findById(userSession.getUserId());
+        if(userExistente.isPresent()){
+            UserModel user = userExistente.get();
+            user.setEmail(userDTO.getEmail());
+            user.setName(userDTO.getName());
+            user.setSector(userDTO.getSector());
+            user.setSupervisor(userDTO.getSupervisor());
+            userRepository.save(user);
+            return user;
+        } else {
+            UserModel userModel = UserDTO.convert(userDTO);
+            return userModel;
+        }
     }
+
     public UserModel userFindById(Long id){
         return userRepository.findById(id)
                 .orElseThrow( () ->

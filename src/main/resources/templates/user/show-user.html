@@ -57,7 +57,7 @@
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="/user/show-user">Visualizar</a>
-                            <a class="nav-link" href="/user/edit-user">Editar</a>
+                            <a class="nav-link" href="/editar-usuario">Editar</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -112,7 +112,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputDepartament" type="text" name="supervisor" th:disabled="true"  th:value="${user.sector.nameSector}" />
+                                        <input class="form-control" id="inputDepartament" type="text" name="sector" th:disabled="true"  th:value="${user.sector.nameSector}" />
                                         <label for="inputSupervisor">Setor</label>
                                     </div>
                                 </div>
