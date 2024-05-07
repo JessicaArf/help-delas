@@ -6,6 +6,8 @@ import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.service.TechService;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,12 @@ public class TechController {
         List<SectorDTO> sectors = userService.findAllSector();
         model.addAttribute("sectors", sectors);
         return "tech/register-tech";
+    }
+
+    // Esse metodo chama a pagina de HTML
+    @GetMapping("/dashboard-tecnico")
+    public String showTech(){
+        return "tech/dashboard-tech";
     }
 
     @PostMapping("/salvar-tech")

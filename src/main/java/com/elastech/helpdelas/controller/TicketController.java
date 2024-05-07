@@ -63,9 +63,8 @@ public class TicketController {
 
         // Adiciona os tickets ao modelo
         model.addAttribute("tickets", tickets);
-        return "ticket/dashboard-user";
+        return "user/dashboard-user";
     }
-
 }
 
 

@@ -29,12 +29,8 @@ public class TicketModel {
     @JoinColumn(name = "id_sector")
     private SectorModel sector;
 
-<<<<<<< HEAD
-    /*@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-=======
     /*
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
->>>>>>> c701ac1a3928728acffec26f51c6da6edacea454
     @JoinColumn(name = "id_priority")
     private PriorityModel priority;
      */
