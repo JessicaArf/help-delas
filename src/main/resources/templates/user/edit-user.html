@@ -14,7 +14,7 @@
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="/user/dashboard-user">HelpDelas</a>
+    <a class="navbar-brand ps-3" href="/dashboard-usuario">HelpDelas</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
@@ -29,7 +29,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/user/show-user">Meus Dados</a></li>
+                <li><a class="dropdown-item" href="/mostrar-usuario">Meus Dados</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li> <form action="/logout" method="post">
                     <button class="dropdown-item" type="submit">Sair</button>
@@ -44,7 +44,7 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Início</div>
-                    <a class="nav-link" href="/user/dashboard-user">
+                    <a class="nav-link" href="/dashboard-usuario">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
@@ -56,8 +56,8 @@
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/user/show-user">Visualizar</a>
-                            <a class="nav-link" href="/user/edit-user">Editar</a>
+                            <a class="nav-link" href="/mostrar-usuario">Visualizar</a>
+                            <a class="nav-link" href="/editar-usuario">Editar</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -67,7 +67,7 @@
                     </a>
                     <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="../ticket/create-ticket">Novo Chamado</a>
+                            <a class="nav-link" href="/criar-chamado">Novo Chamado</a>
                             <a class="nav-link" href="../ticket/edit-ticket">Editar Chamado</a>
                             <a class="nav-link" href="../ticket/show-ticket">Visualizar Chamado</a>
                         </nav>
@@ -85,7 +85,7 @@
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Meus Dados</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/user/dashboard-user">Início</a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard-usuario">Início</a></li>
                     <li class="breadcrumb-item active">Meus Dados</li>
                 </ol>
                 <div class="card mb-4">
@@ -94,8 +94,8 @@
                         Meus Dados
                     </div>
                     <div class="card-body">
-                        <form action="/editar-usuario" method="post" th:object="${user}" >
-                            <input type="hidden" name="_method" value="patch" />
+                        <form  action="/editar-usuario" method="post" th:object="${user}" >
+                            <input type="hidden" name="_method" value="PATCH" />
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
@@ -113,10 +113,11 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <select  class="form-control" id="inputDepartament" >
+                                        <select  class="form-control" id="inputDepartament" name="sector">
                                             <option th:each="sector : ${sectors}"
                                                     th:value="${sector.id}"
-                                                    th:text="${sector.nameSector}"></option>
+                                                    th:text="${sector.nameSector}"
+                                                    th:selected="${sector.id == user.sector.id}"></option>
                                         </select>
                                         <label for="inputDepartament">Setor</label>
                                     </div>
@@ -128,7 +129,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-4 mb-0">
-                                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0"><button class="btn btn-primary" type="submit">Salvar Alterações</button></div>
+                                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0"><button class="btn btn-primary" type="submit" >Salvar Alterações</button></div>
                                 </div>
                             </div>
                             <div th:if="${param.error}">
