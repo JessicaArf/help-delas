@@ -3,15 +3,17 @@ package com.elastech.helpdelas.controller;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
+import com.elastech.helpdelas.model.TicketModel;
+import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.service.TicketService;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -61,7 +63,6 @@ public class TicketController {
             // Se não houver tickets, cria uma lista vazia
             tickets = new ArrayList<>();
         }
-
         // Adiciona os tickets ao modelo
         model.addAttribute("tickets", tickets);
         return "user/dashboard-user";
@@ -91,6 +92,25 @@ public class TicketController {
         }
         model.addAttribute("ticketsAssigned", tickets);
         return "tech/dashboard-tech-assigned";
+    }
+
+    @GetMapping("/usuario/editar-chamado/{ticketId}")
+    public String showEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails){
+        TicketDTO ticket = ticketService.showTicketById(ticketId);
+        UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
+        List<SectorDTO> sectors = userService.findAllSector();
+
+        model.addAttribute("sectors", sectors);
+        model.addAttribute("name", userBasic.getName());
+        model.addAttribute("ticket", ticket);
+
+        return "ticket/update-ticket-user";
+    }
+
+    @PutMapping("/usuario/editar-chamado/{ticketId}")
+    public String updateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket){
+        ticketService.updateTicketUser(ticketId, ticket);
+        return "redirect:/dashboard-usuario";
     }
 
 }

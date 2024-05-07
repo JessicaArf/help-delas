@@ -5,10 +5,12 @@ import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.model.TicketModel;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.repositories.TicketRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,6 +18,8 @@ public class TicketService {
 
     @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
+    private UserService userService;
 
     public TicketDTO createTicket(TicketDTO ticketDTO, UserDTO userBasic){
         UserModel userBasicModel = UserDTO.convert(userBasic);
@@ -48,5 +52,26 @@ public class TicketService {
     }
 
 
+    public TicketDTO showTicketById(Long id){
+        Optional<TicketModel> ticketModel = ticketRepository.findById(id);
+        if (ticketModel.isEmpty()){
+            throw new EntityNotFoundException("Chamado não encontrado");
+        }
+        return new TicketDTO(ticketModel.get());
+    }
+
+    public TicketDTO updateTicketUser(Long id, TicketDTO updateTicket){
+        Optional<TicketModel> ticketModel = ticketRepository.findById(id);
+
+        if (ticketModel.isEmpty()){
+            throw new EntityNotFoundException("Chamado não encontrado");
+        }
+        ticketModel.get().setDescription(updateTicket.getDescription());
+        ticketModel.get().setSubject(updateTicket.getSubject());
+        ticketRepository.save(ticketModel.get());
+
+        return new TicketDTO(ticketModel.get());
+
+    }
 
 }
