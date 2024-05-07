@@ -3,13 +3,10 @@ package com.elastech.helpdelas.controller;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
-import com.elastech.helpdelas.model.TicketModel;
-import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.service.TicketService;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,8 +66,8 @@ public class TicketController {
     }
 
     @GetMapping("/dashboard-tecnico")
-    public String showTicketsAvailable(Model model, @AuthenticationPrincipal UserDetails userDetails){
-    List<TicketDTO> tickets = ticketService.showTicketsAvailable();
+    public String showTicketsAvailable(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        List<TicketDTO> tickets = ticketService.showTicketsAvailable();
 
         if (tickets == null || tickets.isEmpty()) {
 
@@ -80,8 +77,8 @@ public class TicketController {
         return "tech/dashboard-tech";
     }
 
-   @GetMapping("/dashboard-tecnico/meus-chamados")
-    public String showTicketsAssigned(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    @GetMapping("/dashboard-tecnico/meus-chamados")
+    public String showTicketsAssigned(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO techUser = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("techUser", techUser);
         List<TicketDTO> tickets = ticketService.showTicketsAssigned(techUser.getUserId());
@@ -95,7 +92,7 @@ public class TicketController {
     }
 
     @GetMapping("/usuario/editar-chamado/{ticketId}")
-    public String showEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showUserEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         TicketDTO ticket = ticketService.showTicketById(ticketId);
         UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
         List<SectorDTO> sectors = userService.findAllSector();
@@ -108,9 +105,29 @@ public class TicketController {
     }
 
     @PutMapping("/usuario/editar-chamado/{ticketId}")
-    public String updateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket){
+    public String userUpdateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket) {
         ticketService.updateTicketUser(ticketId, ticket);
         return "redirect:/dashboard-usuario";
+    }
+
+    @GetMapping("/tecnico/editar-chamado/{ticketId}")
+    public String showTechEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        TicketDTO ticket = ticketService.showTicketById(ticketId);
+        UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
+        List<SectorDTO> sectors = userService.findAllSector();
+
+        model.addAttribute("sectors", sectors);
+        model.addAttribute("name", userTech.getName());
+        model.addAttribute("ticket", ticket);
+
+        return "ticket/update-ticket-tech";
+    }
+
+    @PutMapping("/tecnico/editar-chamado/{ticketId}")
+    public String techUpdateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket) {
+        UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
+        ticketService.updateTicketTech(ticketId, ticket, userTech);
+        return "redirect:/dashboard-tecnico/meus-chamados";
     }
 
 }

@@ -74,4 +74,22 @@ public class TicketService {
 
     }
 
+    public TicketDTO updateTicketTech(Long id, TicketDTO updateTicket, UserDTO userTech){
+        Optional<TicketModel> ticketModel = ticketRepository.findById(id);
+
+        if (ticketModel.isEmpty()){
+            throw new EntityNotFoundException("Chamado não encontrado");
+        }
+
+        UserModel userTechModel = UserDTO.convert(userTech);
+
+        ticketModel.get().setStatus(updateTicket.getStatus());
+        ticketModel.get().setSector(updateTicket.getSector());
+        ticketModel.get().setUserTech(userTechModel);
+        ticketRepository.save(ticketModel.get());
+
+        return new TicketDTO(ticketModel.get());
+
+    }
+
 }
