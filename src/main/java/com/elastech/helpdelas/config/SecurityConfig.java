@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@Configuration // marca a classe como configuração para o spring
+@Configuration //marca a classe como configuração para o spring
 public class SecurityConfig {
 
     @Autowired
@@ -18,13 +18,12 @@ public class SecurityConfig {
     @Autowired
     private CustomSuccessHandler customSuccessHandler;
 
-    @Bean // essa anotação inndica que o método vai retornar um bean que o spring vai gerenciar
+
+    @Bean // essa anotação indica que o método vai retornar um bean que o spring vai gerenciar
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorize -> authorize //para poder configurar como as requisições são autorizadas
-                        .requestMatchers( "**").permitAll()
-                        .requestMatchers("/salvar-usuario").permitAll()
-                        .requestMatchers("/salvar-tech").permitAll()
+                .authorizeHttpRequests( authorize -> authorize //para poder configurar como as requisições são autorizadas
+                        .requestMatchers( "/", "/assets/**", "/css/**", "/js/**", "/portfolio/**", "/salvar-usuario", "/login").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
                         .successHandler(customSuccessHandler).permitAll())
@@ -47,5 +46,5 @@ public class SecurityConfig {
     public void configure (AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
-        
+
 }

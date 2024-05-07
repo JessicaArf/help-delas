@@ -16,8 +16,6 @@ public class TicketModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ticketId;
-    @Column
-    private String subject;
     private String description;
     private TicketStatus status;
 
@@ -31,18 +29,23 @@ public class TicketModel {
     @JoinColumn(name = "id_sector")
     private SectorModel sector;
 
+<<<<<<< HEAD
     /*@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+=======
+    /*
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+>>>>>>> c701ac1a3928728acffec26f51c6da6edacea454
     @JoinColumn(name = "id_priority")
     private PriorityModel priority;
      */
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_basic_user")
-    private UserModel basicUser;
+    private UserModel userBasic;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_tech_user")
-    private UserModel techUser;
+    private UserModel userTech;
 
     public enum TicketStatus {
         OPEN("Aguardando técnico"),
@@ -60,4 +63,5 @@ public class TicketModel {
             return description;
         }
     }
+
 }
