@@ -22,7 +22,9 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/salvar-usuario")
-    public String register(){
+    public String register(Model model){
+        List<SectorDTO> sectors = userService.findAllSector();
+        model.addAttribute("sectors", sectors);
         return "user/register";
     }
 

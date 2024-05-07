@@ -17,20 +17,36 @@ public class TicketService {
     @Autowired
     private TicketRepository ticketRepository;
 
-    public TicketDTO createTicket(TicketDTO ticketDTO, UserDTO basicUser){
-        UserModel basicUserModel = UserDTO.convert(basicUser);
-        ticketDTO.setBasicUser(basicUserModel);
+    public TicketDTO createTicket(TicketDTO ticketDTO, UserDTO userBasic){
+        UserModel userBasicModel = UserDTO.convert(userBasic);
+        ticketDTO.setUserBasic(userBasicModel);
         ticketDTO.setStatus(TicketModel.TicketStatus.OPEN);
         TicketModel ticketModel = TicketDTO.convert(ticketDTO);
         ticketRepository.save(ticketModel);
         return ticketDTO;
     }
 
-   public List<TicketDTO> showTicketsByUser(Long userId){
-        List<TicketModel> tickets = ticketRepository.findByUserBasicUserId(userId);
+   public List<TicketDTO> showTicketsByUser(Long userBasicId){
+        List<TicketModel> tickets = ticketRepository.findByUserBasicUserId(userBasicId);
        return tickets.stream()
                .map(TicketDTO::new)
                .collect(Collectors.toList());
    }
+
+   public List<TicketDTO> showTicketsAvailable(){
+       List<TicketModel> tickets = ticketRepository.findByUserTechUserIdIsNull();
+       return tickets.stream()
+               .map(TicketDTO::new)
+               .collect(Collectors.toList());
+   }
+
+    public List<TicketDTO> showTicketsAssigned(Long userTechId){
+        List<TicketModel> tickets = ticketRepository.findByUserTechUserId(userTechId);
+        return tickets.stream()
+                .map(TicketDTO::new)
+                .collect(Collectors.toList());
+    }
+
+
 
 }
