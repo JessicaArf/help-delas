@@ -31,7 +31,7 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public UserModel salvar(UserDTO userDTO) throws Exception {
+    public UserDTO salvar(UserDTO userDTO) throws Exception {
         Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
         if(!byEmail.isPresent()){
             RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
@@ -39,7 +39,8 @@ public class UserService {
             userDTO.setSector(userDTO.getSector());
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             UserModel userModel = UserDTO.convert(userDTO);
-            return userRepository.save(userModel);
+            userRepository.save(userModel);
+            return new UserDTO(userModel);
         } else {
             throw new Exception("Já existe um cliente cadastrado com esse e-mail.");
         }
@@ -61,8 +62,9 @@ public class UserService {
         Example example = Example.of(filtroUser, matcher); //pegar as propriedas populadas e criar o objeto
         return userRepository.findAll(example);
     }
-    public UserModel updateUserById(UserModel userSession, UserDTO userDTO) throws Exception {
-        Optional<UserModel> userExistente =  userRepository.findById(userSession.getUserId());
+
+    public UserDTO updateUserById(Long id, UserDTO userDTO) throws Exception {
+        Optional<UserModel> userExistente =  userRepository.findById(id);
         if(userExistente.isPresent()){
             UserModel user = userExistente.get();
             user.setEmail(userDTO.getEmail());
@@ -70,33 +72,10 @@ public class UserService {
             user.setSector(userDTO.getSector());
             user.setSupervisor(userDTO.getSupervisor());
             userRepository.save(user);
-            return user;
+            return new UserDTO(user);
         } else {
-            UserModel userModel = UserDTO.convert(userDTO);
-            return userModel;
+            return userDTO;
         }
-    }
-
-    public UserModel userFindById(Long id){
-        return userRepository.findById(id)
-                .orElseThrow( () ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Usuário não encontrado"));
-
-    }
-
-    public UserModel delete(Long id){
-        return userRepository.findById(id)
-                .map( usuario -> {
-                    userRepository.delete(usuario);
-                    return usuario;
-                })
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
-    }
-
-    public UserModel find(String user) throws Exception  {
-        return userRepository.findByEmail(user)
-                .orElseThrow(() -> new Exception("Usuário não encontrado"));
     }
 
     public UserDTO getUserByEmail(String email){

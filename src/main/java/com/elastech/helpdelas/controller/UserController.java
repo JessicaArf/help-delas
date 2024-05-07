@@ -1,12 +1,14 @@
 package com.elastech.helpdelas.controller;
 
 import com.elastech.helpdelas.dtos.SectorDTO;
+import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,24 +40,11 @@ public class UserController {
             return "redirect:/user/register";
         }
     }
-    @GetMapping("/dashboard-usuario")
-    public String showUserDashboard(Model model, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
-        try {
-            UserModel userDb = userService.find(userDetails.getUsername());
-            if (userDb != null) {
-                model.addAttribute("user", userDb);
-            }
-            return "user/dashboard-user";
-        } catch (Exception e) {
-            System.out.println(e);
-            return "redirect:/login";
-        }
-    }
 
     @GetMapping("/mostrar-usuario")
     public String showUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
         try {
-            UserModel userDb = userService.find(userDetails.getUsername());
+            UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
             if (userDb != null) {
                 model.addAttribute("user", userDb);
             }
@@ -69,7 +58,7 @@ public class UserController {
     @GetMapping("/editar-usuario")
     public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
         try {
-            UserModel userDb = userService.find(userDetails.getUsername());
+            UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
             List<SectorDTO> sectors = userService.findAllSector();
             model.addAttribute("sectors", sectors);
             model.addAttribute("user", userDb);
@@ -82,10 +71,11 @@ public class UserController {
 
     @PostMapping("/editar-usuario")
     public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
-        UserModel userDb = userService.find(userDetails.getUsername());
+        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
+        Long userId = userDb.getUserId();
         try {
             if (userDb != null) {
-                UserModel userAtualizado = userService.updateUserById(userDb, userModel);
+                UserDTO userAtualizado = userService.updateUserById(userId, userModel);
                 model.addAttribute("user", userAtualizado);
                 return "user/show-user";
             }

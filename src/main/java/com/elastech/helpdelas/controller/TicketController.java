@@ -46,7 +46,7 @@ public class TicketController {
         return "redirect:/dashboard-usuario";
     }
 
-    //@GetMapping("/dashboard-usuario")
+    @GetMapping("/dashboard-usuario")
     public String showTicketsByUser(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         // pegando o usuário logado através do userdetails e puxando o usuário do banco de dados pelo email
         UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
