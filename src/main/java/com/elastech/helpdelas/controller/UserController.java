@@ -41,6 +41,7 @@ public class UserController {
             return "redirect:/user/register";
         }
     }
+
     @GetMapping("user/dashboard-user")
     public String showClient(Model model){
         UserModel user = getUser();
