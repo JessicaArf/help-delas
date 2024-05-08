@@ -28,8 +28,10 @@ public class TicketController {
     private UserService userService;
 
     @GetMapping("/criar-chamado")
-    public String showPage(Model model) {
+    public String showPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        UserDTO basicUser = userService.getUserByEmail(userDetails.getUsername());
         List<SectorDTO> sectors = userService.findAllSector();
+        model.addAttribute("name", basicUser.getName());
         model.addAttribute("sectors", sectors);
         return "ticket/create-ticket";
     }
@@ -38,7 +40,6 @@ public class TicketController {
     public String createTicket(TicketDTO ticketDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) {
         // pegando o usuário logado através do userdetails e puxando o usuário do banco de dados pelo email
         UserDTO basicUser = userService.getUserByEmail(userDetails.getUsername());
-        System.out.println(basicUser);
         // passando o ticket e o usuário para que o ticket seja salvo
         ticketService.createTicket(ticketDTO, basicUser);
         // redirecionado para o dashboard do usuário
@@ -101,8 +102,9 @@ public class TicketController {
 
     @GetMapping("/dashboard-tecnico")
     public String showTicketsAvailable(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        UserDTO techUser = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", techUser.getName());
         List<TicketDTO> tickets = ticketService.showTicketsAvailable();
-
         if (tickets == null || tickets.isEmpty()) {
 
             tickets = new ArrayList<>();
@@ -114,7 +116,7 @@ public class TicketController {
     @GetMapping("/dashboard-tecnico/meus-chamados")
     public String showTicketsAssigned(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO techUser = userService.getUserByEmail(userDetails.getUsername());
-        model.addAttribute("techUser", techUser);
+        model.addAttribute("name", techUser.getName());
         List<TicketDTO> tickets = ticketService.showTicketsAssigned(techUser.getUserId());
 
         if (tickets == null || tickets.isEmpty()) {

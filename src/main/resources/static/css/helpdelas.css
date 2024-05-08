@@ -1,14 +1,8 @@
 .body {
     --bs-bg-opacity: 1;
-<<<<<<< HEAD
-    background-color: #FFC901 !important; /background-image: linear-gradient(to bottom, #FFC901, #FFFFFF); / Degradê vertical /
-    background-image: linear-gradient(to bottom right, #FFC901, #FFFFFF); / Degradê diagonal /
-    background-size: 100% 100%; / Isso fará com que o degradê cubra metade da altura do elemento pai */
-=======
     background-color: #FFC901 !important; /*background-image: linear-gradient(to bottom, #FFC901, #FFFFFF); /* Degradê vertical */
     background-image: linear-gradient(to bottom right, #FFC901, #FFFFFF); /* Degradê diagonal */
     background-size: 100% 100%; /* Isso fará com que o degradê cubra metade da altura do elemento pai */
->>>>>>> 28ed294f42ffcf9b1ede90b7d8608fa096a57c49
 }
 .container-img-logo{
     display: flex;
@@ -37,4 +31,38 @@
 .btn-login:hover {
     background-color: #1fd7b2;
     color: #ffffff;
+}
+
+.card-dash {
+margin-top: 2rem;
+background: linear-gradient(10deg, #f5de3e 3%, #a6dbd9 88%, #1bb99a);
+font-weight: bold;
+}
+
+.btn-dash {
+    background-color: #1bb99a;
+    border: 1px solid #1bb99a;
+    border-radius: 5px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.btn-dash:hover {
+    background-color: #1fd7b2;
+    color: #ffffff;
+}
+
+.btn-delete {
+    padding: 0.7rem 5rem;
+    background-color: #b81414;
+    border: 1px solid #b81414;
+    border-radius: 5px;
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 2rem;
+}
+
+#container-btn{
+display: flex;
+flex-direction: row;
 }
