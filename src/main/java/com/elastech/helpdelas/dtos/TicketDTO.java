@@ -14,6 +14,7 @@ import java.time.Instant;
 public class TicketDTO {
 
     private long ticketId;
+    private String subject;
     private String description;
     private TicketModel.TicketStatus status;
     private SectorModel sector;
@@ -31,6 +32,7 @@ public class TicketDTO {
 
     public TicketDTO(TicketModel ticketModel){
         this.ticketId = ticketModel.getTicketId();
+        this.subject = ticketModel.getSubject();
         this.description = ticketModel.getDescription();
         this.status = ticketModel.getStatus();
         this.sector = ticketModel.getSector();
@@ -43,6 +45,7 @@ public class TicketDTO {
     public static TicketModel convert(TicketDTO ticketDTO){
         TicketModel ticket = new TicketModel();
         ticket.setTicketId(ticketDTO.getTicketId());
+        ticket.setSubject(ticketDTO.getSubject());
         ticket.setDescription(ticketDTO.getDescription());
         ticket.setStatus(ticketDTO.getStatus());
         ticket.setSector(ticketDTO.getSector());

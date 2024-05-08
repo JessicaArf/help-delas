@@ -16,6 +16,7 @@ public class TicketModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ticketId;
+    private String subject;
     private String description;
     private TicketStatus status;
 

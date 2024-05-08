@@ -204,7 +204,8 @@
                             <tr>
                                 <th>Número do chamado</th>
                                 <th>Data de Abertura</th>
-                                <th>Cliente</th>
+                                <th>Usuário</th>
+                                <th>Assunto</th>
                                 <th>Descrição</th>
                                 <th>Setor</th>
                                 <th>Status</th>
@@ -217,18 +218,19 @@
                             <tr th:each="ticket : ${ticketsAssigned}">
                                 <td th:text="${ticket.ticketId}"></td>
                                 <td th:text="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
-                                <td th:text="${ticket.client.name}"></td>
+                                <td th:text="${ticket.userBasic.name}"></td>
+                                <td th:text="${ticket.subject}"></td>
                                 <td th:text="${ticket.description}"></td>
-                                <td th:text="${ticket.sector.name}"></td>
+                                <td th:text="${ticket.sector.nameSector}"></td>
                                 <td th:text="${ticket.status.description}"></td>
                                 <td th:text="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
-                                <td th:text="${ticket.technician != null ? ticket.technician.name : 'Não atribuído'}"></td>
-                                <td id="tabela-btn">
-                                    <form th:action="@{'/editar-chamado/' + ${ticket.ticketId}}" method="get">
+                                <td th:text="${ticket.userTech != null ? ticket.userTech.name : 'Não atribuído'}"></td>
+                                <td>
+                                    <form th:action="@{'/tecnico/editar-chamado/' + ${ticket.ticketId}}" method="get">
                                         <button id="editar-btn" type="submit">Editar</button>
                                     </form>
                                 </td>
-                                    </tr>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -260,3 +262,4 @@
 <script src="js/datatables-simple-demo.js"></script>
 </body>
 </html>
+
