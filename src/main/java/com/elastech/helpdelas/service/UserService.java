@@ -38,6 +38,7 @@ public class UserService {
             RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
             userDTO.setRole(role);
             userDTO.setSector(userDTO.getSector());
+            userDTO.setStatus("ATIVO");
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             UserModel userModel = UserDTO.convert(userDTO);
             userRepository.save(userModel);
@@ -89,10 +90,20 @@ public class UserService {
         return new UserDTO(user.get());
     }
 
-    public void deleteById(Long id){
-        UserDTO user = this.getUserById(id);
-        if(user != null){
-            userRepository.deleteById(user.getUserId());
+    public UserDTO atualizarStatus(Long id, String status){
+        Optional<UserModel> userExistente =  userRepository.findById(id);
+        if(userExistente.isPresent()){
+            if(status.equals("desativar")){
+                UserModel user = userExistente.get();
+                user.setStatus("INATIVO");
+                userRepository.save(user);
+                return new UserDTO(user);
+            } else {
+                UserModel user = userExistente.get();
+                user.setStatus("ATIVO");
+                userRepository.save(user);
+                return new UserDTO(user);
+            }
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Usuário não encontrado");

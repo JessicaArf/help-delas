@@ -102,8 +102,10 @@
                                 <th>Supervisor</th>
                                 <th>Setor</th>
                                 <th>Tipo de Acesso </th>
+                                <th>Status </th>
                                 <th>Data de Criação</th>
                                 <th>Última Atualização</th>
+                                <th> </th>
                                 <th> </th>
                                 <th> </th>
                                 <th> </th>
@@ -116,10 +118,12 @@
                                     <td th:text="${user.supervisor}"></td>
                                     <td th:text="${(user.sector != null  ? user.sector.nameSector : '')}"></td>
                                     <td th:text="${user.role.name}"></td>
+                                    <td th:text="${user.status}"></td>
                                     <td th:text="${#dates.format(user.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                     <td th:text="${#dates.format(user.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                     <td><a th:href="@{'/editar-usuario/' + ${user.userId}}" title="Editar"><i class="fas fa-edit"></i></a></td>
-                                    <td><a th:href="@{'/deletar-usuario/' + ${user.userId}}" title="Excluir"><i class="fas fa-trash-alt"></i></a></td>
+                                    <td><a th:href="@{'/desativar-usuario/' + ${user.userId}}" title="Desativar"><i class="fas fa-ban"></i></a></td>
+                                    <td><a th:href="@{'/ativar-usuario/' + ${user.userId}}" title="Ativar"><i class="fas fa-check"></i></a></td>
                                     <td><a th:href="@{'/mostrar-usuario/' + ${user.userId}}" title="Visualizar"><i class="fas fa-eye"></i></a></td>
                                 </tr>
                             </tbody>
