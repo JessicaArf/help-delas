@@ -1,9 +1,12 @@
 package com.elastech.helpdelas.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
-public class Sector {
+@Table(name = "TB_SECTORS")
+public class SectorModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,7 +15,7 @@ public class Sector {
     @Column(nullable = false)
     private String nameSector;
 
-    public Sector() {
+    public SectorModel() {
 
     }
 

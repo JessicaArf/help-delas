@@ -27,7 +27,7 @@ Authentication contém as informações do usuário autenticado (email e senha) 
         /* Esta linha recupera as autoridades (papéis) do usuário autenticado a partir do objeto authentication.
         O resultado é armazenado na variável authorities, que é um Set (conjunto) de objetos GrantedAuthority.
          */
-
+        System.out.println("logado com sucesso");
         // aqui a gente tá pegando a role do usuário autenticado e estamos salvando no var auhtorities
         var authourities = authentication.getAuthorities();
         var roles = authourities.stream().map(GrantedAuthority::getAuthority).findFirst();
@@ -41,4 +41,5 @@ Authentication contém as informações do usuário autenticado (email e senha) 
             response.sendRedirect("/dashboard-admin");
         }
     }
+
 }
