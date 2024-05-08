@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -50,18 +51,10 @@ public class UserService {
         return sectorService.findAll();
     }
 
-    public List<UserModel> userModelList(UserModel filtroUser){
-        //metodo que permite buscar por todos os dados da base da table especifico bem como filtrar por qualquer coluna que contenha  na
-        //base de dados, ignorando letras maiuscula/minuscula
-        ExampleMatcher matcher = ExampleMatcher
-                .matching()
-                .withIgnoreCase()
-                .withStringMatcher(
-                        ExampleMatcher.StringMatcher.CONTAINING);
-
-        Example example = Example.of(filtroUser, matcher); //pegar as propriedas populadas e criar o objeto
-        return userRepository.findAll(example);
-    }
+   public List<UserDTO> findAll(){
+       List<UserModel> users = userRepository.findAll();
+       return users.stream().map(UserDTO::new).collect(Collectors.toList());
+   }
 
     public UserDTO updateUserById(Long id, UserDTO userDTO) throws Exception {
         Optional<UserModel> userExistente =  userRepository.findById(id);
@@ -87,4 +80,24 @@ public class UserService {
         return new UserDTO(user.get());
     }
 
+    public UserDTO getUserById(Long id){
+        Optional<UserModel> user = userRepository.findById(id);
+        if(user.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Usuário não encontrado");
+        }
+        return new UserDTO(user.get());
+    }
+
+    public void deleteById(Long id){
+        UserDTO user = this.getUserById(id);
+        if(user != null){
+            userRepository.deleteById(user.getUserId());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Usuário não encontrado");
+        }
+    }
 }
+
+

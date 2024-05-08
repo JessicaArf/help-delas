@@ -30,6 +30,13 @@ public class UserController {
         return "user/register";
     }
 
+    @GetMapping("/todos-usuarios")
+    public String allUsers(Model model){
+        List<UserDTO> users = userService.findAll();
+        model.addAttribute("users", users);
+        return "user/showAll-user";
+    }
+
     @PostMapping("/salvar-usuario")
     public String register(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
         try{
@@ -84,5 +91,42 @@ public class UserController {
             model.addAttribute("user", userDb);
         }
         return "user/edit-user";
+    }
+
+    @GetMapping("/editar-usuario/{id}")
+    public String editUserId(@PathVariable Long id, Model model){
+        try {
+            UserDTO userDb = userService.getUserById(id);
+            List<SectorDTO> sectors = userService.findAllSector();
+            model.addAttribute("sectors", sectors);
+            model.addAttribute("user", userDb);
+            return "user/edit-user";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "user/edit-user";
+        }
+    }
+
+    @GetMapping("/mostrar-usuario/{id}")
+    public String showUserId(@PathVariable Long id, Model model){
+        try {
+            UserDTO userDb = userService.getUserById(id);
+            model.addAttribute("user", userDb);
+            return "user/show-user";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "user/show-user";
+        }
+    }
+
+    @GetMapping("/deletar-usuario/{id}")
+    public String deleteUserId(@PathVariable Long id, Model model){
+        try {
+            userService.deleteById(id);
+            return "user/showAll-user";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "user/showAll-user";
+        }
     }
 }
