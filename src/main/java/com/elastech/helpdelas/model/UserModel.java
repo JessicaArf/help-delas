@@ -28,6 +28,7 @@ public class UserModel {
     @JoinColumn(name = "id_sector")
     private SectorModel sector;
     private String supervisor;
+    private String status;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_role")

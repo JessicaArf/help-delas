@@ -6,6 +6,8 @@ import com.elastech.helpdelas.model.UserModel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @Getter
 @Setter
 public class UserDTO {
@@ -15,7 +17,11 @@ public class UserDTO {
     private String password;
     private SectorModel sector;
     private String supervisor;
+    private String status;
     private RoleModel role;
+
+    private Instant creationTimestamp;
+    private Instant updatedTimestamp;
 
     public UserDTO(){
 
@@ -27,8 +33,11 @@ public class UserDTO {
         this.name = userModel.getName();
         this.password = userModel.getPassword();
         this.sector = userModel.getSector();
+        this.status = userModel.getStatus();
         this.supervisor = userModel.getSupervisor();
         this.role = userModel.getRole();
+        this.creationTimestamp = userModel.getCreationTimestamp();
+        this.updatedTimestamp = userModel.getUpdatedTimestamp();
     }
 
     public static UserModel convert(UserDTO userDTO){
@@ -39,7 +48,10 @@ public class UserDTO {
         user.setPassword(userDTO.getPassword());
         user.setSector(userDTO.getSector());
         user.setSupervisor(userDTO.getSupervisor());
+        user.setStatus(userDTO.getStatus());
         user.setRole(userDTO.getRole());
+        user.setCreationTimestamp(userDTO.getCreationTimestamp());
+        user.setUpdatedTimestamp(userDTO.getUpdatedTimestamp());
         return user;
     }
 

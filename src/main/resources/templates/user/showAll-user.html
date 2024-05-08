@@ -67,7 +67,7 @@
                     </a>
                     <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/criar-chamado">Novo Chamado</a>
+                            <a class="nav-link" href="../criar-chamado">Novo Chamado</a>
                             <a class="nav-link" href="../ticket/edit-ticket">Editar Chamado</a>
                             <a class="nav-link" href="../ticket/show-ticket">Visualizar Chamado</a>
                         </nav>
@@ -76,68 +76,58 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Bem-vinda(o):</div>
-                <p th:text="${user.name}"> </p>
+                <p> </p>
             </div>
         </nav>
     </div>
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Meus Dados</h1>
+                <h1 class="mt-4">Usuários</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/dashboard-usuario">Início</a></li>
-                    <li class="breadcrumb-item active">Meus Dados</li>
+                    <li class="breadcrumb-item active">Usuários</li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-header">
-                        <i class="fas fa-user fa-fw"></i>
-                        Meus Dados
+                        <i class="fas fa-table me-1"></i>
+                        Todos Usuários
                     </div>
                     <div class="card-body">
-                        <form  action="/editar-usuario" method="post" th:object="${user}" >
-                            <input type="hidden" name="_method" value="PUT" />
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputFirstName" type="text" th:field="*{name}" th:value="${user.name}" />
-                                        <label for="inputFirstName">Nome</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input class="form-control" id="inputEmail" type="email" th:field="*{email}" th:value="${user.email}" />
-                                        <label for="inputEmail">Email</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <select  class="form-control" id="inputDepartament" name="sector">
-                                            <option th:each="sector : ${sectors}"
-                                                    th:value="${sector.id}"
-                                                    th:text="${sector.nameSector}"
-                                                    th:selected="${sector.id == user.sector.id}"></option>
-                                        </select>
-                                        <label for="inputDepartament">Setor</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputSupervisor" type="text" th:field="*{supervisor}"  th:value="${user.supervisor}" />
-                                        <label for="inputSupervisor">Supervisor</label>
-                                    </div>
-                                </div>
-                                <div class="mt-4 mb-0">
-                                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0"><button class="btn btn-primary" type="submit" >Salvar Alterações</button></div>
-                                </div>
-                            </div>
-                            <div th:if="${param.error}">
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    Não foi possível confirmar as alteraçõe.
-                                </div>
-                            </div>
-                        </form>
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Supervisor</th>
+                                <th>Setor</th>
+                                <th>Tipo de Acesso </th>
+                                <th>Status </th>
+                                <th>Data de Criação</th>
+                                <th>Última Atualização</th>
+                                <th> </th>
+                                <th> </th>
+                                <th> </th>
+                                <th> </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="user : ${users}">
+                                    <td th:text="${user.name}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.supervisor}"></td>
+                                    <td th:text="${(user.sector != null  ? user.sector.nameSector : '')}"></td>
+                                    <td th:text="${user.role.name}"></td>
+                                    <td th:text="${user.status}"></td>
+                                    <td th:text="${#dates.format(user.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                                    <td th:text="${#dates.format(user.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                                    <td><a th:href="@{'/editar-usuario/' + ${user.userId}}" title="Editar"><i class="fas fa-edit"></i></a></td>
+                                    <td><a th:href="@{'/desativar-usuario/' + ${user.userId}}" title="Desativar"><i class="fas fa-ban"></i></a></td>
+                                    <td><a th:href="@{'/ativar-usuario/' + ${user.userId}}" title="Ativar"><i class="fas fa-check"></i></a></td>
+                                    <td><a th:href="@{'/mostrar-usuario/' + ${user.userId}}" title="Visualizar"><i class="fas fa-eye"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
