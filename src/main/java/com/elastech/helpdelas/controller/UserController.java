@@ -77,7 +77,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/editar-usuario")
+    @PutMapping("/editar-usuario")
     public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         Long userId = userDb.getUserId();
@@ -108,7 +108,7 @@ public class UserController {
             return "user/edit-user";
         } catch (Exception e) {
             System.out.println(e);
-            return "user/showAll-user";
+            return "user/edit-user";
         }
     }
 
