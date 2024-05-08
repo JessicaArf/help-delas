@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SectorRepository extends JpaRepository<SectorModel, Long> {
 
+    static Object updateById() {
+        return null;
+    }
 }

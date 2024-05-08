@@ -94,52 +94,22 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Cadatro de Técnico</h1>
+                <h1 class="mt-4">Cadastro de Setor</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/user/dashboard-user">Início</a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard-admin">Início</a></li>
                     <li class="breadcrumb-item active"></li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-body">
-                        <form action="/cadastrar-tecnico" method="post">
+                        <form action="/registrar-setor" method="post">
                             <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="inputFirstName">Nome:</label>
-                                    <input class="form-control" id="inputFirstName" type="text" name="name" placeholder="Nome" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="inputEmail">E-mail:</label>
-                                    <input class="form-control" id="inputEmail" type="email" name="email" placeholder="name@example.com"/>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <select  class="form-control" id="inputDepartament" type="text" name="sector" placeholder="Setor" required >
-                                            <option th:each="sector : ${sectors}"
-                                                    th:value="${sector.id}"
-                                                    th:text="${sector.nameSector}"></option>
-                                        </select>
-                                        <label for="inputDepartament">Setor</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="inputSupervisor">Supervisor:</label>
-                                    <input class="form-control" id="inputSupervisor" type="text" name="supervisor" placeholder="Supervisor"/>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="inputPassword">Senha:</label>
-                                    <input class="form-control" id="inputPassword" type="password" name="password"  placeholder="Criar uma senha"/>
+                                <div class="col-md-12">
+                                    <label for="inputNameSector">Nome do Setor:</label>
+                                    <input class="form-control" id="inputNameSector" type="text" name="nameSector" placeholder="Nome Setor" required>
                                 </div>
                             </div>
                             <div class="mt-4 mb-0">
-                                <div class="d-flex align-items-center justify-content-center mt-4 mb-0"><button class="btn-login" type="submit">Criar Conta</button></div>
+                                <div class="d-flex align-items-center justify-content-center mt-4 mb-0"><button class="btn btn-primary" type="submit">Cadastrar Setor</button></div>
                             </div>
                         </form>
                     </div>
