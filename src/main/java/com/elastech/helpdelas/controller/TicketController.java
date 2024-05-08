@@ -50,8 +50,7 @@ public class TicketController {
         // pegando o usuário logado através do userdetails e puxando o usuário do banco de dados pelo email
         UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("name", userBasic.getName());
-        // adicionando o usuário como modelo
-        model.addAttribute("basicUser", userBasic);
+
         // pegando a lista de tickets pelo id do usuário
         List<TicketDTO> tickets = ticketService.showTicketsByUser(userBasic.getUserId());
 
@@ -63,6 +62,35 @@ public class TicketController {
         // Adiciona os tickets ao modelo
         model.addAttribute("tickets", tickets);
         return "user/dashboard-user";
+    }
+
+    @GetMapping("/usuario/editar-chamado/{ticketId}")
+    public String showUserEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        TicketDTO ticket = ticketService.showTicketById(ticketId);
+        UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
+        List<SectorDTO> sectors = userService.findAllSector();
+
+        model.addAttribute("sectors", sectors);
+        model.addAttribute("name", userBasic.getName());
+        model.addAttribute("ticket", ticket);
+
+        return "ticket/update-ticket-user";
+    }
+
+    @PutMapping("/usuario/editar-chamado/{ticketId}")
+    public String userUpdateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket) {
+        ticketService.updateTicketUser(ticketId, ticket);
+        return "redirect:/dashboard-usuario";
+    }
+
+    @GetMapping("/usuario/chamado/{ticketId}")
+    public String showOneTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        TicketDTO ticket = ticketService.showTicketById(ticketId);
+        UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", userTech.getName());
+        model.addAttribute("ticket", ticket);
+
+        return "ticket/view-one-ticket";
     }
 
     @GetMapping("/dashboard-tecnico")
@@ -91,24 +119,6 @@ public class TicketController {
         return "tech/dashboard-tech-assigned";
     }
 
-    @GetMapping("/usuario/editar-chamado/{ticketId}")
-    public String showUserEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        TicketDTO ticket = ticketService.showTicketById(ticketId);
-        UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
-        List<SectorDTO> sectors = userService.findAllSector();
-
-        model.addAttribute("sectors", sectors);
-        model.addAttribute("name", userBasic.getName());
-        model.addAttribute("ticket", ticket);
-
-        return "ticket/update-ticket-user";
-    }
-
-    @PutMapping("/usuario/editar-chamado/{ticketId}")
-    public String userUpdateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket) {
-        ticketService.updateTicketUser(ticketId, ticket);
-        return "redirect:/dashboard-usuario";
-    }
 
     @GetMapping("/tecnico/editar-chamado/{ticketId}")
     public String showTechEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
@@ -129,6 +139,8 @@ public class TicketController {
         ticketService.updateTicketTech(ticketId, ticket, userTech);
         return "redirect:/dashboard-tecnico/meus-chamados";
     }
+
+
 
 }
 

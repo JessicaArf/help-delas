@@ -162,6 +162,7 @@
                                             <th>Data de Criação</th>
                                             <th>Última atualização</th>
                                             <th></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -175,7 +176,12 @@
                                         <td th:text="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                         <td>
                                             <form th:action="@{'/usuario/editar-chamado/' + ${ticket.ticketId}}" method="get">
-                                                <button id="editar-btn" type="submit">Editar</button>
+                                                <button id="edit-btn" type="submit">Editar</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form th:action="@{'/usuario/chamado/' + ${ticket.ticketId}}" method="get">
+                                                <button id="view-btn" type="submit">Visualizar</button>
                                             </form>
                                         </td>
                                     </tr>
