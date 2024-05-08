@@ -24,19 +24,11 @@ public class TechController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserService userService;
-
     @GetMapping("/salvar-tech")
     public String showPageRegister(Model model){
         List<SectorDTO> sectors = userService.findAllSector();
         model.addAttribute("sectors", sectors);
         return "tech/register-tech";
-    }
-
-    @GetMapping("/dashboard-tecnico")
-    public String showTech(){
-        return "tech/dashboard-tech";
     }
 
     @PostMapping("/salvar-tech")
@@ -49,5 +41,4 @@ public class TechController {
             return "redirect:/salvar-tech";
         }
     }
-
 }

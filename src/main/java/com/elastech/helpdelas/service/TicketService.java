@@ -47,6 +47,17 @@ public class TicketService {
                 .collect(Collectors.toList());
     }
 
+    public List<TicketDTO> showAllTickets(){
+        List<TicketModel> tickets = ticketRepository.findAll();
+        return tickets.stream()
+                .map(TicketDTO::new)
+                .collect(Collectors.toList());
+    }
 
-
+    public List<TicketDTO> showAllTicketsTech(){
+        List<TicketModel> tickets = ticketRepository.findAllByUserTechUserIdIsNotNull();
+        return tickets.stream()
+                .map(TicketDTO::new)
+                .collect(Collectors.toList());
+    }
 }

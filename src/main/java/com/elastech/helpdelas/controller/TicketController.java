@@ -79,7 +79,7 @@ public class TicketController {
         return "tech/dashboard-tech";
     }
 
-   @GetMapping("/dashboard-tecnico/meus-chamados")
+    @GetMapping("/dashboard-tecnico/meus-chamados")
     public String showTicketsAssigned(Model model, @AuthenticationPrincipal UserDetails userDetails){
         UserDTO techUser = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("techUser", techUser);
@@ -91,6 +91,22 @@ public class TicketController {
         }
         model.addAttribute("ticketsAssigned", tickets);
         return "tech/dashboard-tech-assigned";
+    }
+
+    @GetMapping("/admin/todos-chamados")
+    public String showAllTickets(Model model, @AuthenticationPrincipal UserDetails userDetails){
+        UserDTO adminUser = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", adminUser);
+
+        List<TicketDTO> allTickets = ticketService.showAllTickets();
+        model.addAttribute("allTickets", allTickets);
+
+        List<TicketDTO> allTicketTech = ticketService.showAllTicketsTech();
+        model.addAttribute("allTicketTech", allTicketTech);
+
+        List<TicketDTO> allTicketsNotAssigned = ticketService.showTicketsAvailable();
+        model.addAttribute("allTicketsNotAssigned", allTicketsNotAssigned);
+        return "admin/table-tickets";
     }
 }
 
