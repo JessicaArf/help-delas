@@ -1,7 +1,12 @@
 package com.elastech.helpdelas.controller;
+import org.springframework.ui.Model;
 import com.elastech.helpdelas.dtos.SectorDTO;
+import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.service.SectorService;
+import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -10,6 +15,8 @@ import java.util.List;
 @Controller
 public class SectorController {
 
+    @Autowired
+    private UserService userService;
     @Autowired
     private SectorService sectorService;
 
@@ -20,7 +27,9 @@ public class SectorController {
     }
 
     @GetMapping("/registrar-setor")
-    public String save(){
+    public String save(@AuthenticationPrincipal UserDetails userDetails, Model model){
+        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", userDb.getName());
         return "sector/register-sector";
     }
 
