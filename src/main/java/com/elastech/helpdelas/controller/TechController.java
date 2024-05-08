@@ -24,21 +24,21 @@ public class TechController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/salvar-tech")
+    @GetMapping("/cadastrar-tecnico")
     public String showPageRegister(Model model){
         List<SectorDTO> sectors = userService.findAllSector();
         model.addAttribute("sectors", sectors);
-        return "tech/register-tech";
+        return "admin/register-tech";
     }
 
-    @PostMapping("/salvar-tech")
+    @PostMapping("/cadastrar-tecnico")
     public String register(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
         try {
             techService.registerTech(userDTO);
-            return "redirect:/login";
+            return "redirect:/dashboard-admin";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
-            return "redirect:/salvar-tech";
+            return "redirect:/dashboard-admin";
         }
     }
 }
