@@ -30,6 +30,14 @@ public class UserController {
         return "user/register";
     }
 
+    @GetMapping("/todos-usuarios")
+    public String allUsers(Model model){
+        List<UserDTO> users = userService.findAll();
+        users.remove(0); //remove o index do admin
+        model.addAttribute("users", users);
+        return "user/showAll-user";
+    }
+
     @PostMapping("/salvar-usuario")
     public String register(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
         try{
@@ -69,7 +77,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/editar-usuario")
+    @PutMapping("/editar-usuario")
     public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         Long userId = userDb.getUserId();
@@ -77,12 +85,70 @@ public class UserController {
             if (userDb != null) {
                 UserDTO userAtualizado = userService.updateUserById(userId, userModel);
                 model.addAttribute("user", userAtualizado);
-                return "user/show-user";
+                if(userDetails.getUsername().contains("admin")){
+                    return "user/showAll-user";
+                } else {
+                    return "user/show-user";
+                }
             }
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
             model.addAttribute("user", userDb);
         }
         return "user/edit-user";
+    }
+
+    @GetMapping("/editar-usuario/{id}")
+    public String editUserId(@PathVariable Long id, Model model){
+        try {
+            UserDTO userDb = userService.getUserById(id);
+            List<SectorDTO> sectors = userService.findAllSector();
+            model.addAttribute("sectors", sectors);
+            model.addAttribute("user", userDb);
+            return "user/edit-user";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "user/edit-user";
+        }
+    }
+
+    @GetMapping("/mostrar-usuario/{id}")
+    public String showUserId(@PathVariable Long id, Model model){
+        try {
+            UserDTO userDb = userService.getUserById(id);
+            model.addAttribute("user", userDb);
+            return "user/show-user";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "user/showAll-user";
+        }
+    }
+
+    @GetMapping("/desativar-usuario/{id}")
+    public String desativarById(@PathVariable Long id, Model model){
+        try {
+            userService.atualizarStatus(id, "desativar");
+            List<UserDTO> users = userService.findAll();
+            users.remove(0); //remove o index do admin
+            model.addAttribute("users", users);
+            return "user/showAll-user";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "user/showAll-user";
+        }
+    }
+
+    @GetMapping("/ativar-usuario/{id}")
+    public String ativarById(@PathVariable Long id, Model model){
+        try {
+            userService.atualizarStatus(id, "ativar");
+            List<UserDTO> users = userService.findAll();
+            users.remove(0); //remove o index do admin
+            model.addAttribute("users", users);
+            return "user/showAll-user";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "user/showAll-user";
+        }
     }
 }
