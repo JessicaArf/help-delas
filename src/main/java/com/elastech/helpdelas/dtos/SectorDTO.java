@@ -12,9 +12,9 @@ public class SectorDTO {
 
     }
 
-    public SectorDTO(Long id) {
+    public SectorDTO(String id) {
 
-        this.id = id;
+        this.id = Long.valueOf(id);
     }
 
     public SectorDTO(Sector sector) {

@@ -1,44 +1,48 @@
 package com.elastech.helpdelas.controller;
-
-
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.service.SectorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@RestController
+@Controller
 public class SectorController {
 
     @Autowired
     private SectorService sectorService;
 
-    @RequestMapping(value = "/registersector", method = RequestMethod.GET)
-    public SectorDTO save(@RequestBody SectorDTO dto) {
-        return this.sectorService.save(dto);
-
+    @PostMapping("/registrar-setor")
+    public String save(SectorDTO dto) {
+        this.sectorService.save(dto);
+        return "/dashboard-admin";
     }
 
-    @RequestMapping(value = "/editsector/{id}", method = RequestMethod.PUT)
+    @GetMapping("/registrar-setor")
+    public String save(){
+        return "sector/register-sector";
+    }
+
+    @PutMapping(value = "/editar-setor/{id}")
     public SectorDTO updateById(@PathVariable Long id, @RequestBody SectorDTO dto) {
         return this.sectorService.updateById(dto, id);
+
     }
 
-    @RequestMapping(value = "/deletesector/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/seletar-setor/{id}")
     public SectorDTO deleteById(@PathVariable Long id) {
         return sectorService.deleteById(id);
     }
 
-    @RequestMapping(value = "/listsectors", method = RequestMethod.GET)
+    @GetMapping(value = "/listar-setor")
     public List<SectorDTO> findAll() {
         return this.sectorService.findAll();
     }
 
-    @RequestMapping(value = "/viewsector/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/visualizar-setor/{id}")
     public SectorDTO findById(@PathVariable Long id) {
         return this.sectorService.findById(id);
     }
 
 }
-
