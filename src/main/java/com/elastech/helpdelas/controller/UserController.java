@@ -40,7 +40,7 @@ public class UserController {
             return "redirect:/user/register";
         }
     }
-
+    
     @GetMapping("/mostrar-usuario")
     public String showUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
         try {

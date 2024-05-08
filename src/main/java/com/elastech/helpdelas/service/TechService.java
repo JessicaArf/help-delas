@@ -14,7 +14,6 @@ import java.util.Optional;
 
 import static com.elastech.helpdelas.dtos.UserDTO.convert;
 
-
 @Service
 public class TechService {
 

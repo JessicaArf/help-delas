@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @Configuration //marca a classe como configuração para o spring
 public class SecurityConfig {
@@ -46,6 +47,12 @@ public class SecurityConfig {
     Define o BCryptPasswordEncoder usado para criptografia e comparação de senhas  */
     public void configure (AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customDetailsService).passwordEncoder(bCryptPasswordEncoder());
+    }
+
+
+    @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        return new HiddenHttpMethodFilter();
     }
 
 }

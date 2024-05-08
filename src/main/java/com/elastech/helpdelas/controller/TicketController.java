@@ -10,13 +10,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Controller
 public class TicketController {
@@ -61,15 +59,14 @@ public class TicketController {
             // Se não houver tickets, cria uma lista vazia
             tickets = new ArrayList<>();
         }
-
         // Adiciona os tickets ao modelo
         model.addAttribute("tickets", tickets);
         return "user/dashboard-user";
     }
 
     @GetMapping("/dashboard-tecnico")
-    public String showTicketsAvailable(Model model, @AuthenticationPrincipal UserDetails userDetails){
-    List<TicketDTO> tickets = ticketService.showTicketsAvailable();
+    public String showTicketsAvailable(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        List<TicketDTO> tickets = ticketService.showTicketsAvailable();
 
         if (tickets == null || tickets.isEmpty()) {
 
@@ -79,7 +76,7 @@ public class TicketController {
         return "tech/dashboard-tech";
     }
 
-   @GetMapping("/dashboard-tecnico/meus-chamados")
+    @GetMapping("/dashboard-tecnico/meus-chamados")
     public String showTicketsAssigned(Model model, @AuthenticationPrincipal UserDetails userDetails){
         UserDTO techUser = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("techUser", techUser);
@@ -93,6 +90,60 @@ public class TicketController {
         return "tech/dashboard-tech-assigned";
     }
 
+    @GetMapping("/usuario/editar-chamado/{ticketId}")
+    public String showUserEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        TicketDTO ticket = ticketService.showTicketById(ticketId);
+        UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
+        List<SectorDTO> sectors = userService.findAllSector();
+
+        model.addAttribute("sectors", sectors);
+        model.addAttribute("name", userBasic.getName());
+        model.addAttribute("ticket", ticket);
+
+        return "ticket/update-ticket-user";
+    }
+
+    @PutMapping("/usuario/editar-chamado/{ticketId}")
+    public String userUpdateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket) {
+        ticketService.updateTicketUser(ticketId, ticket);
+        return "redirect:/dashboard-usuario";
+    }
+
+    @GetMapping("/tecnico/editar-chamado/{ticketId}")
+    public String showTechEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        TicketDTO ticket = ticketService.showTicketById(ticketId);
+        UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
+        List<SectorDTO> sectors = userService.findAllSector();
+
+        model.addAttribute("sectors", sectors);
+        model.addAttribute("name", userTech.getName());
+        model.addAttribute("ticket", ticket);
+
+        return "ticket/update-ticket-tech";
+    }
+
+    @PutMapping("/tecnico/editar-chamado/{ticketId}")
+    public String techUpdateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket) {
+        UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
+        ticketService.updateTicketTech(ticketId, ticket, userTech);
+        return "redirect:/dashboard-tecnico/meus-chamados";
+    }
+
+    @GetMapping("/admin/todos-chamados")
+    public String showAllTickets(Model model, @AuthenticationPrincipal UserDetails userDetails){
+        UserDTO adminUser = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", adminUser);
+
+        List<TicketDTO> allTickets = ticketService.showAllTickets();
+        model.addAttribute("allTickets", allTickets);
+
+        List<TicketDTO> allTicketTech = ticketService.showAllTicketsTech();
+        model.addAttribute("allTicketTech", allTicketTech);
+
+        List<TicketDTO> allTicketsNotAssigned = ticketService.showTicketsAvailable();
+        model.addAttribute("allTicketsNotAssigned", allTicketsNotAssigned);
+        return "admin/table-tickets";
+    }
 }
 
 

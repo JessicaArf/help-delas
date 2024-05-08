@@ -131,72 +131,10 @@
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
-                <div class="row">
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">Primary Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">Warning Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-success text-white mb-4">
-                            <div class="card-body">Success Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">Danger Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area me-1"></i>
-                                Area Chart Example
-                            </div>
-                            <div class="card-body">
-                                <canvas id="myAreaChart" width="100%" height="40"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-bar me-1"></i>
-                                Bar Chart Example
-                            </div>
-                            <div class="card-body">
-                                <canvas id="myBarChart" width="100%" height="40"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        DataTable Example
+                        Todos chamados
                     </div>
                     <div class="card-body">
                         <table id="datatablesSimple">
@@ -215,21 +153,88 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="ticket : ${ticketsAssigned}">
+                            <tr th:each="ticket : ${allTickets}">
                                 <td th:text="${ticket.ticketId}"></td>
                                 <td th:text="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                 <td th:text="${ticket.userBasic.name}"></td>
-                                <td th:text="${ticket.subject}"></td>
+                                <!--<td th:text="${ticket.subject}"></td>-->
                                 <td th:text="${ticket.description}"></td>
                                 <td th:text="${ticket.sector.nameSector}"></td>
                                 <td th:text="${ticket.status.description}"></td>
                                 <td th:text="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                 <td th:text="${ticket.userTech != null ? ticket.userTech.name : 'Não atribuído'}"></td>
-                                <td>
-                                    <form th:action="@{'/tecnico/editar-chamado/' + ${ticket.ticketId}}" method="get">
-                                        <button id="editar-btn" type="submit">Editar</button>
-                                    </form>
-                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Chamados com técnico
+                    </div>
+                    <div class="card-body">
+                            <thead>
+                            <tr>
+                                <th>Número do chamado</th>
+                                <th>Data de Abertura</th>
+                                <th>Usuário</th>
+                                <th>Assunto</th>
+                                <th>Descrição</th>
+                                <th>Setor</th>
+                                <th>Status</th>
+                                <th>Ultima atualização</th>
+                                <th>Técnico responsável</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="ticket : ${allTicketTech}">
+                                <td th:text="${ticket.ticketId}"></td>
+                                <td th:text="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                                <td th:text="${ticket.userBasic.name}"></td>
+                                <!--<td th:text="${ticket.subject}"></td>-->
+                                <td th:text="${ticket.description}"></td>
+                                <td th:text="${ticket.sector.nameSector}"></td>
+                                <td th:text="${ticket.status.description}"></td>
+                                <td th:text="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                                <td th:text="${ticket.userTech != null ? ticket.userTech.name : 'Não atribuído'}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Chamados não atribuídos
+                    </div>
+                    <div class="card-body">
+                            <thead>
+                            <tr>
+                                <th>Número do chamado</th>
+                                <th>Data de Abertura</th>
+                                <th>Usuário</th>
+                                <th>Assunto</th>
+                                <th>Descrição</th>
+                                <th>Setor</th>
+                                <th>Status</th>
+                                <th>Ultima atualização</th>
+                                <th>Técnico responsável</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="ticket : ${allTicketsNotAssigned}">
+                                <td th:text="${ticket.ticketId}"></td>
+                                <td th:text="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                                <td th:text="${ticket.userBasic.name}"></td>
+                                <!--<td th:text="${ticket.subject}"></td>-->
+                                <td th:text="${ticket.description}"></td>
+                                <td th:text="${ticket.sector.nameSector}"></td>
+                                <td th:text="${ticket.status.description}"></td>
+                                <td th:text="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                                <td th:text="${ticket.userTech != null ? ticket.userTech.name : 'Não atribuído'}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -262,4 +267,3 @@
 <script src="js/datatables-simple-demo.js"></script>
 </body>
 </html>
-
