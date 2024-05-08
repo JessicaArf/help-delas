@@ -93,6 +93,12 @@ public class TicketController {
         return "ticket/view-one-ticket";
     }
 
+    @DeleteMapping("/usuario/chamado/{ticketId}")
+    public String deleteTicket(@PathVariable Long ticketId) {
+        ticketService.deleteTicket(ticketId);
+        return "redirect:/dashboard-usuario";
+    }
+
     @GetMapping("/dashboard-tecnico")
     public String showTicketsAvailable(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         List<TicketDTO> tickets = ticketService.showTicketsAvailable();
@@ -139,7 +145,6 @@ public class TicketController {
         ticketService.updateTicketTech(ticketId, ticket, userTech);
         return "redirect:/dashboard-tecnico/meus-chamados";
     }
-
 
 
 }

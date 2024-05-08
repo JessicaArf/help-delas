@@ -105,9 +105,10 @@
                         <h1>Visualizar chamado</h1>
                     </div>
                     <div class="card-body">
-                        <form th:action="@{'/tecnico/editar-chamado/' + ${ticket.ticketId}}" method="post"
+                        <form th:action="@{'/usuario/chamado/' + ${ticket.ticketId}}" method="get"
                               th:object="${ticket}">
                             <input type="hidden" th:name="_method" th:value="PUT"/>
+                            <input type="hidden" id="ticketId" th:value="${ticket.ticketId}"/>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputNumberTicket">Número do chamado:</label>
@@ -162,6 +163,11 @@
                         </form>
                         <form th:action="@{'/usuario/editar-chamado/' + ${ticket.ticketId}}" method="get">
                             <button id="edit-btn" type="submit">Editar</button>
+                        </form>
+                        <form th:action="@{'/usuario/chamado/' + ${ticket.ticketId}}" method="post"
+                              th:object="${ticket}">
+                            <input type="hidden" th:name="_method" th:value="DELETE"/>
+                            <button id="delete-btn" type="submit">Excluir</button>
                         </form>
                     </div>
                 </div>
