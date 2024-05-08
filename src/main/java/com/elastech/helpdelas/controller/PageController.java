@@ -20,4 +20,9 @@ public class PageController {
     public String showPage(){
         return "admin/dashboard-admin";
     }
+
+    @GetMapping("/chamados-admin")
+    public String tiketsAdmin() {
+        return "admin/tickets-admin";
+    }
 }

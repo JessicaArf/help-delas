@@ -135,13 +135,27 @@ public class TicketsController {
 
         List<TicketDTO> allTickets = ticketService.showAllTickets();
         model.addAttribute("allTickets", allTickets);
+        return "admin/table-tickets";
+    }
+
+    @GetMapping("/admin/chamados-tecnico")
+    public String showAllTicketsTech(Model model, @AuthenticationPrincipal UserDetails userDetails){
+        UserDTO adminUser = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", adminUser);
 
         List<TicketDTO> allTicketTech = ticketService.showAllTicketsTech();
         model.addAttribute("allTicketTech", allTicketTech);
+        return "admin/table-tickets2";
+    }
+
+    @GetMapping("/admin/chamdos-nao-atribuido")
+    public String showAllTicketsNotAssigned(Model model, @AuthenticationPrincipal UserDetails userDetails){
+        UserDTO adminUser = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", adminUser);
 
         List<TicketDTO> allTicketsNotAssigned = ticketService.showTicketsAvailable();
         model.addAttribute("allTicketsNotAssigned", allTicketsNotAssigned);
-        return "admin/table-tickets";
+        return "admin/table-tickets3";
     }
 
 }

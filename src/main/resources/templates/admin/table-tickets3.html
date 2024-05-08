@@ -129,7 +129,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        Chamados gerais
+                        Chamados não atribuídos
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
@@ -148,7 +148,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="ticket : ${allTickets}">
+                            <tr th:each="ticket : ${allTicketsNotAssigned}">
                                 <td th:text="${ticket.ticketId}"></td>
                                 <td th:text="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                 <td th:text="${ticket.userBasic.name}"></td>
