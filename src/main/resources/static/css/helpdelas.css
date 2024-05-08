@@ -4,10 +4,12 @@
     background-image: linear-gradient(to bottom right, #FFC901, #FFFFFF); /* Degradê diagonal */
     background-size: 100% 100%; /* Isso fará com que o degradê cubra metade da altura do elemento pai */
 }
+
 .container-img-logo{
     display: flex;
     justify-content: center;
 }
+
 .img-logo {
     width: 12rem;
     display: inline-block;

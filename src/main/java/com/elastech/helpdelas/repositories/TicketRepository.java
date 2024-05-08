@@ -9,4 +9,5 @@ public interface TicketRepository extends JpaRepository<TicketModel, Long> {
     List<TicketModel> findByUserBasicUserId(Long userBasicId);
     List<TicketModel> findByUserTechUserIdIsNull();
     List<TicketModel> findByUserTechUserId(Long technicianId);
+    List<TicketModel> findAllByUserTechUserIdIsNotNull();
 }

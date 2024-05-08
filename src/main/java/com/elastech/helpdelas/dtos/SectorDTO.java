@@ -14,6 +14,7 @@ public class SectorDTO {
 
     public SectorDTO(Long id) {
         this.id = id;
+
     }
 
     public SectorDTO(SectorModel sector) {

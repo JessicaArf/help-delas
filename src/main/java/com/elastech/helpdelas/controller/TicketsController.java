@@ -1,5 +1,6 @@
 package com.elastech.helpdelas.controller;
 
+
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
@@ -12,14 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Controller
-public class TicketController {
-
+public class TicketsController {
 
     @Autowired
     private TicketService ticketService;
@@ -148,6 +146,21 @@ public class TicketController {
         return "redirect:/dashboard-tecnico/meus-chamados";
     }
 
+    @GetMapping("/admin/todos-chamados")
+    public String showAllTickets(Model model, @AuthenticationPrincipal UserDetails userDetails){
+        UserDTO adminUser = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", adminUser);
+
+        List<TicketDTO> allTickets = ticketService.showAllTickets();
+        model.addAttribute("allTickets", allTickets);
+
+        List<TicketDTO> allTicketTech = ticketService.showAllTicketsTech();
+        model.addAttribute("allTicketTech", allTicketTech);
+
+        List<TicketDTO> allTicketsNotAssigned = ticketService.showTicketsAvailable();
+        model.addAttribute("allTicketsNotAssigned", allTicketsNotAssigned);
+        return "admin/table-tickets";
+    }
 
 }
 

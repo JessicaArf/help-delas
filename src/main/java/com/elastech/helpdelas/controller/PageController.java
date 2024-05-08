@@ -15,4 +15,9 @@ public class PageController {
     public String loadSystem(){
         return "default/login";
     }
+
+    @GetMapping("/dashboard-admin")
+    public String showPage(){
+        return "admin/dashboard-admin";
+    }
 }

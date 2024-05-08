@@ -50,9 +50,8 @@ public class TicketService {
                 .map(TicketDTO::new)
                 .collect(Collectors.toList());
     }
-
-
-    public TicketDTO showTicketById(Long id) {
+    
+    public TicketDTO showTicketById(Long id){
         Optional<TicketModel> ticketModel = ticketRepository.findById(id);
         if (ticketModel.isEmpty()) {
             throw new EntityNotFoundException("Chamado não encontrado");
@@ -92,6 +91,7 @@ public class TicketService {
 
     }
 
+
     public void deleteTicket(Long id) {
         Optional<TicketModel> ticketModel = ticketRepository.findById(id);
 
@@ -99,6 +99,21 @@ public class TicketService {
             throw new EntityNotFoundException("Chamado não encontrado");
         }
         ticketRepository.delete(ticketModel.get());
+    }
+
+    
+    public List<TicketDTO> showAllTickets(){
+        List<TicketModel> tickets = ticketRepository.findAll();
+        return tickets.stream()
+                .map(TicketDTO::new)
+                .collect(Collectors.toList());
+    }
+    
+    public List<TicketDTO> showAllTicketsTech(){
+        List<TicketModel> tickets = ticketRepository.findAllByUserTechUserIdIsNotNull();
+        return tickets.stream()
+                .map(TicketDTO::new)
+                .collect(Collectors.toList());
     }
 
 }
