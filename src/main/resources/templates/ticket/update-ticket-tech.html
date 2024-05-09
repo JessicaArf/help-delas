@@ -9,18 +9,18 @@
     <title>HelpDelas</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
     <link href="/css/styles.css" rel="stylesheet"/>
+    <link href="/css/helpdelas.css" rel="stylesheet"/>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="/dahsboard-usuario">HelpDelas</a>
+    <a class="navbar-brand ps-3" href="index.html">HelpDelas</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-
     </form>
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -47,7 +47,7 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Início</div>
-                    <a class="nav-link" href="/user/dashboard-user">
+                    <a class="nav-link" href="/dashboard-tecnico">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
@@ -74,9 +74,8 @@
                     <div class="collapse" id="collapsePages" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="./ticket/create-ticket">Novo Chamado</a>
-                            <a class="nav-link" href="./ticket/edit-ticket">Editar Chamado</a>
-                            <a class="nav-link" href="./ticket/show-ticket">Visualizar Chamado</a>
+                            <a class="nav-link" href="/dashboard-tecnico">Chamados Disponíveis</a>
+                            <a class="nav-link" href="/dashboard-tecnico/meus-chamados">Meus Chamados</a>
                         </nav>
                     </div>
                 </div>
@@ -92,7 +91,8 @@
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Chamados</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/user/dashboard-user">Início</a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard-tecnico">Início</a></li>
+                    <li class="breadcrumb-item active">Editar Chamado</li>
                     <li class="breadcrumb-item active"></li>
                 </ol>
                 <div class="card mb-4">
@@ -108,51 +108,51 @@
                                 <div class="col-md-6">
                                     <label for="inputNumberTicket">Número do chamado:</label>
                                     <input class="form-control" id="inputNumberTicket"
-                                           th:placeholder="${ticket.ticketId}" readonly="readonly"/>
+                                           th:value="${ticket.ticketId}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputUser">Nome Usuário:</label>
-                                    <input class="form-control" id="inputUser" th:placeholder="${ticket.userBasic.name}"
-                                           readonly="readonly"/>
+                                    <input class="form-control" id="inputUser" th:value="${ticket.userBasic.name}"
+                                           th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputUserSector">Setor Usuário:</label>
                                     <input class="form-control" id="inputUserSector"
-                                           th:placeholder="${ticket.userBasic.sector.nameSector}" readonly="readonly"/>
+                                           th:value="${ticket.userBasic.sector.nameSector}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputDateCreation">Data de abertura:</label>
                                     <input class="form-control" id="inputDateCreation"
-                                           th:placeholder="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
-                                           readonly="readonly"/>
+                                           th:value="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
+                                           th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputDateUpdated">Data da última atualização:</label>
                                     <input class="form-control" id="inputDateUpdated"
-                                           th:placeholder="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
-                                           readonly="readonly">
+                                           th:value="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
+                                           th:disabled="true">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputSubject">Assunto</label>
                                     <input class="form-control" id="inputSubject" type="text"
-                                           th:placeholder="${ticket.subject}" readonly="readonly"/>
+                                           th:value="${ticket.subject}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputDescription">Descrição</label>
                                     <input class="form-control" id="inputDescription" type="text"
-                                           th:placeholder="${ticket.description}" readonly="readonly"/>
+                                           th:value="${ticket.description}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -179,12 +179,12 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputUserTech">Técnico Responsável: </label>
-                                    <input class="form-control" id="inputUserTech" type="text" th:placeholder="${name}"
+                                    <input class="form-control" id="inputUserTech" type="text" th:value="${name}"
                                            readonly="readonly"/>
                                 </div>
                                 <div class="mt-4 mb-0">
                                     <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
-                                        <button class="btn btn-primary" type="submit">Atualizar</button>
+                                        <button class="btn btn-primary btn-login" type="submit">Atualizar</button>
                                     </div>
                                 </div>
                             </div>
