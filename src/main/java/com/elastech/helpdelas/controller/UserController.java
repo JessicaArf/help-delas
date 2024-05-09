@@ -31,11 +31,13 @@ public class UserController {
     }
 
     @GetMapping("/todos-usuarios")
-    public String allUsers(Model model){
+    public String allUsers(Model model, @AuthenticationPrincipal UserDetails userDetails){
         List<UserDTO> users = userService.findAll();
+        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         users.remove(0); //remove o index do admin
         model.addAttribute("users", users);
-        return "user/showAll-user";
+        model.addAttribute("name", userDb.getName());
+        return "admin/showAll-user";
     }
 
     @PostMapping("/salvar-usuario")
@@ -85,42 +87,41 @@ public class UserController {
             if (userDb != null) {
                 UserDTO userAtualizado = userService.updateUserById(userId, userModel);
                 model.addAttribute("user", userAtualizado);
-                if(userDetails.getUsername().contains("admin")){
-                    return "user/showAll-user";
-                } else {
-                    return "user/show-user";
-                }
             }
+            return "user/show-user";
+
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
             model.addAttribute("user", userDb);
+            return "user/edit-user";
         }
-        return "user/edit-user";
     }
 
-    @GetMapping("/editar-usuario/{id}")
-    public String editUserId(@PathVariable Long id, Model model){
+  /*  @GetMapping("/editar-usuario/{id}")
+    public String editUserId(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
         try {
             UserDTO userDb = userService.getUserById(id);
             List<SectorDTO> sectors = userService.findAllSector();
+            UserDTO userLogado = userService.getUserByEmail(userDetails.getUsername());
             model.addAttribute("sectors", sectors);
             model.addAttribute("user", userDb);
-            return "user/edit-user";
+            model.addAttribute("name", userLogado.getName());
+            return "admin/edit-user-admin";
         } catch (Exception e) {
             System.out.println(e);
-            return "user/edit-user";
+            return "admin/edit-user-admin";
         }
-    }
+    }*/
 
     @GetMapping("/mostrar-usuario/{id}")
     public String showUserId(@PathVariable Long id, Model model){
         try {
             UserDTO userDb = userService.getUserById(id);
             model.addAttribute("user", userDb);
-            return "user/show-user";
+            return "admin/show-user-admin";
         } catch (Exception e) {
             System.out.println(e);
-            return "user/showAll-user";
+            return "admin/showAll-user";
         }
     }
 
@@ -131,10 +132,10 @@ public class UserController {
             List<UserDTO> users = userService.findAll();
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
-            return "user/showAll-user";
+            return "admin/showAll-user";
         } catch (Exception e) {
             System.out.println(e);
-            return "user/showAll-user";
+            return "admin/showAll-user";
         }
     }
 
@@ -145,10 +146,10 @@ public class UserController {
             List<UserDTO> users = userService.findAll();
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
-            return "user/showAll-user";
+            return "admin/showAll-user";
         } catch (Exception e) {
             System.out.println(e);
-            return "user/showAll-user";
+            return "admin/showAll-user";
         }
     }
 }

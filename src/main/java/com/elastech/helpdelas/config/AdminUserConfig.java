@@ -39,6 +39,7 @@ public class AdminUserConfig implements CommandLineRunner {
                     var user = new UserModel();
                     user.setEmail("admin@helpdelas.com");
                     user.setPassword(passwordEncoder.encode("admin"));
+                    user.setName("Admin");
                     user.setRole(roleAdmin);
                     userRepository.save(user);
                 }
