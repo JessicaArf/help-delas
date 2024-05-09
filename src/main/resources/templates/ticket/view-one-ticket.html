@@ -22,9 +22,6 @@
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                   aria-describedby="btnNavbarSearch"/>
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
         </div>
     </form>
     <!-- Navbar-->
@@ -113,51 +110,51 @@
                                 <div class="col-md-6">
                                     <label for="inputNumberTicket">Número do chamado:</label>
                                     <input class="form-control" id="inputNumberTicket"
-                                           th:placeholder="${ticket.ticketId}" readonly="readonly"/>
+                                           th:value="${ticket.ticketId}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputDateCreation">Data de abertura:</label>
                                     <input class="form-control" id="inputDateCreation"
-                                           th:placeholder="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
-                                           readonly="readonly"/>
+                                           th:value="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
+                                           th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputDateUpdated">Data da última atualização:</label>
                                     <input class="form-control" id="inputDateUpdated"
-                                           th:placeholder="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
-                                           readonly="readonly">
+                                           th:value="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
+                                           th:disabled="true">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputSubject">Assunto</label>
                                     <input class="form-control" id="inputSubject" type="text"
-                                           th:placeholder="${ticket.subject}" readonly="readonly"/>
+                                           th:value="${ticket.subject}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputDescription">Descrição</label>
                                     <input class="form-control" id="inputDescription" type="text"
-                                           th:placeholder="${ticket.description}" readonly="readonly"/>
+                                           th:value="${ticket.description}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="status">Status</label>
                                     <input class="form-control" id="status" type="text"
-                                           th:placeholder="${ticket.status.description}" readonly="readonly"/>
+                                           th:value="${ticket.status.description}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputSector">Setor</label>
                                     <input class="form-control" id="inputSector" type="text"
-                                           th:placeholder="${ticket.sector.nameSector}" readonly="readonly"/>
+                                           th:value="${ticket.sector.nameSector}" th:disabled="true"/>
                                 </div>
                             </div>
                         </form>

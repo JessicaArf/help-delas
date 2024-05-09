@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,7 +126,6 @@ public class TicketsController {
         return "tech/dashboard-tech-assigned";
     }
 
-
     @GetMapping("/tecnico/editar-chamado/{ticketId}")
     public String showTechEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         TicketDTO ticket = ticketService.showTicketById(ticketId);
@@ -147,7 +147,7 @@ public class TicketsController {
     }
 
     @GetMapping("/admin/todos-chamados")
-    public String showAllTickets(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showAllTickets(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO adminUser = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("name", adminUser);
 

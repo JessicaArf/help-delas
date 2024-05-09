@@ -109,23 +109,23 @@
                                 <div class="col-md-6">
                                     <label for="inputSubject">Número do chamado:</label>
                                     <input class="form-control" id="inputNumberTicket"
-                                           th:placeholder="${ticket.ticketId}" readonly="readonly"/>
+                                           th:value="${ticket.ticketId}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputSubject">Data de abertura:</label>
                                     <input class="form-control" id="inputDateCreation"
-                                           th:placeholder="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
-                                           readonly="readonly"/>
+                                           th:value="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
+                                           th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputDateUpdated">Data da última atualização:</label>
                                     <input class="form-control" id="inputDateUpdated"
-                                           th:placeholder="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
-                                           readonly="readonly">
+                                           th:value="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
+                                           th:disabled="true">
                                 </div>
                             </div>
                             <div class="row mb-3">

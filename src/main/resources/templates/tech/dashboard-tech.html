@@ -22,9 +22,6 @@
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                   aria-describedby="btnNavbarSearch"/>
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
         </div>
     </form>
     <!-- Navbar-->
@@ -37,9 +34,11 @@
                 <li>
                     <hr class="dropdown-divider"/>
                 </li>
-                <form action="/logout" method="post">
-                    <button type="submit">Sair</button>
-                </form>
+                <li>
+                    <form action="/logout" method="post">
+                        <button class="dropdown-item" type="submit">Sair</button>
+                    </form>
+                </li>
             </ul>
         </li>
     </ul>
@@ -130,7 +129,7 @@
                 <h1 class="mt-4">Chamados Disponíveis</h1>
                 <div class="row">
                     <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4 card-dash">
+                        <div class="card bg-primary text-black mb-4 card-dash">
                             <div class="card-body">Meus Chamados Atribuídos</div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
                                 <a class="small text-white stretched-link" href="/dashboard-tecnico/meus-chamados">Ver

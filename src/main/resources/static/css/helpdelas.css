@@ -39,13 +39,18 @@
 margin-top: 2rem;
 background: linear-gradient(10deg, #f5de3e 3%, #a6dbd9 88%, #1bb99a);
 font-weight: bold;
+color:rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.card-dash a{
+color:rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .btn-dash {
-    background-color: #1bb99a;
-    border: 1px solid #1bb99a;
+    background-color:#aedbc9;
+    border: 1px solid #aedbc9;
     border-radius: 5px;
-    color: #ffffff;
+    color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
     text-decoration: none;
 }
 
