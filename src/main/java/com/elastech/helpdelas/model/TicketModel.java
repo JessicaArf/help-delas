@@ -26,7 +26,7 @@ public class TicketModel {
     @UpdateTimestamp
     private Instant updatedTimestamp;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_sector")
     private SectorModel sector;
 

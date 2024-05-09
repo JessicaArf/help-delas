@@ -93,28 +93,29 @@
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Chamados</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/dashboard-usuario">Início</a></li>
-                    <li class="breadcrumb-item active">Editar Chamado</li>
+                    <li class="breadcrumb-item"><a href="/user/dashboard-user">Início</a></li>
+                    <li class="breadcrumb-item active">Visualizar Chamado</li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="bi bi-file-earmark-medical"></i>
-                        <h1>Editar Chamado</h1>
+                        <h1>Visualizar chamado</h1>
                     </div>
                     <div class="card-body">
-                        <form th:action="@{'/usuario/editar-chamado/' + ${ticket.ticketId}}" method="post"
+                        <form th:action="@{'/usuario/chamado/' + ${ticket.ticketId}}" method="get"
                               th:object="${ticket}">
                             <input type="hidden" th:name="_method" th:value="PUT"/>
+                            <input type="hidden" id="ticketId" th:value="${ticket.ticketId}"/>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="inputSubject">Número do chamado:</label>
+                                    <label for="inputNumberTicket">Número do chamado:</label>
                                     <input class="form-control" id="inputNumberTicket"
                                            th:value="${ticket.ticketId}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="inputSubject">Data de abertura:</label>
+                                    <label for="inputDateCreation">Data de abertura:</label>
                                     <input class="form-control" id="inputDateCreation"
                                            th:value="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
                                            th:disabled="true"/>
@@ -131,32 +132,42 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputSubject">Assunto</label>
-                                    <input class="form-control" id="inputSubject" type="text" th:field="*{subject}"/>
+                                    <input class="form-control" id="inputSubject" type="text"
+                                           th:value="${ticket.subject}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputDescription">Descrição</label>
                                     <input class="form-control" id="inputDescription" type="text"
-                                           th:field="*{description}"/>
+                                           th:value="${ticket.description}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="inputDepartament">Setor</label>
-                                    <select class="form-control" id="inputDepartament" th:field="*{sector}">
-                                        <option th:each="sector : ${sectors}"
-                                                th:value="${sector.id}"
-                                                th:text="${sector.nameSector}"></option>
-                                    </select>
+                                    <label for="status">Status</label>
+                                    <input class="form-control" id="status" type="text"
+                                           th:value="${ticket.status.description}" th:disabled="true"/>
                                 </div>
-                                <div class="mt-4 mb-0">
-                                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
-                                        <button class="btn btn-primary btn-login" type="submit">Atualizar</button>
-                                    </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="inputSector">Setor</label>
+                                    <input class="form-control" id="inputSector" type="text"
+                                           th:value="${ticket.sector.nameSector}" th:disabled="true"/>
                                 </div>
                             </div>
                         </form>
+                        <div id="container-btn">
+                            <form th:action="@{'/usuario/editar-chamado/' + ${ticket.ticketId}}" method="get">
+                                <button id="edit-btn" type="submit" class="btn-login">Editar</button>
+                            </form>
+                            <form th:action="@{'/usuario/chamado/' + ${ticket.ticketId}}" method="post"
+                                  th:object="${ticket}">
+                                <input type="hidden" th:name="_method" th:value="DELETE"/>
+                                <button id="delete-btn" type="submit" class="btn-delete">Excluir</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -165,11 +176,6 @@
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
                     <div class="text-muted">Copyright &copy; Your Website 2024</div>
-                    <div>
-                        <a href="#">Política de Privacidade</a>
-                        &middot;
-                        <a href="#">Termos e Condições</a>
-                    </div>
                 </div>
             </div>
         </footer>
