@@ -116,7 +116,7 @@
                                             <option th:each="sector : ${sectors}"
                                                     th:value="${sector.sectorId}"
                                                     th:text="${sector.nameSector}"
-                                                    th:selected="${sector.id == user.sector.id}"></option>
+                                                    th:selected="${sector.sectorId == user.sector.sectorId}"></option>
                                         </select>
                                         <label for="inputDepartament">Setor</label>
                                     </div>

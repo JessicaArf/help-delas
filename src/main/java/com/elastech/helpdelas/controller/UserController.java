@@ -24,7 +24,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/salvar-usuario")
-    public String register(Model model){
+    public String showRegister(Model model){
         List<SectorDTO> sectors = userService.findAllSector();
         model.addAttribute("sectors", sectors);
         return "user/register";
@@ -43,7 +43,7 @@ public class UserController {
     @PostMapping("/salvar-usuario")
     public String register(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
         try{
-            userService.salvar(userDTO);
+            userService.save(userDTO);
             return "redirect:/login";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
@@ -66,7 +66,7 @@ public class UserController {
     }
 
     @GetMapping("/editar-usuario")
-    public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showEditUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
         try {
             UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
             List<SectorDTO> sectors = userService.findAllSector();
@@ -97,22 +97,6 @@ public class UserController {
         }
     }
 
-  /*  @GetMapping("/editar-usuario/{id}")
-    public String editUserId(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
-        try {
-            UserDTO userDb = userService.getUserById(id);
-            List<SectorDTO> sectors = userService.findAllSector();
-            UserDTO userLogado = userService.getUserByEmail(userDetails.getUsername());
-            model.addAttribute("sectors", sectors);
-            model.addAttribute("user", userDb);
-            model.addAttribute("name", userLogado.getName());
-            return "admin/edit-user-admin";
-        } catch (Exception e) {
-            System.out.println(e);
-            return "admin/edit-user-admin";
-        }
-    }*/
-
     @GetMapping("/mostrar-usuario/{id}")
     public String showUserId(@PathVariable Long id, Model model){
         try {
@@ -126,9 +110,9 @@ public class UserController {
     }
 
     @GetMapping("/desativar-usuario/{id}")
-    public String desativarById(@PathVariable Long id, Model model){
+    public String disableById(@PathVariable Long id, Model model){
         try {
-            userService.atualizarStatus(id, "desativar");
+            userService.updateStatus(id, "desativar");
             List<UserDTO> users = userService.findAll();
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
@@ -140,9 +124,9 @@ public class UserController {
     }
 
     @GetMapping("/ativar-usuario/{id}")
-    public String ativarById(@PathVariable Long id, Model model){
+    public String activateById(@PathVariable Long id, Model model){
         try {
-            userService.atualizarStatus(id, "ativar");
+            userService.updateStatus(id, "ativar");
             List<UserDTO> users = userService.findAll();
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
