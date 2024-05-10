@@ -133,7 +133,7 @@
                                 <td th:text="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                 <td>
                                     <form th:action="@{'/usuario/chamado/' + ${ticket.ticketId}}" method="get">
-                                        <button id="view-btn" type="submit" class="btn-dash">Editar</button>
+                                        <button id="view-btn" type="submit" class="btn-dash">Visualizar</button>
                                     </form>
                                 </td>
                             </tr>
