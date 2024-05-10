@@ -67,6 +67,7 @@ public class TicketService {
         }
         ticketModel.get().setDescription(updateTicket.getDescription());
         ticketModel.get().setSubject(updateTicket.getSubject());
+
         ticketRepository.save(ticketModel.get());
 
         return new TicketDTO(ticketModel.get());
@@ -84,6 +85,7 @@ public class TicketService {
 
         ticketModel.get().setStatus(updateTicket.getStatus());
         ticketModel.get().setSector(updateTicket.getSector());
+        ticketModel.get().setAnnotation(updateTicket.getAnnotation());
         ticketModel.get().setUserTech(userTechModel);
         ticketRepository.save(ticketModel.get());
 
