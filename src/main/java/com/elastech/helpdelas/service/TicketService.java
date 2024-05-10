@@ -21,7 +21,7 @@ public class TicketService {
     @Autowired
     private UserService userService;
 
-    public TicketDTO createTicket(TicketDTO ticketDTO, UserDTO userBasic){
+    public TicketDTO createTicket(TicketDTO ticketDTO, UserDTO userBasic) {
         UserModel userBasicModel = UserDTO.convert(userBasic);
         ticketDTO.setUserBasic(userBasicModel);
         ticketDTO.setStatus(TicketModel.TicketStatus.OPEN);
@@ -30,21 +30,21 @@ public class TicketService {
         return ticketDTO;
     }
 
-   public List<TicketDTO> showTicketsByUser(Long userBasicId){
+    public List<TicketDTO> showTicketsByUser(Long userBasicId) {
         List<TicketModel> tickets = ticketRepository.findByUserBasicUserId(userBasicId);
-       return tickets.stream()
-               .map(TicketDTO::new)
-               .collect(Collectors.toList());
-   }
+        return tickets.stream()
+                .map(TicketDTO::new)
+                .collect(Collectors.toList());
+    }
 
-   public List<TicketDTO> showTicketsAvailable(){
-       List<TicketModel> tickets = ticketRepository.findByUserTechUserIdIsNull();
-       return tickets.stream()
-               .map(TicketDTO::new)
-               .collect(Collectors.toList());
-   }
+    public List<TicketDTO> showTicketsAvailable() {
+        List<TicketModel> tickets = ticketRepository.findByUserTechUserIdIsNull();
+        return tickets.stream()
+                .map(TicketDTO::new)
+                .collect(Collectors.toList());
+    }
 
-    public List<TicketDTO> showTicketsAssigned(Long userTechId){
+    public List<TicketDTO> showTicketsAssigned(Long userTechId) {
         List<TicketModel> tickets = ticketRepository.findByUserTechUserId(userTechId);
         return tickets.stream()
                 .map(TicketDTO::new)
@@ -53,16 +53,16 @@ public class TicketService {
     
     public TicketDTO showTicketById(Long id){
         Optional<TicketModel> ticketModel = ticketRepository.findById(id);
-        if (ticketModel.isEmpty()){
+        if (ticketModel.isEmpty()) {
             throw new EntityNotFoundException("Chamado não encontrado");
         }
         return new TicketDTO(ticketModel.get());
     }
 
-    public TicketDTO updateTicketUser(Long id, TicketDTO updateTicket){
+    public TicketDTO updateTicketUser(Long id, TicketDTO updateTicket) {
         Optional<TicketModel> ticketModel = ticketRepository.findById(id);
 
-        if (ticketModel.isEmpty()){
+        if (ticketModel.isEmpty()) {
             throw new EntityNotFoundException("Chamado não encontrado");
         }
         ticketModel.get().setDescription(updateTicket.getDescription());
@@ -73,10 +73,10 @@ public class TicketService {
 
     }
 
-    public TicketDTO updateTicketTech(Long id, TicketDTO updateTicket, UserDTO userTech){
+    public TicketDTO updateTicketTech(Long id, TicketDTO updateTicket, UserDTO userTech) {
         Optional<TicketModel> ticketModel = ticketRepository.findById(id);
 
-        if (ticketModel.isEmpty()){
+        if (ticketModel.isEmpty()) {
             throw new EntityNotFoundException("Chamado não encontrado");
         }
 
@@ -90,6 +90,17 @@ public class TicketService {
         return new TicketDTO(ticketModel.get());
 
     }
+
+
+    public void deleteTicket(Long id) {
+        Optional<TicketModel> ticketModel = ticketRepository.findById(id);
+
+        if (ticketModel.isEmpty()) {
+            throw new EntityNotFoundException("Chamado não encontrado");
+        }
+        ticketRepository.delete(ticketModel.get());
+    }
+
     
     public List<TicketDTO> showAllTickets(){
         List<TicketModel> tickets = ticketRepository.findAll();
@@ -104,4 +115,5 @@ public class TicketService {
                 .map(TicketDTO::new)
                 .collect(Collectors.toList());
     }
+
 }
