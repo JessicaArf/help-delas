@@ -52,6 +52,7 @@
     border-radius: 5px;
     color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
     text-decoration: none;
+    font-weight: 500;
 }
 
 .btn-dash:hover {
