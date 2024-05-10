@@ -28,7 +28,7 @@
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/user/show-user">Meus Dados</a></li>
+                <li><a class="dropdown-item" href="/mostrar-tecnico">Meus Dados</a></li>
                 <li>
                     <hr class="dropdown-divider"/>
                 </li>
@@ -180,7 +180,7 @@
                                 <div class="col-md-6">
                                     <label for="inputUserTech">Técnico Responsável: </label>
                                     <input class="form-control" id="inputUserTech" type="text" th:value="${name}"
-                                           readonly="readonly"/>
+                                           th:disabled="true">
                                 </div>
                                 <div class="mt-4 mb-0">
                                     <div class="d-flex align-items-center justify-content-center mt-4 mb-0">

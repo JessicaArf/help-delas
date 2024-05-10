@@ -152,4 +152,20 @@ public class UserController {
             return "admin/showAll-user";
         }
     }
+
+    @GetMapping("/mostrar-tecnico")
+    public String showTech(Model model, @AuthenticationPrincipal UserDetails userDetails){
+        try {
+            UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
+            if (userDb != null) {
+                model.addAttribute("user", userDb);
+            }
+            return "user/show-user";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "user/dashboard-user";
+        }
+    }
+
+
 }

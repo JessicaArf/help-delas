@@ -41,4 +41,5 @@ public class TechController {
             return "redirect:/dashboard-admin";
         }
     }
+
 }
