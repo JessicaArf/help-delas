@@ -2,7 +2,9 @@ package com.elastech.helpdelas.service;
 
 import com.elastech.helpdelas.model.SectorModel;
 import com.elastech.helpdelas.dtos.SectorDTO;
+import com.elastech.helpdelas.model.TicketModel;
 import com.elastech.helpdelas.repositories.SectorRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -43,12 +45,6 @@ public class SectorService {
         return new SectorDTO(sectorModel.get());
     }
 
-    public SectorDTO deleteById(Long sectorId){
-        SectorDTO dto = findById(sectorId);
-        sectorRepository.deleteById(sectorId);
-        return dto;
-    }
-
     public List<SectorDTO> findAllSector(){
         List<SectorModel> sectors = sectorRepository.findAll();
         return sectors.stream().map(SectorDTO::new).collect(Collectors.toList());
@@ -62,5 +58,13 @@ public class SectorService {
         } else {
             return new SectorDTO(resultado.get());
         }
+    }
+
+    public void deleteById(Long sectorId){
+        Optional<SectorModel> sectorModel = sectorRepository.findById(sectorId);
+        if(sectorModel.isEmpty()) {
+            throw new EntityNotFoundException("Setor não encontrado");
+        }
+        sectorRepository.delete(sectorModel.get());
     }
 }

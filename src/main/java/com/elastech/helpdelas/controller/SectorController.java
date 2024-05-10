@@ -41,11 +41,6 @@ public class SectorController {
         return "sector/register-sector";
     }
 
-    @GetMapping("/deletar-setor/{sectorId}")
-    public SectorDTO deleteById(@PathVariable Long sectorId) {
-        return sectorService.deleteById(sectorId);
-    }
-
     @GetMapping("/listar-setor")
     public String findAllSector(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
@@ -72,6 +67,12 @@ public class SectorController {
     @PutMapping("/editar-setor/{sectorId}")
     public String SectorUpdate(@PathVariable Long sectorId, @ModelAttribute SectorDTO sector, @AuthenticationPrincipal UserDetails userDetails){
         SectorDTO sectorDTO = sectorService.updateById(sector, sectorId);
+        return "redirect:/listar-setor";
+    }
+
+    @DeleteMapping("/editar-setor/{sectorId}")
+    public String deleteSector(@PathVariable Long  sectorId) {
+        sectorService.deleteById(sectorId);
         return "redirect:/listar-setor";
     }
 }
