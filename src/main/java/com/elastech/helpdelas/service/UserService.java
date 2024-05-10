@@ -32,7 +32,7 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public UserDTO salvar(UserDTO userDTO) throws Exception {
+    public UserDTO save(UserDTO userDTO) throws Exception {
         Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
         if(!byEmail.isPresent()){
             RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
@@ -90,7 +90,7 @@ public class UserService {
         return new UserDTO(user.get());
     }
 
-    public UserDTO atualizarStatus(Long id, String status){
+    public UserDTO updateStatus(Long id, String status){
         Optional<UserModel> userExistente =  userRepository.findById(id);
         if(userExistente.isPresent()){
             if(status.equals("desativar")){
