@@ -34,3 +34,16 @@
     background-color: #1fd7b2;
     color: #ffffff;
 }
+
+.btn-dash {
+    background-color:#aedbc9;
+    border: 1px solid #aedbc9;
+    border-radius: 5px;
+    color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    text-decoration: none;
+}
+
+.btn-dash:hover {
+    background-color: #1fd7b2;
+    color: #ffffff;
+}

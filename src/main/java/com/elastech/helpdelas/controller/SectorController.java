@@ -1,4 +1,5 @@
 package com.elastech.helpdelas.controller;
+import com.elastech.helpdelas.dtos.TicketDTO;
 import org.springframework.ui.Model;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
@@ -9,6 +10,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.List;
 
 
@@ -21,37 +24,54 @@ public class SectorController {
     private SectorService sectorService;
 
     @PostMapping("/registrar-setor")
-    public String save(SectorDTO dto) {
-        this.sectorService.save(dto);
-        return "/dashboard-admin";
+    public String save(SectorDTO dto, RedirectAttributes redirectAttributes) throws Exception {
+        try{
+            this.sectorService.save(dto);
+            return "redirect:/dashboard-admin";
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("error", true);
+            return "redirect:/registrar-setor";
+        }
     }
 
     @GetMapping("/registrar-setor")
-    public String save(@AuthenticationPrincipal UserDetails userDetails, Model model){
+    public String save(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("name", userDb.getName());
         return "sector/register-sector";
     }
 
-    @PutMapping(value = "/editar-setor/{id}")
-    public SectorDTO updateById(@PathVariable Long id, @RequestBody SectorDTO dto) {
-        return this.sectorService.updateById(dto, id);
-
+    @GetMapping("/deletar-setor/{sectorId}")
+    public SectorDTO deleteById(@PathVariable Long sectorId) {
+        return sectorService.deleteById(sectorId);
     }
 
-    @GetMapping(value = "/seletar-setor/{id}")
-    public SectorDTO deleteById(@PathVariable Long id) {
-        return sectorService.deleteById(id);
+    @GetMapping("/listar-setor")
+    public String findAllSector(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
+        List<SectorDTO> findAllSector = sectorService.findAllSector();
+        model.addAttribute("findAllSector", findAllSector);
+        return "sector/find-sector";
     }
 
-    @GetMapping(value = "/listar-setor")
-    public List<SectorDTO> findAll() {
-        return this.sectorService.findAll();
+    @GetMapping("/visualizar-setor/{sectorId}")
+    public SectorDTO findById(@PathVariable Long sectorId) {
+        return this.sectorService.findById(sectorId);
     }
 
-    @GetMapping(value = "/visualizar-setor/{id}")
-    public SectorDTO findById(@PathVariable Long id) {
-        return this.sectorService.findById(id);
+    @GetMapping("/editar-setor/{sectorId}")
+    public String showEditSector(@PathVariable Long sectorId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        UserDTO userAdmin = userService.getUserByEmail(userDetails.getUsername());
+        SectorDTO sectorDTO = sectorService.findById(sectorId);
+
+        model.addAttribute("name", userAdmin.getEmail());
+        model.addAttribute("sector", sectorDTO);
+        return "sector/update-sector";
     }
 
+    @PutMapping("/editar-setor/{sectorId}")
+    public String SectorUpdate(@PathVariable Long sectorId, @ModelAttribute SectorDTO sector, @AuthenticationPrincipal UserDetails userDetails){
+        SectorDTO sectorDTO = sectorService.updateById(sector, sectorId);
+        return "redirect:/listar-setor";
+    }
 }

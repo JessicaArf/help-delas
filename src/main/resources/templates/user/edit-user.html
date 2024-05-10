@@ -117,7 +117,7 @@
                                     <div class="form-floating mb-3 mb-md-0">
                                         <select  class="form-control" id="inputDepartament" name="sector">
                                             <option th:each="sector : ${sectors}"
-                                                    th:value="${sector.id}"
+                                                    th:value="${sector.sectorId}"
                                                     th:text="${sector.nameSector}"
                                                     th:selected="${sector.id == user.sector.id}"></option>
                                         </select>
