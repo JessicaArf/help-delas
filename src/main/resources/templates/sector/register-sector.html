@@ -14,7 +14,7 @@
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="/dahsboard-usuario">HelpDelas</a>
+    <a class="navbar-brand ps-3" href="/dashboard-admin">HelpDelas</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fas fa-bars"></i></button>
@@ -25,13 +25,10 @@
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/user/show-user">Meus Dados</a></li>
-                <li>
-                    <hr class="dropdown-divider"/>
-                </li>
+                <li><a class="dropdown-item" href="/mostrar-usuario">Meus Dados</a></li>
+                <li><hr class="dropdown-divider" /></li>
                 <li>
                     <form action="/logout" method="post">
                         <button class="dropdown-item" type="submit">Sair</button>
@@ -47,36 +44,50 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Início</div>
-                    <a class="nav-link" href="/user/dashboard-user">
+                    <a class="nav-link" href="/dashboard-admin">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
                     <div class="sb-sidenav-menu-heading">Interface</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
-                       aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Meus Dados
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                         data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/user/show-user">Visualizar</a>
-                            <a class="nav-link" href="/user/edit-user">Editar</a>
-                        </nav>
-                    </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
-                       aria-expanded="false" aria-controls="collapsePages">
-                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseTicket" aria-expanded="false" aria-controls="pagesCollapseAuth">
                         Chamados
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapsePages" aria-labelledby="headingOne"
-                         data-bs-parent="#sidenavAccordion">
+                    <div class="collapse" id="pagesCollapseTicket" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="./ticket/create-ticket">Novo Chamado</a>
-                            <a class="nav-link" href="./ticket/edit-ticket">Editar Chamado</a>
-                            <a class="nav-link" href="./ticket/show-ticket">Visualizar Chamado</a>
+                            <a class="nav-link" href="/admin/todos-chamados">Visualizar</a>
+                            <a class="nav-link" href="/admin/chamados-tecnico">Atribuídos</a>
+                            <a class="nav-link" href="/admin/chamados-nao-atribuido">Não Atribuídos</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseUser" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                        Usuários
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="pagesCollapseUser" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/cadastrar-tecnico">Cadastrar Técnico</a>
+                            <a class="nav-link" href="/todos-usuarios">Listar Usuários</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseSector" aria-expanded="false" aria-controls="pagesCollapseError">
+                        Setor
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="pagesCollapseSector" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/registrar-setor">Cadastrar Setor</a>
+                            <a class="nav-link" href="/listar-setor">Visualizar</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapsePriority" aria-expanded="false" aria-controls="pagesCollapseError">
+                        Prioridade
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="pagesCollapsePriority" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/registrar-prioridade">Cadastrar Prioridade</a>
+                            <a class="nav-link" href="/listar-prioridade">Visualizar</a>
                         </nav>
                     </div>
                 </div>
@@ -91,13 +102,15 @@
         <main>
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Cadastro de Setor</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/dashboard-admin">Início</a></li>
-                    <li class="breadcrumb-item active"></li>
-                </ol>
                 <div class="card mb-4">
                     <div class="card-body">
                         <form action="/registrar-setor" method="post">
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="inputNameDepartment">Nome do Departamento:</label>
+                                    <input class="form-control" id="inputNameDepartment" type="text" name="nameDepartment" placeholder="Nome Departamento" required>
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="inputNameSector">Nome do Setor:</label>
@@ -108,6 +121,11 @@
                                 <div class="d-flex align-items-center justify-content-center mt-4 mb-0"><button class="btn btn-primary" type="submit">Cadastrar Setor</button></div>
                             </div>
                         </form>
+                        <div th:if="${param.error}">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Setor já cadastrado.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

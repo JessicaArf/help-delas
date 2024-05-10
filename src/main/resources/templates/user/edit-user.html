@@ -28,9 +28,11 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="/mostrar-usuario">Meus Dados</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li> <form action="/logout" method="post">
-                    <button class="dropdown-item" type="submit">Sair</button>
-                </form></li>
+                <li>
+                    <form action="/logout" method="post">
+                        <button class="dropdown-item" type="submit">Sair</button>
+                    </form>
+                </li>
             </ul>
         </li>
     </ul>
@@ -112,9 +114,9 @@
                                     <div class="form-floating mb-3 mb-md-0">
                                         <select  class="form-control" id="inputDepartament" name="sector">
                                             <option th:each="sector : ${sectors}"
-                                                    th:value="${sector.id}"
+                                                    th:value="${sector.sectorId}"
                                                     th:text="${sector.nameSector}"
-                                                    th:selected="${sector.id == user.sector.id}"></option>
+                                                    th:selected="${sector.sectorId == user.sector.sectorId}"></option>
                                         </select>
                                         <label for="inputDepartament">Setor</label>
                                     </div>
@@ -143,11 +145,6 @@
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
                     <div class="text-muted">Copyright &copy; Your Website 2024</div>
-                    <div>
-                        <a href="#">Política de Privacidade</a>
-                        &middot;
-                        <a href="#">Termos e Condições</a>
-                    </div>
                 </div>
             </div>
         </footer>

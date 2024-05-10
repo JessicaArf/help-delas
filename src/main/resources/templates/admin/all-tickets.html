@@ -9,28 +9,27 @@
     <title>Dashboard - Técnico</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
     <link href="/css/styles.css" rel="stylesheet"/>
-    <link href="/css/helpdelas.css" rel="stylesheet"/>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="/dashboard-tecnico">Help-Delas</a>
+    <a class="navbar-brand ps-3" href="/dashboard-admin">Help-Delas</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <div class="input-group">
+        </div>
     </form>
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/mostrar-tecnico">Meus Dados</a></li>
-                <li>
-                    <hr class="dropdown-divider"/>
-                </li>
+                <li><a class="dropdown-item" href="/mostrar-usuario">Meus Dados</a></li>
+                <li><hr class="dropdown-divider" /></li>
                 <li>
                     <form action="/logout" method="post">
                         <button class="dropdown-item" type="submit">Sair</button>
@@ -46,52 +45,68 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Início</div>
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="/dashboard-admin">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
                     <div class="sb-sidenav-menu-heading">Interface</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
-                       aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseTicket" aria-expanded="false" aria-controls="pagesCollapseAuth">
                         Chamados
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                         data-bs-parent="#sidenavAccordion">
+                    <div class="collapse" id="pagesCollapseTicket" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/dashboard-tecnico">Chamados Disponíveis</a>
-                            <a class="nav-link" href="/dashboard-tecnico/meus-chamados">Meus Chamados</a>
+                            <a class="nav-link" href="/admin/todos-chamados">Visualizar</a>
+                            <a class="nav-link" href="/admin/chamados-tecnico">Atribuídos</a>
+                            <a class="nav-link" href="/admin/chamados-nao-atribuido">Não Atribuídos</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseUser" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                        Usuários
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="pagesCollapseUser" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/cadastrar-tecnico">Cadastrar Técnico</a>
+                            <a class="nav-link" href="/todos-usuarios">Listar Usuários</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseSector" aria-expanded="false" aria-controls="pagesCollapseError">
+                        Setor
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="pagesCollapseSector" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/registrar-setor">Cadastrar Setor</a>
+                            <a class="nav-link" href="/listar-setor">Visualizar</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapsePriority" aria-expanded="false" aria-controls="pagesCollapseError">
+                        Prioridade
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="pagesCollapsePriority" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/registrar-prioridade">Cadastrar Prioridade</a>
+                            <a class="nav-link" href="/listar-prioridade">Visualizar</a>
                         </nav>
                     </div>
                 </div>
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Bem-vinda(o):</div>
-                <p th:text="${name}"></p>
+                <span th:text="${name}"></span>
             </div>
         </nav>
     </div>
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Chamados Disponíveis</h1>
-                <div class="row">
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-black mb-4 card-dash">
-                            <div class="card-body">Meus Chamados Atribuídos</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="/dashboard-tecnico/meus-chamados">Ver
-                                    detalhes</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <h1 class="mt-4">Chamados</h1>
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        Chamados
+                        Chamados gerais
                     </div>
                     <div class="card-body">
                         <table id="datatablesSimple">
@@ -104,13 +119,13 @@
                                 <th>Descrição</th>
                                 <th>Setor</th>
                                 <th>Status</th>
-                                <th>Última atualização</th>
+                                <th>Ultima atualização</th>
                                 <th>Técnico responsável</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="ticket : ${ticketsAvailable}">
+                            <tr th:each="ticket : ${allTickets}">
                                 <td th:text="${ticket.ticketId}"></td>
                                 <td th:text="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                 <td th:text="${ticket.userBasic.name}"></td>
@@ -120,11 +135,6 @@
                                 <td th:text="${ticket.status.description}"></td>
                                 <td th:text="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                 <td th:text="${ticket.userTech != null ? ticket.userTech.name : 'Não atribuído'}"></td>
-                                <td>
-                                    <form th:action="@{'/tecnico/editar-chamado/' + ${ticket.ticketId}}" method="get">
-                                        <button id="edit-btn" type="submit" class="btn-dash">Editar</button>
-                                    </form>
-                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -136,6 +146,11 @@
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
                     <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -143,12 +158,12 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-<script src="js/scripts.js"></script>
+<script src="/js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-<script src="assets/demo/chart-area-demo.js"></script>
-<script src="assets/demo/chart-bar-demo.js"></script>
+<script src="/assets/demo/chart-area-demo.js"></script>
+<script src="/assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
-<script src="js/datatables-simple-demo.js"></script>
+<script src="/js/datatables-simple-demo.js"></script>
 </body>
 </html>

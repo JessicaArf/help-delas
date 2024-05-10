@@ -45,7 +45,7 @@
                                                     <div class="form-floating mb-3 mb-md-0">
                                                         <select  class="form-control" id="inputDepartament" type="text" name="sector" placeholder="Setor" required >
                                                             <option th:each="sector : ${sectors}"
-                                                            th:value="${sector.id}"
+                                                            th:value="${sector.sectorId}"
                                                             th:text="${sector.nameSector}"></option>
                                                         </select>
                                                         <label for="inputDepartament">Setor</label>

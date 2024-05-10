@@ -9,14 +9,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "TB_SECTORS")
-public class SectorModel {
+@Table(name = "TB_PRIORITIES")
+public class PriorityModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long sectorId;
+    private Long priorityId;
 
     @Column(unique = true)
-    private String nameSector;
-    private String nameDepartment;
+    private String namePriority;
+
+    @Column(length = 1000)
+    private String description;
 }
+
+
