@@ -49,7 +49,7 @@ public class UserService {
     }
 
     public List<SectorDTO> findAllSector(){
-        return sectorService.findAll();
+        return sectorService.findAllSector();
     }
 
    public List<UserDTO> findAll(){

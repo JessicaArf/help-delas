@@ -1,47 +1,34 @@
 package com.elastech.helpdelas.dtos;
 
 import com.elastech.helpdelas.model.SectorModel;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.List;
+
+@Getter
+@Setter
 public class SectorDTO {
 
-    private Long id;
-
+    private Long sectorId;
     private String nameSector;
+    private String nameDepartment;
 
     public SectorDTO() {
 
     }
 
-    public SectorDTO(Long id) {
-        this.id = id;
-
-    }
-
     public SectorDTO(SectorModel sector) {
-        this.id = sector.getId();
+        this.sectorId = sector.getSectorId();
         this.nameSector = sector.getNameSector();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNameSector() {
-        return nameSector;
-    }
-
-    public void setNameSector(String nameSector) {
-        this.nameSector = nameSector;
+        this.nameDepartment = sector.getNameDepartment();
     }
 
     public static SectorModel convert(SectorDTO sectorDTO){
         SectorModel sector = new SectorModel();
-        sector.setId(sectorDTO.getId());
+        sector.setSectorId(sectorDTO.getSectorId());
         sector.setNameSector(sectorDTO.getNameSector());
+        sector.setNameDepartment(sectorDTO.getNameDepartment());
         return sector;
     }
 }
