@@ -17,6 +17,7 @@ public class TicketDTO {
     private String subject;
     private String description;
     private TicketModel.TicketStatus status;
+    private String annotation;
     private SectorModel sector;
     /*
     private PriorityModel priority;
@@ -35,6 +36,7 @@ public class TicketDTO {
         this.subject = ticketModel.getSubject();
         this.description = ticketModel.getDescription();
         this.status = ticketModel.getStatus();
+        this.annotation = ticketModel.getAnnotation();
         this.sector = ticketModel.getSector();
         this.userBasic = ticketModel.getUserBasic();
         this.userTech = ticketModel.getUserTech();
@@ -48,6 +50,7 @@ public class TicketDTO {
         ticket.setSubject(ticketDTO.getSubject());
         ticket.setDescription(ticketDTO.getDescription());
         ticket.setStatus(ticketDTO.getStatus());
+        ticket.setAnnotation(ticketDTO.getAnnotation());
         ticket.setSector(ticketDTO.getSector());
         ticket.setUserBasic(ticketDTO.getUserBasic());
         ticket.setUserTech(ticketDTO.getUserTech());

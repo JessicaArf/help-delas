@@ -168,7 +168,7 @@
                                     <label for="inputDepartament">Setor</label>
                                     <select class="form-control" id="inputDepartament" th:field="*{sector}">
                                         <option th:each="sector : ${sectors}"
-                                                th:value="${sector.id}"
+                                                th:value="${sector.sectorId}"
                                                 th:text="${sector.nameSector}"></option>
                                     </select>
                                 </div>
@@ -178,6 +178,13 @@
                                     <label for="inputUserTech">Técnico Responsável: </label>
                                     <input class="form-control" id="inputUserTech" type="text" th:value="${name}"
                                            th:disabled="true">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="inputAnnotation">Anotações: </label>
+                                    <textarea class="form-control" id="inputAnnotation" type="text"  th:field="*{annotation}"
+                                              th:value="${ticket.annotation}" ></textarea>
                                 </div>
                                 <div class="mt-4 mb-0">
                                     <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
