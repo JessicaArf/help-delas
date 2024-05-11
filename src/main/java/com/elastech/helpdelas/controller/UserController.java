@@ -43,7 +43,7 @@ public class UserController {
     @PostMapping("/salvar-usuario")
     public String register(UserDTO userDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
         try{
-            userService.save(userDTO, userDetails.getUsername());
+            userService.save(userDTO, userDetails);
             return "redirect:/login";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
@@ -161,7 +161,7 @@ public class UserController {
     @PostMapping("/cadastrar-tecnico")
     public String registerTech(UserDTO userDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
         try {
-            userService.save(userDTO, userDetails.getUsername());
+            userService.save(userDTO, userDetails);
             return "redirect:/dashboard-admin";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);

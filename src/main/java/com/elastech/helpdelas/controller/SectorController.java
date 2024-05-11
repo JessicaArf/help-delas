@@ -71,8 +71,17 @@ public class SectorController {
     }
 
     @DeleteMapping("/editar-setor/{sectorId}")
-    public String deleteSector(@PathVariable Long  sectorId) {
-        sectorService.deleteById(sectorId);
+    public String deleteSector(@PathVariable Long  sectorId, Model model, RedirectAttributes redirectAttributes) {
+        List<UserDTO> users = userService.showAllUsersWithSector(sectorId);
+        try{
+            if(users.isEmpty()){
+                sectorService.deleteById(sectorId);
+                return "redirect:/listar-setor";
+            }
+
+        }catch (Exception e){
+            redirectAttributes.addAttribute("error", true);
+        }
         return "redirect:/listar-setor";
     }
 }

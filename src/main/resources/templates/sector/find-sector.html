@@ -163,6 +163,9 @@
                                 </td>
                             </tr>
                             </tbody>
+                            <div class="alert alert-danger alert-dismissible fade show" th:if="${param.error}" >
+                                Setor não pode ser excluída, pois encontra-se em uso.
+                            </div>
                         </table>
                     </div>
                 </div>
