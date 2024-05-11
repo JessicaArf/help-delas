@@ -106,12 +106,11 @@
                 <h1 class="mt-4">Prioridades</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/dashboard-admin">Início</a></li>
-                    <li class="breadcrumb-item active">Prioridades</li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        Prioridades
+                        Lista de Prioridades
                     </div>
                     <div class="card-body">
                         <table id="datatablesSimple">
@@ -159,9 +158,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="alert alert-danger alert-dismissible fade show" th:if="${param.error}" >
-                                            Prioridade não pode ser excluída, pois encontra-se em uso.
-                                        </div>
+                                    </div>
+                                    <div class="alert alert-danger alert-dismissible fade show" th:if="${param.error}" >
+                                        Prioridade não pode ser excluída, pois encontra-se em uso.
                                     </div>
                                 </td>
                             </tr>

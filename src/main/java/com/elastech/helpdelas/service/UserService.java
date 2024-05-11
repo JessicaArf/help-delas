@@ -1,9 +1,11 @@
 package com.elastech.helpdelas.service;
 
 import com.elastech.helpdelas.dtos.SectorDTO;
+import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.model.RoleModel;
 import com.elastech.helpdelas.model.SectorModel;
+import com.elastech.helpdelas.model.TicketModel;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.repositories.RoleRepository;
 import com.elastech.helpdelas.repositories.UserRepository;
@@ -115,6 +117,13 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "Usuário não encontrado");
         }
+    }
+
+    public List<UserDTO> showAllUsersWithSector(Long sectorId){
+        List<UserModel> users = userRepository.findBySectorSectorId(sectorId);
+        return users.stream()
+                .map(UserDTO::new)
+                .collect(Collectors.toList());
     }
 }
 

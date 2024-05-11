@@ -104,6 +104,9 @@
         <main>
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Setores</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/dashboard-admin">Início</a></li>
+                </ol>
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
@@ -125,6 +128,7 @@
                                 <td th:text="${sector.sectorId}"></td>
                                 <td th:text="${sector.nameSector}"></td>
                                 <td th:text="${sector.nameDepartment}"></td>
+                                <!--<td><a th:href="@{'/editar-setor/' + ${sector.sectorId}}" title="Editar"><i class="fas fa-pencil-square"></i></a></td>-->
                                 <td>
                                     <form th:action="@{'/editar-setor/' + ${sector.sectorId}}" method="get">
                                         <button id="view-btn" type="submit" class="btn-dash">Editar</button>
@@ -159,6 +163,9 @@
                                 </td>
                             </tr>
                             </tbody>
+                            <div class="alert alert-danger alert-dismissible fade show" th:if="${param.error}" >
+                                Setor não pode ser excluída, pois encontra-se em uso.
+                            </div>
                         </table>
                     </div>
                 </div>

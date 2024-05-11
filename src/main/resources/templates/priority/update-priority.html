@@ -105,7 +105,6 @@
                 <h1 class="mt-4">Prioridades</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/dashboard-admin">Início</a></li>
-                    <li class="breadcrumb-item active">Editar Prioridade</li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-header">
@@ -117,10 +116,9 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputNamePriority">Nome da Prioridade</label>
-                                    <input class="form-control" id="inputNamePriority" th:value="${priority.namePriority}"  th:field="*{namePriority}" />
+                                    <input class="form-control" id="inputNamePriority" th:value="${priority.namePriority}"  th:field="*{namePriority}" /
                                 </div>
                             </div>
-
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="inputDescription">Descrição:</label>
