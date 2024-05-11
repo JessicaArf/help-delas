@@ -125,7 +125,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="priority : ${priorities}">
+                                <tr th:each="priority : ${priorities}">
                                 <td th:text="${priority.priorityId}"></td>
                                 <td th:text="${priority.namePriority}"></td>
                                 <td th:text="${priority.description}"></td>
@@ -158,6 +158,9 @@
                                                     <button type="button" class="btn-dash" data-bs-dismiss="modal">Voltar</button>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="alert alert-danger alert-dismissible fade show" th:if="${param.error}" >
+                                            Prioridade não pode ser excluída, pois encontra-se em uso.
                                         </div>
                                     </div>
                                 </td>

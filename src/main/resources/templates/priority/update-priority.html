@@ -117,14 +117,14 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="inputNamePriority">Nome da Prioridade</label>
-                                    <input class="form-control" id="inputNamePriority" th:value="${priority.namePriority}" name="namePriority"/>
+                                    <input class="form-control" id="inputNamePriority" th:value="${priority.namePriority}"  th:field="*{namePriority}" />
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="inputDescription">Descrição:</label>
-                                    <textarea class="form-control" id="inputDescription" rows="3" type="text" name="description" th:value="${priority.description}"></textarea>
+                                    <textarea class="form-control" id="inputDescription" rows="3" th:field="*{description}" th:value="${priority.description}"></textarea>
                                 </div>
                             </div>
                             <div class="mt-4 mb-0">
