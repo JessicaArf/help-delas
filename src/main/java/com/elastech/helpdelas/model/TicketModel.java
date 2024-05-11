@@ -19,6 +19,7 @@ public class TicketModel {
     private String subject;
     private String description;
     private TicketStatus status;
+    private String annotation;
 
     @CreationTimestamp
     private Instant creationTimestamp;

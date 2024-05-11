@@ -41,9 +41,9 @@ public class UserController {
     }
 
     @PostMapping("/salvar-usuario")
-    public String register(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
+    public String register(UserDTO userDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
         try{
-            userService.save(userDTO);
+            userService.save(userDTO, userDetails.getUsername());
             return "redirect:/login";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
@@ -151,5 +151,22 @@ public class UserController {
         }
     }
 
+    @GetMapping("/cadastrar-tecnico")
+    public String showPageRegister(Model model){
+        List<SectorDTO> sectors = userService.findAllSector();
+        model.addAttribute("sectors", sectors);
+        return "admin/register-tech";
+    }
+
+    @PostMapping("/cadastrar-tecnico")
+    public String registerTech(UserDTO userDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+        try {
+            userService.save(userDTO, userDetails.getUsername());
+            return "redirect:/dashboard-admin";
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("error", true);
+            return "redirect:/dashboard-admin";
+        }
+    }
 
 }

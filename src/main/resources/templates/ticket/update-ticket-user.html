@@ -141,7 +141,7 @@
                                     <label for="inputDepartament">Setor</label>
                                     <select class="form-control" id="inputDepartament" th:field="*{sector}">
                                         <option th:each="sector : ${sectors}"
-                                                th:value="${sector.id}"
+                                                th:value="${sector.sectorId}"
                                                 th:text="${sector.nameSector}"></option>
                                     </select>
                                 </div>

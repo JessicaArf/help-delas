@@ -32,10 +32,15 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public UserDTO save(UserDTO userDTO) throws Exception {
+    public UserDTO save(UserDTO userDTO, String user) throws Exception {
         Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
+        RoleModel role = null;
         if(!byEmail.isPresent()){
-            RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
+            if(user.equals("admin@helpdelas.com")){
+                role = roleRepository.findByName(RoleModel.Values.TECH.name());
+            }else{
+                role = roleRepository.findByName(RoleModel.Values.USER.name());
+            }
             userDTO.setRole(role);
             userDTO.setSector(userDTO.getSector());
             userDTO.setStatus("ATIVO");
