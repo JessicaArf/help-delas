@@ -2,8 +2,10 @@ package com.elastech.helpdelas.controller;
 
 import com.elastech.helpdelas.dtos.PriorityDTO;
 import com.elastech.helpdelas.dtos.SectorDTO;
+import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.service.PriorityService;
+import com.elastech.helpdelas.service.TicketService;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +23,8 @@ public class PriorityController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TicketService ticketService;
     @Autowired
     private PriorityService priorityService;
 
@@ -46,9 +50,12 @@ public class PriorityController {
     public String findAllPriority(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         List<PriorityDTO> priorities = priorityService.findAllPriority();
+        List<TicketDTO> tickets = ticketService.showAllTickets();
+        int size = tickets.size();
 
         model.addAttribute("name", userDb.getName());
         model.addAttribute("priorities", priorities);
+        model.addAttribute("size", size);
         return "priority/find-priority";
     }
 
