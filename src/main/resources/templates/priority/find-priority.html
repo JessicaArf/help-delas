@@ -147,26 +147,19 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div th:if="${size > 0}">
-                                                        Prioridade não pode ser excluída, pois encontra-se em uso.
-                                                    </div>
-                                                    <div th:unless="${size > 0}">
-                                                        Você está prestes a excluir uma prioridade. Tem certeza de que deseja prosseguir com a exclusão?
-                                                    </div>
+                                                    Você está prestes a excluir uma prioridade. Tem certeza de que deseja prosseguir com a exclusão?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <div th:if="${size > 0}">
-                                                        <button type="button" class="btn-dash" data-bs-dismiss="modal">Voltar</button>
-                                                    </div>
-                                                    <div th:unless="${size > 0}">
-                                                        <form th:action="@{'/editar-prioridade/' + ${priority.priorityId}}" method="post" th:object="${priority}">
-                                                            <input type="hidden" th:name="_method" th:value="DELETE">
-                                                            <button id="delete-tbn" type="submit" class="btn-dash">Confirmar</button>
-                                                        </form>
-                                                        <button type="button" class="btn-dash" data-bs-dismiss="modal">Voltar</button>
-                                                    </div>
+                                                    <form th:action="@{'/editar-prioridade/' + ${priority.priorityId}}" method="post" th:object="${priority}">
+                                                        <input type="hidden" th:name="_method" th:value="DELETE">
+                                                        <button id="delete-tbn" type="submit" class="btn-dash">Confirmar</button>
+                                                    </form>
+                                                    <button type="button" class="btn-dash" data-bs-dismiss="modal">Voltar</button>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="alert alert-danger alert-dismissible fade show" th:if="${param.error}" >
+                                            Prioridade não pode ser excluída, pois encontra-se em uso.
                                         </div>
                                     </div>
                                 </td>

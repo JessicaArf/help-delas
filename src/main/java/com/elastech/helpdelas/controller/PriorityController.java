@@ -50,12 +50,9 @@ public class PriorityController {
     public String findAllPriority(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         List<PriorityDTO> priorities = priorityService.findAllPriority();
-        List<TicketDTO> tickets = ticketService.showAllTickets();
-        int size = tickets.size();
 
         model.addAttribute("name", userDb.getName());
         model.addAttribute("priorities", priorities);
-        model.addAttribute("size", size);
         return "priority/find-priority";
     }
 
@@ -80,9 +77,18 @@ public class PriorityController {
         return "redirect:/listar-prioridade";
     }
 
-    @DeleteMapping("/editar-prioriade/{priorityId}")
-    public String deletePriority(@PathVariable Long  priorityId) {
-        priorityService.deleteById(priorityId);
-        return "redirect:/listar-prioridade";
+    @DeleteMapping("/editar-prioridade/{priorityId}")
+    public String deletePriority(@PathVariable Long  priorityId, Model model, RedirectAttributes redirectAttributes) {
+        List<TicketDTO> tickets = ticketService.showAllTicketsWithPriority(priorityId);
+        int size = tickets.size();
+        try{
+            if(size == 0){
+                priorityService.deleteById(priorityId);
+            }
+            return "redirect:/listar-prioridade";
+        }catch (Exception e) {
+            redirectAttributes.addAttribute("error", true);
+            return "/listar-prioridade";
+        }
     }
 }

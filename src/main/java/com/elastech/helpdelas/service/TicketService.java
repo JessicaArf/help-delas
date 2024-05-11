@@ -118,4 +118,12 @@ public class TicketService {
                 .collect(Collectors.toList());
     }
 
+    public List<TicketDTO> showAllTicketsWithPriority(Long priorityId){
+        List<TicketModel> tickets = ticketRepository.findByPriorityPriorityId(priorityId);
+        return tickets.stream()
+                .map(TicketDTO::new)
+                .collect(Collectors.toList());
+    }
+
+
 }
