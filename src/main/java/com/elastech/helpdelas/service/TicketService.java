@@ -124,6 +124,4 @@ public class TicketService {
                 .map(TicketDTO::new)
                 .collect(Collectors.toList());
     }
-
-
 }

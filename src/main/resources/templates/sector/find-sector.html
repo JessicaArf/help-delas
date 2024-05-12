@@ -104,10 +104,13 @@
         <main>
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Setores</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/dashboard-admin">Início</a></li>
+                </ol>
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        Todos os setores
+                        Lista de Setores
                     </div>
                     <div class="card-body">
                         <table id="datatablesSimple">
@@ -125,17 +128,24 @@
                                 <td th:text="${sector.sectorId}"></td>
                                 <td th:text="${sector.nameSector}"></td>
                                 <td th:text="${sector.nameDepartment}"></td>
+                                <!--<td><a th:href="@{'/editar-setor/' + ${sector.sectorId}}" title="Editar"><i class="fas fa-pencil-square"></i></a></td>-->
                                 <td>
                                     <form th:action="@{'/editar-setor/' + ${sector.sectorId}}" method="get">
                                         <button id="view-btn" type="submit" class="btn-dash">Editar</button>
                                     </form>
                                 </td>
                                 <td>
-                                    <!-- Button trigger modal -->
+                                    <form th:action="@{'/editar-setor/' + ${sector.sectorId}}" method="post" th:object="${sector}">
+                                        <input type="hidden" th:name="_method" th:value="DELETE">
+                                        <button id="delete-tbn" type="submit" class="btn-dash">Excluir</button>
+                                    </form>
+                                </td>
+                                <!--<td>
+                                    Button trigger modal
                                     <button type="button" class="btn-dash" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         Excluir
                                     </button>
-                                    <!-- Modal -->
+                                     Modal
                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -156,9 +166,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                </td>
+                                </td>-->
                             </tr>
                             </tbody>
+                            <div th:if="${param.error}">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    Setor não pode ser excluído, pos já está em uso.
+                                </div>
+                            </div>
                         </table>
                     </div>
                 </div>

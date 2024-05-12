@@ -59,7 +59,6 @@ public class PriorityService {
         return new PriorityDTO(priorityModel);
     }
 
-
     public void deleteById(Long priorityId) {
         Optional<PriorityModel> priority = priorityRepository.findById(priorityId);
         if(priority.isEmpty()) {
