@@ -80,6 +80,22 @@ public class UserController {
         }
     }
 
+    @GetMapping("/editar-tecnico/{id}")
+    public String showEditTech(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
+        try {
+            UserDTO userDb = userService.getUserById(id);
+            List<SectorDTO> sectors = userService.findAllSector();
+            UserDTO login = userService.getUserByEmail(userDetails.getUsername());
+            model.addAttribute("sectors", sectors);
+            model.addAttribute("user", userDb);
+            model.addAttribute("name", login.getName());
+            return "admin/edit-tech-admin";
+        } catch (Exception e) {
+            System.out.println(e);
+            return "admin/edit-tech-admin";
+        }
+    }
+
     @PutMapping("/editar-usuario")
     public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
@@ -95,6 +111,25 @@ public class UserController {
             redirectAttributes.addAttribute("error", true);
             model.addAttribute("user", userDb);
             return "user/edit-user";
+        }
+    }
+
+    @PutMapping("/editar-tecnico/{id}")
+    public String editTech(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, Model model, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
+        UserDTO userDb = userService.getUserById(id);
+        UserDTO login = userService.getUserByEmail(userDetails.getUsername());
+        try {
+            if (userDb != null) {
+                UserDTO userAtualizado = userService.updateUserById(id, userModel);
+                model.addAttribute("user", userAtualizado);
+                model.addAttribute("name", login.getName());
+            }
+            return "admin/show-user-admin";
+
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("error", true);
+            model.addAttribute("user", userDb);
+            return "admin/edit-tech-admin";
         }
     }
 
