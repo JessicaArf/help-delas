@@ -128,7 +128,6 @@
                                 <td th:text="${sector.sectorId}"></td>
                                 <td th:text="${sector.nameSector}"></td>
                                 <td th:text="${sector.nameDepartment}"></td>
-                                <!--<td><a th:href="@{'/editar-setor/' + ${sector.sectorId}}" title="Editar"><i class="fas fa-pencil-square"></i></a></td>-->
                                 <td>
                                     <form th:action="@{'/editar-setor/' + ${sector.sectorId}}" method="get">
                                         <button id="view-btn" type="submit" class="btn-dash">Editar</button>
