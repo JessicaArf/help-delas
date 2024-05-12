@@ -22,9 +22,11 @@ public class CustomDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserModel user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username)); // expressão lambda para em caso de não encontrar o usuário
+        if(!user.getStatus().equals("ATIVO")){
+            throw new RuntimeException("Usuário inativo.");
+        }
         // Aqui criamos uma SimpleGrantedAuthority com o nome da role do usuário
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getName());
-        System.out.println(user.getRole().getName());
         // Retornamos um UserDetails com as informações do usuário e sua autoridade (role)
         return new User(user.getEmail(), user.getPassword(), Collections.singleton(authority));
     }

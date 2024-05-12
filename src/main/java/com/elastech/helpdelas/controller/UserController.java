@@ -1,14 +1,11 @@
 package com.elastech.helpdelas.controller;
 
 import com.elastech.helpdelas.dtos.SectorDTO;
-import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
-import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
