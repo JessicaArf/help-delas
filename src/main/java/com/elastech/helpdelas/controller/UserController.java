@@ -1,5 +1,6 @@
 package com.elastech.helpdelas.controller;
 
+import com.elastech.helpdelas.dtos.PriorityDTO;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
@@ -168,8 +169,7 @@ public class UserController {
             return "redirect:/dashboard-admin";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
-            return "redirect:/dashboard-admin";
+            return "redirect:/cadastrar-tecnico";
         }
     }
-
 }

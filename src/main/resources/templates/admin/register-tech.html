@@ -150,6 +150,11 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="mt-4 mb-0" th:if="${param.error}">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                E-mail já cadastrado.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
