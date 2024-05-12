@@ -80,11 +80,9 @@ public class PriorityController {
     @DeleteMapping("/editar-prioridade/{priorityId}")
     public String deletePriority(@PathVariable Long  priorityId, Model model, RedirectAttributes redirectAttributes) {
         List<TicketDTO> tickets = ticketService.showAllTicketsWithPriority(priorityId);
-        int size = tickets.size();
         try{
-            if(size == 0){
-                priorityService.deleteById(priorityId);
-            }
+            if(tickets.isEmpty())
+               priorityService.deleteById(priorityId);
             return "redirect:/listar-prioridade";
         }catch (Exception e) {
             redirectAttributes.addAttribute("error", true);

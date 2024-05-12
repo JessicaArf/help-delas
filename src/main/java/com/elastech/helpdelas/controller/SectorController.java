@@ -79,7 +79,6 @@ public class SectorController {
                 sectorService.deleteById(sectorId);
                 return "redirect:/listar-setor";
             }
-
         }catch (Exception e){
             redirectAttributes.addAttribute("error", true);
         }

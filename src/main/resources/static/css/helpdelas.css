@@ -86,5 +86,12 @@
     padding: 1.3rem;
 }
 
+.disabled-link {
+    pointer-events: none; /* Impede cliques */
+    color: gray; /* Altera a cor para indicar que está desativado */
+    text-decoration: none; /* Remove sublinhado */
+    cursor: default; /* Remove o cursor de link */
+}
+
 
 

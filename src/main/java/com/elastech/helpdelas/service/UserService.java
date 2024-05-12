@@ -40,7 +40,7 @@ public class UserService {
         Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
         RoleModel role = null;
         if(!byEmail.isPresent()){
-            if(userDetails != null){
+            if(userDetails !=null){
                 role = roleRepository.findByName(RoleModel.Values.TECH.name());
             }else{
                 role = roleRepository.findByName(RoleModel.Values.USER.name());

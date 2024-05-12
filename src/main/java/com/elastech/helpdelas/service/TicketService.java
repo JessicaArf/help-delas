@@ -1,5 +1,6 @@
 package com.elastech.helpdelas.service;
 
+import com.elastech.helpdelas.dtos.ApiTicketDTO;
 import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.model.TicketModel;
@@ -122,6 +123,20 @@ public class TicketService {
         List<TicketModel> tickets = ticketRepository.findByPriorityPriorityId(priorityId);
         return tickets.stream()
                 .map(TicketDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<ApiTicketDTO> findAll() {
+        List<TicketModel> tickets = ticketRepository.findAll();
+        return tickets.stream()
+                .map(ApiTicketDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<ApiTicketDTO> findByStatusTicketStatusLike(TicketModel.TicketStatus status) {
+        List<TicketModel> tickets = ticketRepository.findByStatus(status);
+        return tickets.stream()
+                .map(ApiTicketDTO::new)
                 .collect(Collectors.toList());
     }
 }
