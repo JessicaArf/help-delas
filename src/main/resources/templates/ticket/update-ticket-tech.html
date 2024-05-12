@@ -58,8 +58,7 @@
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/user/show-user">Visualizar</a>
-                            <a class="nav-link" href="/user/edit-user">Editar</a>
+                            <a class="nav-link" href="/mostrar-tecnico">Visualizar</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
@@ -89,8 +88,6 @@
                 <h1 class="mt-4">Chamados</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item"><a href="/dashboard-tecnico">Início</a></li>
-                    <li class="breadcrumb-item active">Editar Chamado</li>
-                    <li class="breadcrumb-item active"></li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-header">
@@ -102,36 +99,18 @@
                               th:object="${ticket}">
                             <input type="hidden" th:name="_method" th:value="PUT"/>
                             <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="inputNumberTicket">Número do chamado:</label>
                                     <input class="form-control" id="inputNumberTicket"
                                            th:value="${ticket.ticketId}" th:disabled="true"/>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="inputUser">Nome Usuário:</label>
-                                    <input class="form-control" id="inputUser" th:value="${ticket.userBasic.name}"
-                                           th:disabled="true"/>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="inputUserSector">Setor Usuário:</label>
-                                    <input class="form-control" id="inputUserSector"
-                                           th:value="${ticket.userBasic.sector.nameSector}" th:disabled="true"/>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="inputDateCreation">Data de abertura:</label>
                                     <input class="form-control" id="inputDateCreation"
                                            th:value="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
                                            th:disabled="true"/>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="inputDateUpdated">Data da última atualização:</label>
                                     <input class="form-control" id="inputDateUpdated"
                                            th:value="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"
@@ -140,52 +119,62 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="inputSubject">Assunto</label>
+                                    <label for="inputUser">Nome Usuário:</label>
+                                    <input class="form-control" id="inputUser" th:value="${ticket.userBasic.name}"
+                                           th:disabled="true"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputUserSector">Setor Usuário:</label>
+                                    <input class="form-control" id="inputUserSector"
+                                           th:value="${ticket.userBasic.sector.nameSector}" th:disabled="true"/>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="inputSubject">Assunto:</label>
                                     <input class="form-control" id="inputSubject" type="text"
                                            th:value="${ticket.subject}" th:disabled="true"/>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="inputDescription">Descrição</label>
-                                    <input class="form-control" id="inputDescription" type="text"
-                                           th:value="${ticket.description}" th:disabled="true"/>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="status">Status</label>
+                                    <label for="status">Status:</label>
                                     <select class="form-control" id="status" th:field="*{status}">
                                         <option th:each="status : ${ticket.status.values()}"
                                                 th:value="${status}"
-                                                th:text="${status.description}">[[${status.description}]]
+                                                th:text="${status.description}">
                                         </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="inputDepartament">Setor</label>
+                                    <label for="inputDepartament">Setor:</label>
                                     <select class="form-control" id="inputDepartament" th:field="*{sector}">
                                         <option th:each="sector : ${sectors}"
                                                 th:value="${sector.sectorId}"
                                                 th:text="${sector.nameSector}"></option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="inputUserTech">Técnico Responsável: </label>
+                                    <label for="inputUserTech">Técnico Responsável:</label>
                                     <input class="form-control" id="inputUserTech" type="text" th:value="${name}"
                                            th:disabled="true">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="inputAnnotation">Anotações: </label>
-                                    <textarea class="form-control" id="inputAnnotation" type="text"  th:field="*{annotation}"
-                                              th:value="${ticket.annotation}" ></textarea>
+                                    <label for="inputDescription">Descrição:</label>
+                                    <textarea class="form-control" id="inputDescription" type="text" rows="3"
+                                              th:value="${ticket.description}" th:disabled="true" th:field="*{description}">
+                                    </textarea>
                                 </div>
+                                <div class="col-md-6">
+                                    <label for="inputAnnotation">Anotações:</label>
+                                    <textarea class="form-control" id="inputAnnotation" type="text" rows="3" th:field="*{annotation}"
+                                              th:value="${ticket.annotation}">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
                                 <div class="mt-4 mb-0">
                                     <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
                                         <button class="btn btn-primary btn-login" type="submit">Atualizar</button>
@@ -200,12 +189,7 @@
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2024</div>
-                    <div>
-                        <a href="#">Política de Privacidade</a>
-                        &middot;
-                        <a href="#">Termos e Condições</a>
-                    </div>
+                    <div class="text-muted">Copyright &copy; HelpDelas 2024</div>
                 </div>
             </div>
         </footer>

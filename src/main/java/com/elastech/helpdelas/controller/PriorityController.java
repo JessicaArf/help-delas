@@ -2,8 +2,10 @@ package com.elastech.helpdelas.controller;
 
 import com.elastech.helpdelas.dtos.PriorityDTO;
 import com.elastech.helpdelas.dtos.SectorDTO;
+import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.service.PriorityService;
+import com.elastech.helpdelas.service.TicketService;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +23,8 @@ public class PriorityController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TicketService ticketService;
     @Autowired
     private PriorityService priorityService;
 
@@ -73,9 +77,18 @@ public class PriorityController {
         return "redirect:/listar-prioridade";
     }
 
-    @DeleteMapping("/editar-prioriade/{priorityId}")
-    public String deletePriority(@PathVariable Long  priorityId) {
-        priorityService.deleteById(priorityId);
-        return "redirect:/listar-prioridade";
+    @DeleteMapping("/editar-prioridade/{priorityId}")
+    public String deletePriority(@PathVariable Long  priorityId, Model model, RedirectAttributes redirectAttributes) {
+        List<TicketDTO> tickets = ticketService.showAllTicketsWithPriority(priorityId);
+        int size = tickets.size();
+        try{
+            if(size == 0){
+                priorityService.deleteById(priorityId);
+            }
+            return "redirect:/listar-prioridade";
+        }catch (Exception e) {
+            redirectAttributes.addAttribute("error", true);
+            return "/listar-prioridade";
+        }
     }
 }

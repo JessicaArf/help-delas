@@ -30,8 +30,8 @@ public class TicketsController {
     public String showPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO basicUser = userService.getUserByEmail(userDetails.getUsername());
         List<SectorDTO> sectors = userService.findAllSector();
-        model.addAttribute("name", basicUser.getName());
-        model.addAttribute("sectors", sectors);
+        model.addAttribute("user", basicUser);
+        model.addAttribute("sector", basicUser.getSector());
         return "ticket/create-ticket";
     }
 
@@ -70,8 +70,8 @@ public class TicketsController {
         UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
         List<SectorDTO> sectors = userService.findAllSector();
 
-        model.addAttribute("sectors", sectors);
-        model.addAttribute("name", userBasic.getName());
+        model.addAttribute("sector", userBasic.getSector());
+        model.addAttribute("user", userBasic);
         model.addAttribute("ticket", ticket);
 
         return "ticket/update-ticket-user";
@@ -89,7 +89,6 @@ public class TicketsController {
         UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("name", userTech.getName());
         model.addAttribute("ticket", ticket);
-
         return "ticket/view-one-ticket";
     }
 
@@ -149,8 +148,7 @@ public class TicketsController {
     @GetMapping("/admin/todos-chamados")
     public String showAllTickets(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO adminUser = userService.getUserByEmail(userDetails.getUsername());
-        model.addAttribute("name", adminUser);
-
+        model.addAttribute("name", adminUser.getName());
         List<TicketDTO> allTickets = ticketService.showAllTickets();
         model.addAttribute("allTickets", allTickets);
         return "admin/all-tickets";
@@ -159,8 +157,7 @@ public class TicketsController {
     @GetMapping("/admin/chamados-tecnico")
     public String showAllTicketsTech(Model model, @AuthenticationPrincipal UserDetails userDetails){
         UserDTO adminUser = userService.getUserByEmail(userDetails.getUsername());
-        model.addAttribute("name", adminUser);
-
+        model.addAttribute("name", adminUser.getName());
         List<TicketDTO> allTicketTech = ticketService.showAllTicketsTech();
         model.addAttribute("allTicketTech", allTicketTech);
         return "admin/all-tickets-tech";
@@ -169,8 +166,7 @@ public class TicketsController {
     @GetMapping("/admin/chamados-nao-atribuido")
     public String showAllTicketsNotAssigned(Model model, @AuthenticationPrincipal UserDetails userDetails){
         UserDTO adminUser = userService.getUserByEmail(userDetails.getUsername());
-        model.addAttribute("name", adminUser);
-
+        model.addAttribute("name", adminUser.getName());
         List<TicketDTO> allTicketsNotAssigned = ticketService.showTicketsAvailable();
         model.addAttribute("allTicketsNotAssigned", allTicketsNotAssigned);
         return "admin/all-tickets-no-assigned";

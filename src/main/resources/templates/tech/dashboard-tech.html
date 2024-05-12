@@ -46,7 +46,7 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Início</div>
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="/dashboard-tecnico">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
@@ -54,10 +54,22 @@
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
                        aria-expanded="false" aria-controls="collapseLayouts">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Chamados
+                        Meus Dados
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/mostrar-tecnico">Visualizar</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+                       aria-expanded="false" aria-controls="collapsePages">
+                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                        Chamados
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapsePages" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="/dashboard-tecnico">Chamados Disponíveis</a>
@@ -68,7 +80,7 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Bem-vinda(o):</div>
-                <p th:text="${name}"></p>
+                <span th:text="${name}"></span>
             </div>
         </nav>
     </div>
@@ -116,7 +128,7 @@
                                 <td th:text="${ticket.userBasic.name}"></td>
                                 <td th:text="${ticket.subject}"></td>
                                 <td th:text="${ticket.description}"></td>
-                                <td th:text="${ticket.sector.nameSector}"></td>
+                                <td th:text="${ticket.sector != null ? ticket.sector.nameSector : '-'}"></td>
                                 <td th:text="${ticket.status.description}"></td>
                                 <td th:text="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                 <td th:text="${ticket.userTech != null ? ticket.userTech.name : 'Não atribuído'}"></td>
@@ -135,7 +147,7 @@
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                    <div class="text-muted">Copyright &copy; HelpDelas 2024</div>
                 </div>
             </div>
         </footer>

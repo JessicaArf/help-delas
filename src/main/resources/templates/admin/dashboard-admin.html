@@ -9,6 +9,7 @@
         <title>Dashboard - Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="/css/styles.css" rel="stylesheet" />
+        <link href="/css/helpdelas.css" rel="stylesheet"/>
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -104,69 +105,78 @@
                         <h1 class="mt-4">Dashboard</h1>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
+                                <div class="card text-black mb-4 color-card">
                                     <div class="card-body">Chamados Gerais</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="/admin/todos-chamados">Ver detalhes</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="/admin/todos-chamados"></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Chamados com Técnico</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="/admin/chamados-tecnico">Ver detalhes</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                <div class="card text-black mb-4 color-card">
+                                    <div class="card-body">Chamados Atribuídos</div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <a class="small text-black stretched-link" href="/admin/chamados-tecnico"></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
+                                <div class="card text-black mb-4 color-card">
                                     <div class="card-body">Chamados não Atribuídos</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="/admin/chamados-nao-atribuido">Ver detalhes</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <a class="small text-black stretched-link" href="/admin/chamados-nao-atribuido"></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Cadastrar Setor</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="/registrar-setor">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Lista de Setores</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="/listar-setor">Ver detalhes</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
+                                <div class="card text-black mb-4 color-card">
                                     <div class="card-body">Cadastrar Técnico</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="/cadastrar-tecnico"></a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Lista de Usuários</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="/"></a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                <div class="card text-black mb-4 color-card">
+                                    <div class="card-body">Cadastrar Setor</div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="/registrar-setor"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card text-black mb-4 color-card">
+                                    <div class="card-body">Cadastrar Prioridade</div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="/registrar-prioridade"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card text-black mb-4 color-card">
+                                    <div class="card-body">Listar Usuários</div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="/todos-usuarios"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card text-black mb-4 color-card">
+                                    <div class="card-body">Listar Setores</div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="/listar-setor"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card text-black mb-4 color-card">
+                                    <div class="card-body">Listar Prioridades</div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="/listar-prioridade"></a>
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +186,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                            <div class="text-muted">Copyright &copy; HelpDelas 2024</div>
                         </div>
                     </div>
                 </footer>
