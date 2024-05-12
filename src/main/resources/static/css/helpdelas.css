@@ -1,7 +1,12 @@
+:root {
+    --color-primary: #54b69b;
+    --color-hover: #5ac3a6;
+}
+
 .body {
     --bs-bg-opacity: 1;
-    background-color: #FFC901 !important; /*background-image: linear-gradient(to bottom, #FFC901, #FFFFFF); /* Degradê vertical */
-    background-image: linear-gradient(to bottom right, #FFC901, #FFFFFF); /* Degradê diagonal */
+    background-color: #FFC901 !important;
+    background-image: linear-gradient(to bottom right, #f6df3c1f, #FFFFFF); /* Degradê diagonal */
     background-size: 100% 100%; /* Isso fará com que o degradê cubra metade da altura do elemento pai */
 }
 
@@ -22,16 +27,16 @@
 }
 
 .btn-login {
-    padding: 0.7rem 5rem;
-    background-color: #1bb99a;
-    border: 1px solid #1bb99a;
+    padding: 0.7rem 3rem;
+    background-color: var(--color-primary) !important;
+    border: 1px solid var(--color-primary) !important;
     border-radius: 5px;
     color: #ffffff;
     text-decoration: none;
 }
 
 .btn-login:hover {
-    background-color: #1fd7b2;
+    background-color: var(--color-hover) !important;
     color: #ffffff;
 }
 
@@ -47,16 +52,17 @@
 }
 
 .btn-dash {
-    background-color:#aedbc9;
-    border: 1px solid #aedbc9;
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-primary);
     border-radius: 5px;
     color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
     text-decoration: none;
     font-weight: 500;
+    padding:3px;
 }
 
 .btn-dash:hover {
-    background-color: #1fd7b2;
+    background-color: var(--color-hover);
     color: #ffffff;
 }
 
@@ -71,7 +77,14 @@
 }
 
 #container-btn{
-display: flex;
-flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
+
+.color-card {
+    background: linear-gradient(47.09deg, var(--color-primary) .72%, rgba(166, 219, 217, .4) 72.48%) !important;
+    padding: 1.3rem;
+}
+
+
 

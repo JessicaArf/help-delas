@@ -44,7 +44,6 @@ public class AdminUserConfig implements CommandLineRunner {
                     userRepository.save(user);
                 }
         );
-
     }
 }
 

@@ -1,5 +1,7 @@
 package com.elastech.helpdelas.controller;
 import com.elastech.helpdelas.dtos.TicketDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
@@ -11,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 
 
@@ -45,6 +46,7 @@ public class SectorController {
     public String findAllSector(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         List<SectorDTO> findAllSector = sectorService.findAllSector();
+        model.addAttribute("name", userDb.getName());
         model.addAttribute("findAllSector", findAllSector);
         return "sector/find-sector";
     }
@@ -58,7 +60,6 @@ public class SectorController {
     public String showEditSector(@PathVariable Long sectorId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO userAdmin = userService.getUserByEmail(userDetails.getUsername());
         SectorDTO sectorDTO = sectorService.findById(sectorId);
-
         model.addAttribute("name", userAdmin.getEmail());
         model.addAttribute("sector", sectorDTO);
         return "sector/update-sector";
@@ -82,5 +83,5 @@ public class SectorController {
             redirectAttributes.addAttribute("error", true);
         }
         return "redirect:/listar-setor";
-    }
+     }
 }

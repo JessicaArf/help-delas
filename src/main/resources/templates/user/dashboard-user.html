@@ -124,7 +124,7 @@
                                 <td th:text="${ticket.ticketId}"></td>
                                 <td th:text="${ticket.subject}"></td>
                                 <td th:text="${ticket.description}"></td>
-                                <td th:text="${ticket.sector.nameSector}"></td>
+                                <td th:text="${ticket.sector != null  ? ticket.sector.nameSector : ''}"></td>
                                 <td th:text="${ticket.status.description}"></td>
                                 <td th:text="${#dates.format(ticket.creationTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                 <td th:text="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
@@ -143,12 +143,7 @@
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2024</div>
-                    <div>
-                        <a href="#">Política de Privacidade</a>
-                        &middot;
-                        <a href="#">Temos e Condições</a>
-                    </div>
+                    <div class="text-muted">Copyright &copy; HelpDelas 2024</div>
                 </div>
             </div>
         </footer>
