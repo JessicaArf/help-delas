@@ -1,14 +1,11 @@
 package com.elastech.helpdelas.controller;
 
 import com.elastech.helpdelas.dtos.SectorDTO;
-import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
-import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -151,5 +148,22 @@ public class UserController {
         }
     }
 
+    @GetMapping("/cadastrar-tecnico")
+    public String showPageRegister(Model model){
+        List<SectorDTO> sectors = userService.findAllSector();
+        model.addAttribute("sectors", sectors);
+        return "admin/register-tech";
+    }
+
+    @PostMapping("/cadastrar-tecnico")
+    public String registerTech(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
+        try {
+            userService.registerTech(userDTO);
+            return "redirect:/dashboard-admin";
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("error", true);
+            return "redirect:/dashboard-admin";
+        }
+    }
 
 }

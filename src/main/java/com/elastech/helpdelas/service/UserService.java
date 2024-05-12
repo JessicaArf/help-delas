@@ -109,6 +109,27 @@ public class UserService {
                     "Usuário não encontrado");
         }
     }
+
+    public UserDTO registerTech(UserDTO userDTO) throws Exception {
+        //Aqui está pegando a role de Tech pelo metodo findByName e salva dentro da variavel roleTech
+        RoleModel roleTech = roleRepository.findByName(RoleModel.Values.TECH.name());
+        //Aqui tesmo um user model optional pois pode ser que não encontre um usuário no BD
+        Optional<UserModel> userExists = userRepository.findByEmail(userDTO.getEmail());
+        //Condição para verificar se o usuário já exite lançando um mensagem
+        if(userExists.isPresent()){
+            throw new Exception("Esse e-mail já existe");
+        }
+        //Pegando a senha do usuário que está sendo cadastrado e passando um metodo de criptografar
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        //Passando a role de Tech para esse usuario
+        userDTO.setRole(roleTech);
+        //Utilizando o metodo de converter o userDTO em um userModel
+        UserModel userTech = UserDTO.convert(userDTO);
+        //Salvando
+        userRepository.save(userTech);
+        return new UserDTO(userTech);
+    }
+
 }
 
 
