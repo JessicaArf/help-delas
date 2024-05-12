@@ -40,6 +40,7 @@ public class AdminUserConfig implements CommandLineRunner {
                     user.setEmail("admin@helpdelas.com");
                     user.setPassword(passwordEncoder.encode("admin"));
                     user.setName("Admin");
+                    user.setStatus("ATIVO");
                     user.setRole(roleAdmin);
                     userRepository.save(user);
                 }

@@ -1,17 +1,12 @@
 package com.elastech.helpdelas.service;
 
 import com.elastech.helpdelas.dtos.SectorDTO;
-import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.model.RoleModel;
-import com.elastech.helpdelas.model.SectorModel;
-import com.elastech.helpdelas.model.TicketModel;
 import com.elastech.helpdelas.model.UserModel;
 import com.elastech.helpdelas.repositories.RoleRepository;
 import com.elastech.helpdelas.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,11 +23,13 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
     private SectorService sectorService;
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -119,12 +116,14 @@ public class UserService {
         }
     }
 
+
     public List<UserDTO> showAllUsersWithSector(Long sectorId){
         List<UserModel> users = userRepository.findBySectorSectorId(sectorId);
         return users.stream()
                 .map(UserDTO::new)
                 .collect(Collectors.toList());
     }
+
 }
 
 
