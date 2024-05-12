@@ -26,6 +26,7 @@ public class UserController {
     @GetMapping("/salvar-usuario")
     public String showRegister(Model model){
         List<SectorDTO> sectors = userService.findAllSector();
+        sectors.remove(0);
         model.addAttribute("sectors", sectors);
         return "user/register";
     }
@@ -144,17 +145,19 @@ public class UserController {
             if (userDb != null) {
                 model.addAttribute("user", userDb);
             }
-            return "user/show-user";
+            return "tech/show-tech";
         } catch (Exception e) {
             System.out.println(e);
-            return "user/dashboard-user";
+            return "tech/dashboard-tech";
         }
     }
 
     @GetMapping("/cadastrar-tecnico")
-    public String showPageRegister(Model model){
+    public String showPageRegister(Model model, @AuthenticationPrincipal UserDetails userDetails){
+        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         List<SectorDTO> sectors = userService.findAllSector();
-        model.addAttribute("sectors", sectors);
+        model.addAttribute("name", userDb.getName());
+        model.addAttribute("sectors", sectors.get(0));
         return "admin/register-tech";
     }
 
