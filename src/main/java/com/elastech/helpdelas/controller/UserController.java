@@ -117,20 +117,24 @@ public class UserController {
 
     @PutMapping("/editar-tecnico/{id}")
     public String editTech(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, Model model, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
-        UserDTO userDb = userService.getUserById(id);
         UserDTO login = userService.getUserByEmail(userDetails.getUsername());
+        UserDTO userDb = userService.getUserById(id);
         try {
             if (userDb != null) {
                 UserDTO userAtualizado = userService.updateUserById(id, userModel);
+                redirectAttributes.addAttribute("successEdit", true);
                 model.addAttribute("user", userAtualizado);
                 model.addAttribute("name", login.getName());
+                return "redirect:/mostrar-usuario/{id}";
+            }else{
+                redirectAttributes.addAttribute("errorEdit", true);
             }
-            return "admin/show-user-admin";
+            return "redirect:/editar-tecnico/{id}";
 
         } catch (Exception e) {
-            redirectAttributes.addAttribute("error", true);
+            redirectAttributes.addAttribute("errorEdit", true);
             model.addAttribute("user", userDb);
-            return "admin/edit-tech-admin";
+            return "redirect:/editar-tecnico/{id}";
         }
     }
 
@@ -201,6 +205,7 @@ public class UserController {
     public String registerTech(UserDTO userDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
         try {
             userService.save(userDTO, userDetails);
+            redirectAttributes.addAttribute("success", true);
             return "redirect:/dashboard-admin";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);

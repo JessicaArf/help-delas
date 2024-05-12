@@ -37,9 +37,10 @@ public class PriorityController {
 
     @PostMapping("/registrar-prioridade")
     public String save(PriorityDTO dto, RedirectAttributes redirectAttributes) throws Exception {
-        try{
+        try {
             priorityService.save(dto);
-            return "redirect:/dashboard-admin";
+            redirectAttributes.addAttribute("success", true);
+            return "redirect:/listar-prioridade";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
             return "redirect:/registrar-prioridade";
@@ -72,21 +73,31 @@ public class PriorityController {
     }
 
     @PutMapping("/editar-prioridade/{id}")
-    public String updatePriority(@PathVariable Long id, @ModelAttribute PriorityDTO priority){
-        priorityService.updateById(priority, id);
-        return "redirect:/listar-prioridade";
+    public String updatePriority(@PathVariable Long id, @ModelAttribute PriorityDTO priority, RedirectAttributes redirectAttributes) throws Exception{
+        try {
+            PriorityDTO priorityDTO = priorityService.updateById(priority, id);
+            redirectAttributes.addAttribute("successEdit", true);
+            return "redirect:/listar-prioridade";
+        }catch (Exception e) {
+            redirectAttributes.addAttribute("errorEdit", true);
+        }
+            return "redirect:/editar-prioridade/{id}";
     }
 
     @DeleteMapping("/editar-prioridade/{priorityId}")
-    public String deletePriority(@PathVariable Long  priorityId, Model model, RedirectAttributes redirectAttributes) {
-        List<TicketDTO> tickets = ticketService.showAllTicketsWithPriority(priorityId);
-        try{
-            if(tickets.isEmpty())
-               priorityService.deleteById(priorityId);
-            return "redirect:/listar-prioridade";
+    public String deletePriority(@PathVariable Long priorityId, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            List<TicketDTO> tickets = ticketService.showAllTicketsWithPriority(priorityId);
+            if (tickets.isEmpty()) {
+                priorityService.deleteById(priorityId);
+                redirectAttributes.addAttribute("successDelete", true);
+                return "redirect:/listar-prioridade";
+            }else {
+                redirectAttributes.addAttribute("errorDelete", true);
+            }
         }catch (Exception e) {
-            redirectAttributes.addAttribute("error", true);
-            return "/listar-prioridade";
+            redirectAttributes.addAttribute("errorDelete", true);
         }
+        return "/listar-prioridade";
     }
 }
