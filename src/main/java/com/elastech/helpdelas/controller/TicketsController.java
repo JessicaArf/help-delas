@@ -65,11 +65,6 @@ public class TicketsController {
         // pegando a lista de tickets pelo id do usuário
         List<TicketDTO> tickets = ticketService.showTicketsByUser(userBasic.getUserId());
 
-        // Verifica se a lista de tickets é nula ou vazia
-        if (tickets == null || tickets.isEmpty()) {
-            // Se não houver tickets, cria uma lista vazia
-            tickets = new ArrayList<>();
-        }
         // Adiciona os tickets ao modelo
         model.addAttribute("tickets", tickets);
         return "user/dashboard-user";
@@ -114,10 +109,6 @@ public class TicketsController {
         UserDTO techUser = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("name", techUser.getName());
         List<TicketDTO> tickets = ticketService.showTicketsAvailable();
-        if (tickets == null || tickets.isEmpty()) {
-
-            tickets = new ArrayList<>();
-        }
         model.addAttribute("ticketsAvailable", tickets);
         return "tech/dashboard-tech";
     }
@@ -128,10 +119,6 @@ public class TicketsController {
         model.addAttribute("name", techUser.getName());
         List<TicketDTO> tickets = ticketService.showTicketsAssigned(techUser.getUserId());
 
-        if (tickets == null || tickets.isEmpty()) {
-
-            tickets = new ArrayList<>();
-        }
         model.addAttribute("ticketsAssigned", tickets);
         return "tech/dashboard-tech-assigned";
     }

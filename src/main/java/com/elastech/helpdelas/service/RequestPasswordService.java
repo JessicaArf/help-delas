@@ -78,7 +78,6 @@ public class RequestPasswordService {
                 + "<br>"
                 + "Ignore esse email se você não fez essa solicitação.";
         helper.setText(emailContent, true);
-        helper.setFrom("helpdelas@outlook.com", "HelpDelas Suporte");
         helper.setSubject(subject);
         helper.setTo(to);
         javaMailSender.send(message);
@@ -106,7 +105,6 @@ public class RequestPasswordService {
         } else {
             return "/default/reset-password";
         }
-
     }
 
 }

@@ -14,6 +14,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,17 +45,17 @@ public class TicketService {
 
     public List<TicketDTO> showTicketsByUser(Long userBasicId) {
         List<TicketModel> tickets = ticketRepository.findByUserBasicUserId(userBasicId);
-        return tickets.stream().map(TicketDTO::new).collect(Collectors.toList());
+        return checkIfListEmpty(tickets);
     }
 
     public List<TicketDTO> showTicketsAvailable() {
         List<TicketModel> tickets = ticketRepository.findByUserTechUserIdIsNull();
-        return tickets.stream().map(TicketDTO::new).collect(Collectors.toList());
+        return checkIfListEmpty(tickets);
     }
 
     public List<TicketDTO> showTicketsAssigned(Long userTechId) {
         List<TicketModel> tickets = ticketRepository.findByUserTechUserId(userTechId);
-        return tickets.stream().map(TicketDTO::new).collect(Collectors.toList());
+        return checkIfListEmpty(tickets);
     }
 
     public TicketDTO showTicketById(Long id) {
@@ -118,16 +119,23 @@ public class TicketService {
 
     public List<TicketDTO> showAllTickets() {
         List<TicketModel> tickets = ticketRepository.findAll();
-        return tickets.stream().map(TicketDTO::new).collect(Collectors.toList());
+        return checkIfListEmpty(tickets);
     }
 
     public List<TicketDTO> showAllTicketsTech() {
         List<TicketModel> tickets = ticketRepository.findAllByUserTechUserIdIsNotNull();
-        return tickets.stream().map(TicketDTO::new).collect(Collectors.toList());
+        return checkIfListEmpty(tickets);
     }
 
     public List<TicketDTO> showAllTicketsWithPriority(Long priorityId) {
         List<TicketModel> tickets = ticketRepository.findByPriorityPriorityId(priorityId);
+        return checkIfListEmpty(tickets);
+    }
+
+    private List<TicketDTO> checkIfListEmpty(List<TicketModel> tickets) {
+        if (tickets == null || tickets.isEmpty()) {
+            return Collections.emptyList();
+        }
         return tickets.stream().map(TicketDTO::new).collect(Collectors.toList());
     }
 
@@ -135,7 +143,6 @@ public class TicketService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         helper.setText(emailContent, true);
-        helper.setFrom("helpdelas@outlook.com", "HelpDelas Sistema");
         helper.setSubject(subject);
         helper.setTo(to);
         javaMailSender.send(message);
