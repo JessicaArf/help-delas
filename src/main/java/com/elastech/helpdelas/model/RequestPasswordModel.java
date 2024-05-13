@@ -1,22 +1,21 @@
 package com.elastech.helpdelas.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
 @Table(name = "TB_PASSWORD_TOKEN")
 public class RequestPasswordModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tokenId;
+    private Long requestId;
 
     private String token;
     @ManyToOne

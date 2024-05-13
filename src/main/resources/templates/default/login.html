@@ -24,6 +24,11 @@
                                         <a href="/"><img src="../portfolio/assets/img/logo.svg"  alt="logo" class="img-logo"/></a>
                                     </div>
                                     <div class="card-body">
+                                        <div th:if="${param.senhaAlterada}">
+                                            <div class="alert alert-success" role="alert">
+                                                Senha alterada com sucesso!
+                                            </div>
+                                        </div>
                                         <form th:action="@{/login}" method="post">
                                             <div class="form-floating mb-3">
                                                 <input name="username" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
