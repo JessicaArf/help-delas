@@ -191,6 +191,15 @@ public class TicketsController {
         model.addAttribute("allTicketsNotAssigned", allTicketsNotAssigned);
         return "admin/all-tickets-no-assigned";
     }
+
+    @GetMapping("/admin/chamado/{ticketId}")
+    public String showOneTicketAdmin(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        TicketDTO ticket = ticketService.showTicketById(ticketId);
+        UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", userTech.getName());
+        model.addAttribute("ticket", ticket);
+        return "ticket/view-one-ticket-admin";
+    }
 }
 
 
