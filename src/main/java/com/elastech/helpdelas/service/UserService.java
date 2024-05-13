@@ -33,15 +33,10 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public UserDTO save(UserDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+    public UserDTO save(UserDTO userDTO) throws Exception {
         Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
-        RoleModel role = null;
+        RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
         if(!byEmail.isPresent()){
-            if(userDetails !=null){
-                role = roleRepository.findByName(RoleModel.Values.TECH.name());
-            }else{
-                role = roleRepository.findByName(RoleModel.Values.USER.name());
-            }
             userDTO.setRole(role);
             userDTO.setSector(userDTO.getSector());
             userDTO.setStatus("ATIVO");
@@ -50,7 +45,23 @@ public class UserService {
             userRepository.save(userModel);
             return new UserDTO(userModel);
         } else {
-            throw new Exception("Já existe um cliente cadastrado com esse e-mail.");
+            throw new Exception("Já existe um usuário cadastrado com esse e-mail.");
+        }
+    }
+
+    public UserDTO saveTech(UserDTO userDTO) throws Exception {
+        Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
+        RoleModel role = roleRepository.findByName(RoleModel.Values.TECH.name());
+        if(!byEmail.isPresent()){
+            userDTO.setRole(role);
+            userDTO.setSector(userDTO.getSector());
+            userDTO.setStatus("ATIVO");
+            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            UserModel userModel = UserDTO.convert(userDTO);
+            userRepository.save(userModel);
+            return new UserDTO(userModel);
+        } else {
+            throw new Exception("Já existe um usuário cadastrado com esse e-mail.");
         }
     }
 

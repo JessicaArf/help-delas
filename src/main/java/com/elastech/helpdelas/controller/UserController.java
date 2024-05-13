@@ -40,9 +40,9 @@ public class UserController {
     }
 
     @PostMapping("/salvar-usuario")
-    public String register(UserDTO userDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+    public String register(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
         try{
-            userService.save(userDTO, userDetails);
+            userService.save(userDTO);
             return "redirect:/login";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
@@ -203,9 +203,9 @@ public class UserController {
     }
 
     @PostMapping("/cadastrar-tecnico")
-    public String registerTech(UserDTO userDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+    public String registerTech(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
         try {
-            userService.save(userDTO, userDetails);
+            userService.saveTech(userDTO);
             redirectAttributes.addAttribute("success", true);
             return "redirect:/cadastrar-tecnico";
         } catch (Exception e) {
