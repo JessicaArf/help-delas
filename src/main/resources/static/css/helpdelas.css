@@ -1,90 +1,89 @@
 :root {
-    --color-primary: #54b69b;
-    --color-hover: #5ac3a6;
+    --color-primary: #54b69b; /* Variavel das cores principais */
+    --color-hover: #5ac3a6; /* Variavel da cor quando passa o mouse  */
 }
 
 .body {
     --bs-bg-opacity: 1;
-    background-color: #FFC901 !important;
+    background-color: #FFC901 !important; /* Cor de fundo */
     background-image: linear-gradient(to bottom right, #f6df3c1f, #FFFFFF); /* Degradê diagonal */
-    background-size: 100% 100%; /* Isso fará com que o degradê cubra metade da altura do elemento pai */
+    background-size: 100% 100%; /* Isso fará com que o degradê cubra 100% da altura do elemento pai */
 }
 
 .container-img-logo{
-    display: flex;
-    justify-content: center;
+    display: flex; /* Responsividade */
+    justify-content: center; /* Alinhando o logo no centro do elemento */
 }
 
 .img-logo {
-    margin-top: 1rem;
-    width: 12rem;
-    display: inline-block;
+    width: 12rem; /* Tamanhado do logo */
+    display: inline-block; /* Responsividade */
 }
 
 .navbar-logo {
-    font-family: "Shrikhand", serif;
-    font-weight: 400;
-    font-style: normal;
+    font-family: "Shrikhand", serif; /* Tipo de fonte usada */
+    font-weight: 400; /* Peso da fonte */
+    font-style: normal; /* Estilo normal da fonte */
 }
 
 .btn-login {
-    padding: 0.7rem 3rem;
-    background-color: var(--color-primary) !important;
-    border: 1px solid var(--color-primary) !important;
-    border-radius: 5px;
-    color: #ffffff;
-    text-decoration: none;
+    padding: 0.7rem 3rem; /* Espaçamento interno */
+    background-color: var(--color-primary) !important; /* Cor de fundo */
+    border: 1px solid var(--color-primary) !important; /* Borda solida com cor */
+    border-radius: 5px; /* Borda arredondada */
+    color: #ffffff; /* Cor da letra */
+    text-decoration: none; /* Remove sublinhado */
 }
 
 .btn-login:hover {
-    background-color: var(--color-hover) !important;
-    color: #ffffff;
+    background-color: var(--color-hover) !important; /* Cor de fundo ao passar o mouse */
+    color: #ffffff; /* Cor da letra */
 }
 
 .card-dash {
-    margin-top: 2rem;
-    background: linear-gradient(10deg, #f5de3e 3%, #a6dbd9 88%, #1bb99a);
-    font-weight: bold;
-    color:rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    margin-top: 2rem; /* Espaçamento externo apenas em cima */
+    background: linear-gradient(10deg, #f5de3e 3%, #a6dbd9 88%, #1bb99a); /* Cor da letra */
+    font-weight: bold; /* Fonte em negrito */
+    color:rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important; /* Cor da letra */
 }
 
 .card-dash a {
-    color:rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    color:rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important; /* Cor da letra */
 }
 
 .btn-dash {
-    background-color: var(--color-primary);
-    border: 1px solid var(--color-primary);
-    border-radius: 5px;
-    color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
-    text-decoration: none;
-    font-weight: 500;
-    padding:3px;
+    background-color: var(--color-primary); /* Cor de fundo */
+    border: 1px solid var(--color-primary); /* Borda solida com cor */
+    border-radius: 5px; /* Borda arredondada */
+    color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important; /* Cor da letra */
+    text-decoration: none; /* Remove sublinhado */
+    font-weight: 500; /* Peso da fonte deixando mais forte */
+    padding:3px; /* Espaçamento interno */
 }
 
 .btn-dash:hover {
-    background-color: var(--color-hover);
-    color: #ffffff;
+    background-color: var(--color-hover); /* Cor de fundo ao passar o mouse */
+    color: #ffffff; /* Cor da letra */
 }
 
 .btn-delete {
-    padding: 0.7rem 5rem;
-    background-color: #b81414;
-    border: 1px solid #b81414;
-    border-radius: 5px;
-    color: #ffffff;
-    text-decoration: none;
-    margin-left: 2rem;
+    padding: 0.7rem 5rem; /* Espaçamento interno do botão */
+    background-color: #b81414; /* Cor de fundo do botão */
+    border: 1px solid #b81414; /* Borda solida com cor*/
+    border-radius: 5px; /* Bordar arredondada */
+    color: #ffffff; /* Cor da letra do botão */
+    text-decoration: none; /* Remove sublinhado */
+    margin-left: 2rem; /* Aplicando margem somente na esquerda do botão */
 }
 
 #container-btn{
-    display: flex;
-    flex-direction: row;
+    display: flex; /* Deixar responsivo */
+    flex-direction: row; /* Deixando o botão na direção da linha*/
 }
 
 .color-card {
-    background: linear-gradient(47.09deg, var(--color-primary) .72%, rgba(166, 219, 217, .4) 72.48%) !important;
-    padding: 1.3rem;
+    background: linear-gradient(47.09deg, var(--color-primary) .72%, rgba(166, 219, 217, .4) 72.48%) !important;/* Degradrê na horizontal */
+    padding: 1.3rem;/* Espaçamento interno do card */
 }
 
 .disabled-link {

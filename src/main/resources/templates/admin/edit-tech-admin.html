@@ -98,7 +98,7 @@
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Meus Dados</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/dashboard-admin">Início</a></li>
+                    <li class="breadcrumb-item"><a href="/todos-usuarios">Voltar</a></li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-header">
@@ -141,9 +141,9 @@
                                     <div class="d-flex align-items-center justify-content-center mt-4 mb-0"><button class="btn btn-primary" type="submit" >Salvar Alterações</button></div>
                                 </div>
                             </div>
-                            <div th:if="${param.error}">
+                            <div class="mt-4 mb-0" th:if="${param.errorEdit}">
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    Não foi possível confirmar as alterações.
+                                    Não foi possível confirmar as alterações, pois o e-mail fornecido já está em uso.
                                 </div>
                             </div>
                         </form>

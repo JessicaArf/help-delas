@@ -98,7 +98,7 @@
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Meus Dados</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/dashboard-admin">Início</a></li>
+                    <li class="breadcrumb-item"><a href="/todos-usuarios">Voltar</a></li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-header">
@@ -136,6 +136,11 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="mt-4 mb-0" th:if="${param.successEdit}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Informações alteradas com sucesso.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

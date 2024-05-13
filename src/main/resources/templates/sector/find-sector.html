@@ -29,8 +29,6 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/mostrar-usuario">Meus Dados</a></li>
-                <li><hr class="dropdown-divider" /></li>
                 <li>
                     <form action="/logout" method="post">
                         <button class="dropdown-item" type="submit">Sair</button>
@@ -168,12 +166,27 @@
                                 </td>-->
                             </tr>
                             </tbody>
-                            <div th:if="${param.error}">
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    Setor não pode ser excluído, pos já está em uso.
-                                </div>
-                            </div>
                         </table>
+                        <div class="mt-4 mb-0" th:if="${param.success}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Setor cadastrado com sucesso.
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-0" th:if="${param.successEdit}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Setor alterada com sucesso.
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-0" th:if="${param.successDelete}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Setor excluído com sucesso.
+                            </div>
+                        </div>
+                        <div th:if="${param.errorDelete}">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Ocorreu um erro ao excluir o setor. Certifique-se de que não há usuários associados a este setor.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
