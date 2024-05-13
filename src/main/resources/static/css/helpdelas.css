@@ -93,5 +93,8 @@
     cursor: default; /* Remove o cursor de link */
 }
 
-
+.icon {
+background-color: transparent;
+border: none;
+}
 

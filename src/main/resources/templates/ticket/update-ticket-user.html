@@ -124,14 +124,8 @@
                                     <input class="form-control" id="inputSubject" type="text" th:field="*{subject}"/>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="inputDepartament">Setor:</label>
-                                    <select class="form-control" id="inputDepartament" th:field="*{sector}">
-                                        <option th:each="sector : ${sector}"
-                                                th:value="${sector.sectorId}"
-                                                th:text="${sector.nameSector}"
-                                                th:selected="${sector.sectorId == user.sector.sectorId}">
-                                        </option>
-                                    </select>
+                                    <label for="inputSector">Setor:</label>
+                                    <input class="form-control" id="inputSector" type="text" th:field="*{sector.nameSector}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
