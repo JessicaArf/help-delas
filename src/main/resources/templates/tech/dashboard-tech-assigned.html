@@ -119,6 +119,7 @@
                                 <th>Ultima atualização</th>
                                 <th>Técnico responsável</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -136,6 +137,11 @@
                                 <td>
                                     <form th:action="@{'/tecnico/editar-chamado/' + ${ticket.ticketId}}" method="get">
                                         <button id="edit-btn" type="submit" class="btn-dash">Editar</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form th:action="@{'/tecnico/chamado/' + ${ticket.ticketId}}" method="get">
+                                        <button id="view-btn" type="submit" class="btn-dash">Visualizar</button>
                                     </form>
                                 </td>
                             </tr>

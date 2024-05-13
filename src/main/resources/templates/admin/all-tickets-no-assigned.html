@@ -26,10 +26,13 @@
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="/mostrar-usuario">Meus Dados</a></li>
-                <li><hr class="dropdown-divider" /></li>
+                <li>
+                    <hr class="dropdown-divider"/>
+                </li>
                 <li>
                     <form action="/logout" method="post">
                         <button class="dropdown-item" type="submit">Sair</button>
@@ -50,42 +53,50 @@
                         Dashboard
                     </a>
                     <div class="sb-sidenav-menu-heading">Interface</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseTicket" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#pagesCollapseTicket" aria-expanded="false" aria-controls="pagesCollapseAuth">
                         Chamados
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="pagesCollapseTicket" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                    <div class="collapse" id="pagesCollapseTicket" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordionPages">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="/admin/todos-chamados">Visualizar</a>
                             <a class="nav-link" href="/admin/chamados-tecnico">Atribuídos</a>
                             <a class="nav-link" href="/admin/chamados-nao-atribuido">Não Atribuídos</a>
                         </nav>
                     </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseUser" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseUser"
+                       aria-expanded="false" aria-controls="pagesCollapseAuth">
                         Usuários
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="pagesCollapseUser" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                    <div class="collapse" id="pagesCollapseUser" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordionPages">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="/cadastrar-tecnico">Cadastrar Técnico</a>
                             <a class="nav-link" href="/todos-usuarios">Listar Usuários</a>
                         </nav>
                     </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseSector" aria-expanded="false" aria-controls="pagesCollapseError">
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#pagesCollapseSector" aria-expanded="false" aria-controls="pagesCollapseError">
                         Setor
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="pagesCollapseSector" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                    <div class="collapse" id="pagesCollapseSector" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordionPages">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="/registrar-setor">Cadastrar Setor</a>
                             <a class="nav-link" href="/listar-setor">Visualizar</a>
                         </nav>
                     </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapsePriority" aria-expanded="false" aria-controls="pagesCollapseError">
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#pagesCollapsePriority" aria-expanded="false" aria-controls="pagesCollapseError">
                         Prioridade
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="pagesCollapsePriority" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                    <div class="collapse" id="pagesCollapsePriority" aria-labelledby="headingOne"
+                         data-bs-parent="#sidenavAccordionPages">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="/registrar-prioridade">Cadastrar Prioridade</a>
                             <a class="nav-link" href="/listar-prioridade">Visualizar</a>

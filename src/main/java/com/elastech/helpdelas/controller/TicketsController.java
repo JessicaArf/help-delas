@@ -93,12 +93,12 @@ public class TicketsController {
     }
 
     @GetMapping("/usuario/chamado/{ticketId}")
-    public String showOneTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String showOneTicketUser(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         TicketDTO ticket = ticketService.showTicketById(ticketId);
-        UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
-        model.addAttribute("name", userTech.getName());
+        UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", userBasic.getName());
         model.addAttribute("ticket", ticket);
-        return "ticket/view-one-ticket";
+        return "ticket/view-one-ticket-user";
     }
 
     @DeleteMapping("/usuario/chamado/{ticketId}")
@@ -132,6 +132,15 @@ public class TicketsController {
         }
         model.addAttribute("ticketsAssigned", tickets);
         return "tech/dashboard-tech-assigned";
+    }
+
+    @GetMapping("/tecnico/chamado/{ticketId}")
+    public String showOneTicketTech(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        TicketDTO ticket = ticketService.showTicketById(ticketId);
+        UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", userTech.getName());
+        model.addAttribute("ticket", ticket);
+        return "ticket/view-one-ticket-tech";
     }
 
     @GetMapping("/tecnico/editar-chamado/{ticketId}")
