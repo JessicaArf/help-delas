@@ -1,9 +1,12 @@
 package com.elastech.helpdelas.controller;
 
 
+import com.elastech.helpdelas.dtos.PriorityDTO;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
+import com.elastech.helpdelas.service.PriorityService;
+import com.elastech.helpdelas.service.SectorService;
 import com.elastech.helpdelas.service.TicketService;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +29,16 @@ public class TicketsController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PriorityService priorityService;
+
+    @Autowired
+    private SectorService sectorService;
+
     @GetMapping("/criar-chamado")
     public String showPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO basicUser = userService.getUserByEmail(userDetails.getUsername());
-        List<SectorDTO> sectors = userService.findAllSector();
+        List<SectorDTO> sectors = sectorService.findAllSector();
         model.addAttribute("user", basicUser);
         model.addAttribute("sector", basicUser.getSector());
         return "ticket/create-ticket";
@@ -129,8 +138,10 @@ public class TicketsController {
     public String showTechEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         TicketDTO ticket = ticketService.showTicketById(ticketId);
         UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
-        List<SectorDTO> sectors = userService.findAllSector();
+        List<SectorDTO> sectors = sectorService.findAllSector();
+        List<PriorityDTO> priorities = priorityService.findAllPriority();
 
+        model.addAttribute("priorities", priorities);
         model.addAttribute("sectors", sectors);
         model.addAttribute("name", userTech.getName());
         model.addAttribute("ticket", ticket);

@@ -115,6 +115,7 @@
                                 <th>Assunto</th>
                                 <th>Descrição</th>
                                 <th>Setor</th>
+                                <th>Prioridade</th>
                                 <th>Status</th>
                                 <th>Última atualização</th>
                                 <th>Técnico responsável</th>
@@ -129,6 +130,7 @@
                                 <td th:text="${ticket.subject}"></td>
                                 <td th:text="${ticket.description}"></td>
                                 <td th:text="${ticket.sector != null ? ticket.sector.nameSector : '-'}"></td>
+                                <td th:text="${ticket.priority != null  ? ticket.priority.namePriority : 'Não atribuído'}"></td>
                                 <td th:text="${ticket.status.description}"></td>
                                 <td th:text="${#dates.format(ticket.updatedTimestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
                                 <td th:text="${ticket.userTech != null ? ticket.userTech.name : 'Não atribuído'}"></td>

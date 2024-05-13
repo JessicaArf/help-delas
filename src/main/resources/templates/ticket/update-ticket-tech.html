@@ -25,10 +25,13 @@
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="/mostrar-tecnico">Meus Dados</a></li>
-                <li><hr class="dropdown-divider"/></li>
+                <li>
+                    <hr class="dropdown-divider"/>
+                </li>
                 <li>
                     <form action="/logout" method="post">
                         <button class="dropdown-item" type="submit">Sair</button>
@@ -135,13 +138,21 @@
                                     <input class="form-control" id="inputSubject" type="text"
                                            th:value="${ticket.subject}" th:disabled="true"/>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <label for="status">Status:</label>
                                     <select class="form-control" id="status" th:field="*{status}">
                                         <option th:each="status : ${ticket.status.values()}"
                                                 th:value="${status}"
                                                 th:text="${status.description}">
                                         </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="inputPriority">Prioridade:</label>
+                                    <select class="form-control" id="inputPriority" th:field="*{priority}">
+                                        <option th:each="priority : ${priorities}"
+                                                th:value="${priority.priorityId}"
+                                                th:text="${priority.namePriority}"></option>
                                     </select>
                                 </div>
                             </div>
@@ -164,12 +175,14 @@
                                 <div class="col-md-6">
                                     <label for="inputDescription">Descrição:</label>
                                     <textarea class="form-control" id="inputDescription" type="text" rows="3"
-                                              th:value="${ticket.description}" th:disabled="true" th:field="*{description}">
+                                              th:value="${ticket.description}" th:disabled="true"
+                                              th:field="*{description}">
                                     </textarea>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputAnnotation">Anotações:</label>
-                                    <textarea class="form-control" id="inputAnnotation" type="text" rows="3" th:field="*{annotation}"
+                                    <textarea class="form-control" id="inputAnnotation" type="text" rows="3"
+                                              th:field="*{annotation}"
                                               th:value="${ticket.annotation}">
                                     </textarea>
                                 </div>

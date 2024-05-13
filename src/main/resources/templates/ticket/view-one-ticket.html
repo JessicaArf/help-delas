@@ -125,20 +125,28 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label for="inputSector">Setor:</label>
                                     <input class="form-control" id="inputSector" type="text"
                                            th:value="${ticket.sector.nameSector}" th:disabled="true"/>
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="inputSubject">Assunto:</label>
-                                    <input class="form-control" id="inputSubject" type="text"
-                                           th:value="${ticket.subject}" th:disabled="true"/>
-                                </div>
-                                <div class="col-md-4">
+
+                                <div class="col-md-6">
                                     <label for="status">Status:</label>
                                     <input class="form-control" id="status" type="text"
                                            th:value="${ticket.status.description}" th:disabled="true"/>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="inputSubject">Assunto:</label>
+                                <input class="form-control" id="inputSubject" type="text"
+                                       th:value="${ticket.subject}" th:disabled="true"/>
+                            </div>
+                                <div class="col-md-6">
+                                    <label for="inputSubject">Prioridade:</label>
+                                    <input class="form-control" id="inputPriority" type="text"
+                                           th:value="${ticket.priority != null  ? ticket.priority.namePriority : 'Não atribuído'}" th:disabled="true"/>
                                 </div>
                             </div>
                             <div class="row mb-3">

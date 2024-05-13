@@ -1,5 +1,6 @@
 package com.elastech.helpdelas.dtos;
 
+import com.elastech.helpdelas.model.PriorityModel;
 import com.elastech.helpdelas.model.SectorModel;
 import com.elastech.helpdelas.model.TicketModel;
 import com.elastech.helpdelas.model.UserModel;
@@ -19,9 +20,7 @@ public class TicketDTO {
     private TicketModel.TicketStatus status;
     private String annotation;
     private SectorModel sector;
-    /*
     private PriorityModel priority;
-     */
     private UserModel userBasic;
     private UserModel userTech;
     private Instant creationTimestamp;
@@ -38,6 +37,7 @@ public class TicketDTO {
         this.status = ticketModel.getStatus();
         this.annotation = ticketModel.getAnnotation();
         this.sector = ticketModel.getSector();
+        this.priority = ticketModel.getPriority();
         this.userBasic = ticketModel.getUserBasic();
         this.userTech = ticketModel.getUserTech();
         this.creationTimestamp = ticketModel.getCreationTimestamp();
@@ -52,6 +52,7 @@ public class TicketDTO {
         ticket.setStatus(ticketDTO.getStatus());
         ticket.setAnnotation(ticketDTO.getAnnotation());
         ticket.setSector(ticketDTO.getSector());
+        ticket.setPriority(ticketDTO.getPriority());
         ticket.setUserBasic(ticketDTO.getUserBasic());
         ticket.setUserTech(ticketDTO.getUserTech());
         ticket.setCreationTimestamp(ticketDTO.getCreationTimestamp());
