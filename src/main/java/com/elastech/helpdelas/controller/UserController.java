@@ -88,7 +88,7 @@ public class UserController {
             model.addAttribute("name", login.getName());
             return "admin/edit-tech-admin";
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return "admin/edit-tech-admin";
         }
     }
