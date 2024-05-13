@@ -1,9 +1,12 @@
 package com.elastech.helpdelas.controller;
 
 
+import com.elastech.helpdelas.dtos.PriorityDTO;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
+import com.elastech.helpdelas.service.PriorityService;
+import com.elastech.helpdelas.service.SectorService;
 import com.elastech.helpdelas.service.TicketService;
 import com.elastech.helpdelas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +29,16 @@ public class TicketsController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PriorityService priorityService;
+
+    @Autowired
+    private SectorService sectorService;
+
     @GetMapping("/criar-chamado")
     public String showPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO basicUser = userService.getUserByEmail(userDetails.getUsername());
-        List<SectorDTO> sectors = userService.findAllSector();
+        List<SectorDTO> sectors = sectorService.findAllSector();
         model.addAttribute("user", basicUser);
         model.addAttribute("sector", basicUser.getSector());
         return "ticket/create-ticket";
@@ -84,12 +93,12 @@ public class TicketsController {
     }
 
     @GetMapping("/usuario/chamado/{ticketId}")
-    public String showOneTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String showOneTicketUser(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         TicketDTO ticket = ticketService.showTicketById(ticketId);
-        UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
-        model.addAttribute("name", userTech.getName());
+        UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", userBasic.getName());
         model.addAttribute("ticket", ticket);
-        return "ticket/view-one-ticket";
+        return "ticket/view-one-ticket-user";
     }
 
     @DeleteMapping("/usuario/chamado/{ticketId}")
@@ -125,12 +134,23 @@ public class TicketsController {
         return "tech/dashboard-tech-assigned";
     }
 
+    @GetMapping("/tecnico/chamado/{ticketId}")
+    public String showOneTicketTech(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        TicketDTO ticket = ticketService.showTicketById(ticketId);
+        UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", userTech.getName());
+        model.addAttribute("ticket", ticket);
+        return "ticket/view-one-ticket-tech";
+    }
+
     @GetMapping("/tecnico/editar-chamado/{ticketId}")
     public String showTechEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         TicketDTO ticket = ticketService.showTicketById(ticketId);
         UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
-        List<SectorDTO> sectors = userService.findAllSector();
+        List<SectorDTO> sectors = sectorService.findAllSector();
+        List<PriorityDTO> priorities = priorityService.findAllPriority();
 
+        model.addAttribute("priorities", priorities);
         model.addAttribute("sectors", sectors);
         model.addAttribute("name", userTech.getName());
         model.addAttribute("ticket", ticket);
@@ -170,6 +190,15 @@ public class TicketsController {
         List<TicketDTO> allTicketsNotAssigned = ticketService.showTicketsAvailable();
         model.addAttribute("allTicketsNotAssigned", allTicketsNotAssigned);
         return "admin/all-tickets-no-assigned";
+    }
+
+    @GetMapping("/admin/chamado/{ticketId}")
+    public String showOneTicketAdmin(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        TicketDTO ticket = ticketService.showTicketById(ticketId);
+        UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", userTech.getName());
+        model.addAttribute("ticket", ticket);
+        return "ticket/view-one-ticket-admin";
     }
 }
 

@@ -18,12 +18,14 @@ public class TicketService {
 
     @Autowired
     private TicketRepository ticketRepository;
+
     @Autowired
     private UserService userService;
 
     public TicketDTO createTicket(TicketDTO ticketDTO, UserDTO userBasic) {
         UserModel userBasicModel = UserDTO.convert(userBasic);
         ticketDTO.setUserBasic(userBasicModel);
+        ticketDTO.setSector(userBasicModel.getSector());
         ticketDTO.setStatus(TicketModel.TicketStatus.OPEN);
         TicketModel ticketModel = TicketDTO.convert(ticketDTO);
         ticketRepository.save(ticketModel);
@@ -85,6 +87,7 @@ public class TicketService {
 
         ticketModel.get().setStatus(updateTicket.getStatus());
         ticketModel.get().setSector(updateTicket.getSector());
+        ticketModel.get().setPriority(updateTicket.getPriority());
         ticketModel.get().setAnnotation(updateTicket.getAnnotation());
         ticketModel.get().setUserTech(userTechModel);
         ticketRepository.save(ticketModel.get());

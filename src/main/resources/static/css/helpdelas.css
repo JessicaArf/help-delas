@@ -87,5 +87,8 @@
     padding: 1.3rem;
 }
 
-
+.icon {
+background-color: transparent;
+border: none;
+}
 

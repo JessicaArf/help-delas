@@ -21,6 +21,7 @@ public class PriorityModel {
 
     @Column(length = 1000)
     private String description;
+
 }
 
 
