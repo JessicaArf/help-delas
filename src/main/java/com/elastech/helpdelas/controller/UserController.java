@@ -151,12 +151,14 @@ public class UserController {
     }
 
     @GetMapping("/desativar-usuario/{id}")
-    public String disableById(@PathVariable Long id, Model model){
+    public String disableById(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
+        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         try {
             userService.updateStatus(id, "desativar");
             List<UserDTO> users = userService.findAll();
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
+            model.addAttribute("name", userDb.getName());
             return "admin/showAll-user";
         } catch (Exception e) {
             System.out.println(e);
@@ -165,9 +167,11 @@ public class UserController {
     }
 
     @GetMapping("/ativar-usuario/{id}")
-    public String activateById(@PathVariable Long id, Model model){
+    public String activateById(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
+        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         try {
             userService.updateStatus(id, "ativar");
+            model.addAttribute("name", userDb.getName());
             List<UserDTO> users = userService.findAll();
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
@@ -206,7 +210,7 @@ public class UserController {
         try {
             userService.save(userDTO, userDetails);
             redirectAttributes.addAttribute("success", true);
-            return "redirect:/dashboard-admin";
+            return "redirect:/cadastrar-tecnico";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
             return "redirect:/cadastrar-tecnico";
