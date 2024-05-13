@@ -9,6 +9,7 @@
     <title>HelpDelas</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/helpdelas.css" rel="stylesheet"/>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
@@ -118,7 +119,7 @@
                                 <th>Status </th>
                                 <th>Data de Criação</th>
                                 <th>Última Atualização</th>
-                                <!--<th> </th>-->
+                                <th> </th>
                                 <th> </th>
                                 <th> </th>
                                 <th> </th>
@@ -137,9 +138,31 @@
                                     <td><a th:href="@{'/desativar-usuario/' + ${user.userId}}" title="Desativar"><i class="fas fa-ban"></i></a></td>
                                     <td><a th:href="@{'/ativar-usuario/' + ${user.userId}}" title="Ativar"><i class="fas fa-check"></i></a></td>
                                     <td><a th:href="@{'/mostrar-usuario/' + ${user.userId}}" title="Visualizar"><i class="fas fa-eye"></i></a></td>
+                                    <td th:if="${user.role.roleId == 3}"><a href="#" title="Editar" ><i class="fas fa-edit disabled-link"></i></a></td>
+                                    <td th:unless="${user.role.roleId == 3}"><a th:href="@{'/editar-tecnico/' + ${user.userId}}" title="Editar" ><i class="fas fa-edit"></i></a></td>
                                 </tr>
                             </tbody>
                         </table>
+                        <div th:if="${param.successActive}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Técnico ativado com sucesso.
+                            </div>
+                        </div>
+                        <div th:if="${param.errorActive}">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Este técnico já está ativado. Não é possível ativá-lo novamente.
+                            </div>
+                        </div>
+                        <div th:if="${param.successDisable}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Técnico desativado com sucesso.
+                            </div>
+                        </div>
+                        <div th:if="${param.errorDisable}">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                Este técnico já está desativado. Não é possível desativá-lo novamente.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

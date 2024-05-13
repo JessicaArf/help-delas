@@ -27,8 +27,9 @@ public class SectorController {
     @PostMapping("/registrar-setor")
     public String save(SectorDTO dto, RedirectAttributes redirectAttributes) throws Exception {
         try{
-            this.sectorService.save(dto);
-            return "redirect:/dashboard-admin";
+            sectorService.save(dto);
+            redirectAttributes.addAttribute("success", true);
+            return "redirect:/listar-setor";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
             return "redirect:/registrar-setor";
@@ -66,22 +67,30 @@ public class SectorController {
     }
 
     @PutMapping("/editar-setor/{sectorId}")
-    public String SectorUpdate(@PathVariable Long sectorId, @ModelAttribute SectorDTO sector, @AuthenticationPrincipal UserDetails userDetails){
-        SectorDTO sectorDTO = sectorService.updateById(sector, sectorId);
-        return "redirect:/listar-setor";
+    public String SectorUpdate(@PathVariable Long sectorId, @ModelAttribute SectorDTO sector, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes) throws Exception{
+        try{
+            sectorService.updateById(sector, sectorId);
+            redirectAttributes.addAttribute("successEdit", true);
+            return "redirect:/listar-setor";
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("errorEdit", true);
+        }
+        return "redirect:/editar-setor/{sectorId}";
     }
 
     @DeleteMapping("/editar-setor/{sectorId}")
     public String deleteSector(@PathVariable Long  sectorId, Model model, RedirectAttributes redirectAttributes) {
-        List<UserDTO> users = userService.showAllUsersWithSector(sectorId);
-        try{
+        try {
+            List<UserDTO> users = userService.showAllUsersWithSector(sectorId);
             if(users.isEmpty()){
                 sectorService.deleteById(sectorId);
+                redirectAttributes.addAttribute("successDelete", true);
                 return "redirect:/listar-setor";
+            }else {
+                redirectAttributes.addAttribute("errorDelete", true);
             }
-
         }catch (Exception e){
-            redirectAttributes.addAttribute("error", true);
+            redirectAttributes.addAttribute("errorDelete", true);
         }
         return "redirect:/listar-setor";
      }

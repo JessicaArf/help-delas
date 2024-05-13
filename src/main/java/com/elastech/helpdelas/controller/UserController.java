@@ -1,5 +1,6 @@
 package com.elastech.helpdelas.controller;
 
+import com.elastech.helpdelas.dtos.PriorityDTO;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.service.UserService;
@@ -39,9 +40,9 @@ public class UserController {
     }
 
     @PostMapping("/salvar-usuario")
-    public String register(UserDTO userDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+    public String register(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
         try{
-            userService.save(userDTO, userDetails);
+            userService.save(userDTO);
             return "redirect:/login";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
@@ -77,6 +78,22 @@ public class UserController {
         }
     }
 
+    @GetMapping("/editar-tecnico/{id}")
+    public String showEditTech(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
+        try {
+            UserDTO userDb = userService.getUserById(id);
+            List<SectorDTO> sectors = userService.findAllSector();
+            UserDTO login = userService.getUserByEmail(userDetails.getUsername());
+            model.addAttribute("sectors", sectors);
+            model.addAttribute("user", userDb);
+            model.addAttribute("name", login.getName());
+            return "admin/edit-tech-admin";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return "admin/edit-tech-admin";
+        }
+    }
+
     @PutMapping("/editar-usuario")
     public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
@@ -95,6 +112,29 @@ public class UserController {
         }
     }
 
+    @PutMapping("/editar-tecnico/{id}")
+    public String editTech(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, Model model, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
+        UserDTO login = userService.getUserByEmail(userDetails.getUsername());
+        UserDTO userDb = userService.getUserById(id);
+        try {
+            if (userDb != null) {
+                UserDTO userAtualizado = userService.updateUserById(id, userModel);
+                redirectAttributes.addAttribute("successEdit", true);
+                model.addAttribute("user", userAtualizado);
+                model.addAttribute("name", login.getName());
+                return "redirect:/mostrar-usuario/{id}";
+            }else{
+                redirectAttributes.addAttribute("errorEdit", true);
+            }
+            return "redirect:/editar-tecnico/{id}";
+
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("errorEdit", true);
+            model.addAttribute("user", userDb);
+            return "redirect:/editar-tecnico/{id}";
+        }
+    }
+
     @GetMapping("/mostrar-usuario/{id}")
     public String showUserId(@PathVariable Long id, Model model){
         try {
@@ -108,12 +148,14 @@ public class UserController {
     }
 
     @GetMapping("/desativar-usuario/{id}")
-    public String disableById(@PathVariable Long id, Model model){
+    public String disableById(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
+        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         try {
             userService.updateStatus(id, "desativar");
             List<UserDTO> users = userService.findAll();
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
+            model.addAttribute("name", userDb.getName());
             return "admin/showAll-user";
         } catch (Exception e) {
             System.out.println(e);
@@ -122,9 +164,11 @@ public class UserController {
     }
 
     @GetMapping("/ativar-usuario/{id}")
-    public String activateById(@PathVariable Long id, Model model){
+    public String activateById(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
+        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         try {
             userService.updateStatus(id, "ativar");
+            model.addAttribute("name", userDb.getName());
             List<UserDTO> users = userService.findAll();
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
@@ -159,14 +203,14 @@ public class UserController {
     }
 
     @PostMapping("/cadastrar-tecnico")
-    public String registerTech(UserDTO userDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+    public String registerTech(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
         try {
-            userService.save(userDTO, userDetails);
-            return "redirect:/dashboard-admin";
+            userService.saveTech(userDTO);
+            redirectAttributes.addAttribute("success", true);
+            return "redirect:/cadastrar-tecnico";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
-            return "redirect:/dashboard-admin";
+            return "redirect:/cadastrar-tecnico";
         }
     }
-
 }

@@ -6,29 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>HelpDelas</title>
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <title>Charts - SB Admin</title>
     <link href="/css/styles.css" rel="stylesheet" />
+    <script>
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/consultar-chamados", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                document.getElementById("message").innerText = xhr.responseText;
+            } else {
+                console.error('Erro ao chamar a rota:', xhr.status);
+            }
+        }
+    };
+    xhr.send();
+
+    </script>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="/dashboard-admin">HelpDelas</a>
+    <a class="navbar-brand ps-3" href="../user/dashboard-user.html">Start Bootstrap</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-
+    <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+        </div>
     </form>
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li> <form action="/logout" method="post">
-                    <button class="dropdown-item" type="submit">Sair</button>
-                </form></li>
+                <li><a class="dropdown-item" href="#!">Settings</a></li>
+                <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="#!">Logout</a></li>
             </ul>
         </li>
     </ul>
@@ -65,7 +83,7 @@
                             <a class="nav-link" href="/todos-usuarios">Listar Usuários</a>
                         </nav>
                     </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseSector" aria-expanded="false" aria-controls="pagesCollapseError">
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseSector" aria-expanded="false" aria-controls="pagesCollapseSector">
                         Setor
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -75,7 +93,7 @@
                             <a class="nav-link" href="/listar-setor">Visualizar</a>
                         </nav>
                     </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapsePriority" aria-expanded="false" aria-controls="pagesCollapseError">
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapsePriority" aria-expanded="false" aria-controls="pagesCollapsePriority">
                         Prioridade
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -83,6 +101,15 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="/registrar-prioridade">Cadastrar Prioridade</a>
                             <a class="nav-link" href="/listar-prioridade">Visualizar</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseReports" aria-expanded="false" aria-controls="pagesCollapseReports">
+                        Relatório
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="pagesCollapseReports" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="/reports">Visualizar</a>
                         </nav>
                     </div>
                 </div>
@@ -96,50 +123,47 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Meus Dados</h1>
+                <h1 class="mt-4">Charts</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/todos-usuarios">Voltar</a></li>
+                    <li class="breadcrumb-item"><a href="../user/dashboard-user.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Charts</li>
                 </ol>
                 <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-user fa-fw"></i>
-                        Meus Dados
-                    </div>
                     <div class="card-body">
-                        <form action="#" method="post" >
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputFirstName" type="text" name="name" th:disabled="true"  th:value="${user.name}" />
-                                        <label for="inputFirstName">Nome</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input class="form-control" id="inputEmail" type="email" name="email" th:disabled="true"  th:value="${user.email}" />
-                                        <label for="inputEmail">Email</label>
-                                    </div>
-                                </div>
+                        Este relatório visa fornecer uma análise detalhada das soluções dos chamados atendidos e finalizados no sistema.
+                        Ele destaca métricas-chave e indicadores de desempenho que são essenciais para avaliar a eficácia do nosso serviço de suporte.
+                        Número total de chamados atendidos
+                        Tempo médio de resposta
+                        Tempo médio de resolução
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-area me-1"></i>
+                        Area Chart Example
+                    </div>
+                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
+                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar me-1"></i>
+                                Bar Chart Example
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputDepartament" type="text" name="sector" th:disabled="true"  th:value="${(user.sector != null  ? user.sector.nameSector : '')}" />
-                                        <label for="inputSupervisor">Setor</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputSupervisor" type="text" name="supervisor" th:disabled="true"  th:value="${user.supervisor}" />
-                                        <label for="inputSupervisor">Supervisor</label>
-                                    </div>
-                                </div>
+                            <div class="card-body"><canvas id="myBarChart" width="100%" height="50"></canvas></div>
+                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-pie me-1"></i>
+                                Pie Chart Example
                             </div>
-                        </form>
-                        <div class="mt-4 mb-0" th:if="${param.successEdit}">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                Informações alteradas com sucesso.
-                            </div>
+                            <div class="card-body"><canvas id="myPieChart" width="100%" height="50"></canvas></div>
+                            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                         </div>
                     </div>
                 </div>
@@ -148,7 +172,12 @@
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; HelpDelas 2024</div>
+                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -156,7 +185,9 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="/js/scripts.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-<script src="/js/datatables-simple-demo.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="/assets/demo/chart-area-demo.js"></script>
+<script src="/assets/demo/chart-bar-demo.js"></script>
+<script src="/assets/demo/chart-pie-demo.js"></script>
 </body>
 </html>

@@ -37,9 +37,8 @@ public class PriorityService {
     }
 
     public PriorityDTO findById(Long priorityId) {
-        List<PriorityModel> priority = priorityRepository.findAll();
         Optional<PriorityModel> resultado = priorityRepository.findById(priorityId);
-        if(resultado.isEmpty()) {
+       if(resultado.isEmpty()) {
             throw new RuntimeException("setor não encontrado");
         } else {
             return new PriorityDTO(resultado.get());

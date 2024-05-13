@@ -28,8 +28,6 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/mostrar-usuario">Meus Dados</a></li>
-                <li><hr class="dropdown-divider" /></li>
                 <li>
                     <form action="/logout" method="post">
                         <button class="dropdown-item" type="submit">Sair</button>
@@ -131,7 +129,7 @@
                                 </div>
                             </div>
                         </form>
-                        <div th:if="${param.error}">
+                        <div class="mt-4 mb-0" th:if="${param.error}">
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 Setor já cadastrado.
                             </div>
