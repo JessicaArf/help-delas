@@ -1,7 +1,5 @@
 package com.elastech.helpdelas.controller;
-import com.elastech.helpdelas.dtos.TicketDTO;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.ui.Model;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
@@ -13,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.List;
 
 
@@ -21,12 +20,20 @@ public class SectorController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private SectorService sectorService;
 
+    @GetMapping("/registrar-setor")
+    public String save(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
+        model.addAttribute("name", userDb.getName());
+        return "sector/register-sector";
+    }
+
     @PostMapping("/registrar-setor")
     public String save(SectorDTO dto, RedirectAttributes redirectAttributes) throws Exception {
-        try{
+        try {
             sectorService.save(dto);
             redirectAttributes.addAttribute("success", true);
             return "redirect:/listar-setor";
@@ -34,13 +41,6 @@ public class SectorController {
             redirectAttributes.addAttribute("error", true);
             return "redirect:/registrar-setor";
         }
-    }
-
-    @GetMapping("/registrar-setor")
-    public String save(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
-        model.addAttribute("name", userDb.getName());
-        return "sector/register-sector";
     }
 
     @GetMapping("/listar-setor")
@@ -52,10 +52,6 @@ public class SectorController {
         return "sector/find-sector";
     }
 
-    @GetMapping("/visualizar-setor/{sectorId}")
-    public SectorDTO findById(@PathVariable Long sectorId) {
-        return this.sectorService.findById(sectorId);
-    }
 
     @GetMapping("/editar-setor/{sectorId}")
     public String showEditSector(@PathVariable Long sectorId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
@@ -67,8 +63,8 @@ public class SectorController {
     }
 
     @PutMapping("/editar-setor/{sectorId}")
-    public String SectorUpdate(@PathVariable Long sectorId, @ModelAttribute SectorDTO sector, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes) throws Exception{
-        try{
+    public String sectorUpdate(@PathVariable Long sectorId, @ModelAttribute SectorDTO sector, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes) throws Exception {
+        try {
             sectorService.updateById(sector, sectorId);
             redirectAttributes.addAttribute("successEdit", true);
             return "redirect:/listar-setor";
@@ -79,19 +75,19 @@ public class SectorController {
     }
 
     @DeleteMapping("/editar-setor/{sectorId}")
-    public String deleteSector(@PathVariable Long  sectorId, Model model, RedirectAttributes redirectAttributes) {
+    public String deleteSector(@PathVariable Long sectorId, Model model, RedirectAttributes redirectAttributes) {
         try {
             List<UserDTO> users = userService.showAllUsersWithSector(sectorId);
-            if(users.isEmpty()){
+            if (users.isEmpty()) {
                 sectorService.deleteById(sectorId);
                 redirectAttributes.addAttribute("successDelete", true);
                 return "redirect:/listar-setor";
-            }else {
+            } else {
                 redirectAttributes.addAttribute("errorDelete", true);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             redirectAttributes.addAttribute("errorDelete", true);
         }
         return "redirect:/listar-setor";
-     }
+    }
 }

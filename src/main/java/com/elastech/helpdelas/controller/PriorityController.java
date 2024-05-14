@@ -1,7 +1,6 @@
 package com.elastech.helpdelas.controller;
 
 import com.elastech.helpdelas.dtos.PriorityDTO;
-import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.TicketDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.service.PriorityService;
@@ -25,6 +24,7 @@ public class PriorityController {
 
     @Autowired
     private TicketService ticketService;
+
     @Autowired
     private PriorityService priorityService;
 
@@ -57,31 +57,26 @@ public class PriorityController {
         return "priority/find-priority";
     }
 
-    @GetMapping("/visualizar-prioriade/{id}")
-    public PriorityDTO findById(@PathVariable Long id) {
-        return priorityService.findById(id);
-    }
-
-    @GetMapping("/editar-prioridade/{id}")
-    public String showEditPriority(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+    @GetMapping("/editar-prioridade/{priorityId}")
+    public String showEditPriority(@PathVariable Long priorityId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO userAdmin = userService.getUserByEmail(userDetails.getUsername());
-        PriorityDTO priorityDTO = priorityService.findById(id);
+        PriorityDTO priorityDTO = priorityService.findById(priorityId);
 
         model.addAttribute("name", userAdmin.getEmail());
         model.addAttribute("priority", priorityDTO);
         return "priority/update-priority";
     }
 
-    @PutMapping("/editar-prioridade/{id}")
-    public String updatePriority(@PathVariable Long id, @ModelAttribute PriorityDTO priority, RedirectAttributes redirectAttributes) throws Exception{
+    @PutMapping("/editar-prioridade/{priorityId}")
+    public String updatePriority(@PathVariable Long priorityId, @ModelAttribute PriorityDTO priority, RedirectAttributes redirectAttributes) throws Exception {
         try {
-            PriorityDTO priorityDTO = priorityService.updateById(priority, id);
+            PriorityDTO priorityDTO = priorityService.updateById(priority, priorityId);
             redirectAttributes.addAttribute("successEdit", true);
             return "redirect:/listar-prioridade";
-        }catch (Exception e) {
+        } catch (Exception e) {
             redirectAttributes.addAttribute("errorEdit", true);
         }
-            return "redirect:/editar-prioridade/{id}";
+        return "redirect:/editar-prioridade/{priorityId}";
     }
 
     @DeleteMapping("/editar-prioridade/{priorityId}")
@@ -91,13 +86,12 @@ public class PriorityController {
             if (tickets.isEmpty()) {
                 priorityService.deleteById(priorityId);
                 redirectAttributes.addAttribute("successDelete", true);
-                return "redirect:/listar-prioridade";
-            }else {
+            } else {
                 redirectAttributes.addAttribute("errorDelete", true);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             redirectAttributes.addAttribute("errorDelete", true);
         }
-        return "/listar-prioridade";
+        return "redirect:/listar-prioridade";
     }
 }

@@ -2,11 +2,10 @@ package com.elastech.helpdelas.service;
 
 import com.elastech.helpdelas.model.SectorModel;
 import com.elastech.helpdelas.dtos.SectorDTO;
-import com.elastech.helpdelas.model.TicketModel;
 import com.elastech.helpdelas.repositories.SectorRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,53 +16,46 @@ public class SectorService {
     @Autowired
     private SectorRepository sectorRepository;
 
-    public SectorDTO save(SectorDTO dto){
+    public void save(SectorDTO dto) {
         Optional<SectorModel> sectorModel = sectorRepository.findByNameSector(dto.getNameSector());
-        if(sectorModel.isPresent()){
-            throw new RuntimeException("Setor já cadastrado");
+        if (sectorModel.isPresent()) {
+            throw new RuntimeException("Setor já cadastrado.");
         }
         SectorModel sector = SectorDTO.convert(dto);
-        sector = sectorRepository.save(sector);
-        return new SectorDTO(sector);
+        sectorRepository.save(sector);
     }
 
-    public SectorDTO updateById(SectorDTO dto, Long sectorId){
+    public void updateById(SectorDTO dto, Long sectorId) {
         Optional<SectorModel> sectorModel = sectorRepository.findById(sectorId);
-        System.out.println(sectorModel);
-        if(sectorModel.isEmpty()){
-            throw new RuntimeException("Setor não encontrado");
+        if (sectorModel.isEmpty()) {
+            throw new RuntimeException("Setor não encontrado.");
         }
         //pegando os dados do BD e fazendo a alteração do nome do setor
         sectorModel.get().setNameSector(dto.getNameSector());
         //pegando os dados do BD e fazendo a alteração do nome do departamento
         sectorModel.get().setNameDepartment(dto.getNameDepartment());
-        System.out.println(sectorModel);
         //salvando a informação
         sectorRepository.save(sectorModel.get());
-        System.out.println(sectorModel);
-        //retornando o novo nome
-        return new SectorDTO(sectorModel.get());
     }
 
-    public List<SectorDTO> findAllSector(){
+    public List<SectorDTO> findAllSector() {
         List<SectorModel> sectors = sectorRepository.findAll();
         return sectors.stream().map(SectorDTO::new).collect(Collectors.toList());
     }
 
-    public SectorDTO findById(Long sectorId){
-        List<SectorModel> sector = sectorRepository.findAll();
-        Optional<SectorModel> resultado = sectorRepository.findById(sectorId);
-        if(resultado.isEmpty()) {
-            throw new RuntimeException("setor não encontrado");
+    public SectorDTO findById(Long sectorId) {
+        Optional<SectorModel> result = sectorRepository.findById(sectorId);
+        if (result.isEmpty()) {
+            throw new RuntimeException("Setor não encontrado.");
         } else {
-            return new SectorDTO(resultado.get());
+            return new SectorDTO(result.get());
         }
     }
 
-    public void deleteById(Long sectorId){
+    public void deleteById(Long sectorId) {
         Optional<SectorModel> sectorModel = sectorRepository.findById(sectorId);
-        if(sectorModel.isEmpty()) {
-            throw new EntityNotFoundException("Setor não encontrado");
+        if (sectorModel.isEmpty()) {
+            throw new RuntimeException("Setor não encontrado");
         }
         sectorRepository.delete(sectorModel.get());
     }
