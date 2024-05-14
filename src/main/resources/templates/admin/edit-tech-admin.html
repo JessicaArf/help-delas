@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
     <title>HelpDelas</title>
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
-    <link href="/css/styles.css" rel="stylesheet"/>
-    <link href="/css/helpdelas.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
@@ -17,23 +16,19 @@
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="/dashboard-admin">HelpDelas</a>
     <!-- Sidebar Toggle-->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-            class="fas fa-bars"></i></button>
-    <!-- Navbar Search-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-        </div>
+
     </form>
     <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li>
-                    <form action="/logout" method="post">
-                        <button class="dropdown-item" type="submit">Sair</button>
-                    </form>
-                </li>
+                <li> <form action="/logout" method="post">
+                    <button class="dropdown-item" type="submit">Sair</button>
+                </form></li>
             </ul>
         </li>
     </ul>
@@ -101,40 +96,57 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Prioridades</h1>
+                <h1 class="mt-4">Meus Dados</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/listar-prioridade">Voltar</a></li>
+                    <li class="breadcrumb-item"><a href="/todos-usuarios">Voltar</a></li>
                 </ol>
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h1>Editar Prioridade</h1>
+                        <i class="fas fa-user fa-fw"></i>
+                        Meus Dados
                     </div>
                     <div class="card-body">
-                        <form th:action="@{'/editar-prioridade/' + ${priority.priorityId}}" method="post" th:object="${priority}">
-                            <input type="hidden" th:name="_method" th:value="PUT" />
+                        <form th:action="@{'/editar-tecnico/' + ${user.userId}}" method="post" th:object="${user}" >
+                            <input type="hidden" name="_method" value="PUT" />
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="inputNamePriority">Nome da Prioridade</label>
-                                    <input class="form-control" id="inputNamePriority" th:value="${priority.namePriority}"  th:field="*{namePriority}" /
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input class="form-control" id="inputFirstName" type="text" th:field="*{name}" th:value="${user.name}" />
+                                        <label for="inputFirstName">Nome:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input class="form-control" id="inputEmail" type="email" th:field="*{email}" th:value="${user.email}" />
+                                        <label for="inputEmail">Email:</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <label for="inputDescription">Descrição:</label>
-                                    <textarea class="form-control" id="inputDescription" rows="3" th:field="*{description}" th:value="${priority.description}"></textarea>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input class="form-control" id="inputDepartament" type="text" th:field="*{sector.nameSector}" th:value="${user.sector.nameSector}" disabled/>
+                                        <label for="inputDepartament">Setor:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input class="form-control" id="inputSupervisor" type="text" th:field="*{supervisor}"  th:value="${user.supervisor}" />
+                                        <label for="inputSupervisor">Supervisor:</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="mt-4 mb-0">
-                                <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
-                                    <button class="btn btn-login" type="submit">Atualizar</button>
+                            <div>
+                                <div class="mt-4 mb-0">
+                                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0"><button class="btn btn-primary" type="submit" >Salvar Alterações</button></div>
+                                </div>
+                            </div>
+                            <div class="mt-4 mb-0" th:if="${param.errorEdit}">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    Não foi possível confirmar as alterações, pois o e-mail fornecido já está em uso.
                                 </div>
                             </div>
                         </form>
-                        <div class="mt-4 mb-0" th:if="${param.errorEdit}">
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Ocorreu um erro ao alterar a prioridade, esse nome já existe, tente outro.
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -148,11 +160,9 @@
         </footer>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="/js/scripts.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 <script src="/js/datatables-simple-demo.js"></script>
 </body>
 </html>

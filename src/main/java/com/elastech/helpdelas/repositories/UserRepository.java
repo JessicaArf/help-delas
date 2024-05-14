@@ -1,6 +1,5 @@
 package com.elastech.helpdelas.repositories;
 
-
 import com.elastech.helpdelas.model.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,4 +10,5 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
     Optional<UserModel> findByEmail(String username);
     List<UserModel> findBySectorSectorId(Long sectorId);
     List<UserModel> findByRoleName(String name);
+    UserModel findByEmailIgnoringCaseAndUserIdNot(String email, Long id);
 }

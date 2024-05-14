@@ -29,8 +29,6 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/mostrar-usuario">Meus Dados</a></li>
-                <li><hr class="dropdown-divider" /></li>
                 <li>
                     <form action="/logout" method="post">
                         <button class="dropdown-item" type="submit">Sair</button>
@@ -156,7 +154,7 @@
                                                     Você está prestes a excluir uma prioridade. Tem certeza de que deseja prosseguir com a exclusão?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form th:action="@{'/editar-prioridade/' + ${priority.priorityId}}" method="post" th:object="${priority}">
+                                                    <form th:action="@{'/editar-prioridade/' + ${priority.priorityId}}" method="post">
                                                         <input type="hidden" th:name="_method" th:value="DELETE">
                                                         <button id="delete-tbn" type="submit" class="btn-dash">Confirmar</button>
                                                     </form>
@@ -172,6 +170,26 @@
                             </tr>
                             </tbody>
                         </table>
+                        <div class="mt-4 mb-0" th:if="${param.success}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Prioridade cadastrada com sucesso.
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-0" th:if="${param.successEdit}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Prioridade alterada com sucesso.
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-0" th:if="${param.successDelete}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Prioridade excluída com sucesso.
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-0" th:if="${param.errorDelete}">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Ocorreu um erro ao excluir a prioridade. Certifique-se de que não há chamados associados a esta prioridade.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

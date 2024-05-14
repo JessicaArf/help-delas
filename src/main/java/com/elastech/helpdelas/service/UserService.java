@@ -33,16 +33,10 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-
-    public UserDTO save(UserDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+    public UserDTO save(UserDTO userDTO) throws Exception {
         Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
-        RoleModel role = null;
-        if (!byEmail.isPresent()) {
-            if (userDetails != null) {
-                role = roleRepository.findByName(RoleModel.Values.TECH.name());
-            } else {
-                role = roleRepository.findByName(RoleModel.Values.USER.name());
-            }
+        RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
+        if(!byEmail.isPresent()){
             userDTO.setRole(role);
             userDTO.setSector(userDTO.getSector());
             userDTO.setStatus("ATIVO");
@@ -51,7 +45,23 @@ public class UserService {
             userRepository.save(userModel);
             return new UserDTO(userModel);
         } else {
-            throw new Exception("Já existe um cliente cadastrado com esse e-mail.");
+            throw new Exception("Já existe um usuário cadastrado com esse e-mail.");
+        }
+    }
+
+    public UserDTO saveTech(UserDTO userDTO) throws Exception {
+        Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
+        RoleModel role = roleRepository.findByName(RoleModel.Values.TECH.name());
+        if(!byEmail.isPresent()){
+            userDTO.setRole(role);
+            userDTO.setSector(userDTO.getSector());
+            userDTO.setStatus("ATIVO");
+            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            UserModel userModel = UserDTO.convert(userDTO);
+            userRepository.save(userModel);
+            return new UserDTO(userModel);
+        } else {
+            throw new Exception("Já existe um usuário cadastrado com esse e-mail.");
         }
     }
 
@@ -65,21 +75,37 @@ public class UserService {
     }
 
     public UserDTO updateUserById(Long id, UserDTO userDTO) throws Exception {
-        Optional<UserModel> userExistente = userRepository.findById(id);
-        if (userExistente.isPresent()) {
-            UserModel user = userExistente.get();
+        Optional<UserModel> userExistente =  userRepository.findById(id);
+        Optional<UserModel> emailExistente =  userRepository.findByEmail(userExistente.get().getEmail());
+        Boolean userDTO1 = getUserByEmailIgnoringCaseAndUser(userDTO.getEmail(), id);
+
+        if(userDTO1) {
+            throw new Exception("Já existe um usuário cadastrado com esse e-mail.");
+        } else {
+            UserModel user = emailExistente.get();
             user.setEmail(userDTO.getEmail());
             user.setName(userDTO.getName());
-            user.setSector(userDTO.getSector());
+            if(user.getRole().getName().equals("TECH")){
+                user.setSector(userExistente.get().getSector());
+            } else {
+                user.setSector(userDTO.getSector());
+            }
             user.setSupervisor(userDTO.getSupervisor());
             userRepository.save(user);
+            System.out.println(user);
             return new UserDTO(user);
-        } else {
-            return userDTO;
         }
     }
 
-    public UserDTO getUserByEmail(String email) {
+    public Boolean getUserByEmailIgnoringCaseAndUser(String email, Long idUser) {
+        UserModel byEmailIgnoringCaseAndIdNot = userRepository.findByEmailIgnoringCaseAndUserIdNot(email, idUser);
+        if (byEmailIgnoringCaseAndIdNot != null){
+            return true;
+        }
+        return  false;
+    }
+
+    public UserDTO getUserByEmail(String email){
         Optional<UserModel> user = userRepository.findByEmail(email);
         if (user.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
