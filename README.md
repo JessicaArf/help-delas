@@ -2,7 +2,6 @@
 
 ![image](https://github.com/JessicaArf/help-delas/assets/106780748/9ce15472-3445-4e8f-8ad3-89a0ff434811)
 
-
 # Índice
 <!--ts-->
 
@@ -26,11 +25,11 @@ Para garantir a segurança e a disponibilidade adequada das funcionalidades, imp
 
 Essa aplicação teve os seguintes requisitos:
 
-- [x] Tela Inicial contendo uma breve descrição sobre o sistema para introduzir o usuário<br>
-- [x] Tela de Login contendo a possibilidade de logar no sistema e também realizar o cadastro de um usuário<br>
+- [x] Tela Inicial contendo uma breve descrição sobre o sistema para introduzir o usuário.<br>
+- [x] Tela de Login contendo a possibilidade de logar no sistema e também realizar o cadastro de um usuário.<br>
 - [x] Tela do Usuário contendo a possibilidade de cadastrar novos chamados, visualizar seus dados e editá-los.<br>
-- [x] Tela do Técnico, contendo a possibilidade de visualizar os chamados disponíveis para serem atendidos, os chamdados que já estão atribuídos a ele e a chance de alterar o status dos chamados.<br>
-- [x] Tela do Administrador, disponibilizando uma visão abrangente do uso do sistema, fornecendo dados essenciais, como números de chamados em aberto, em execução e aguardando. Além disso, nessa tela permite o gerenciamento de elementos-chaves do sistema, como o cadastramento de informações vitais, garantido flexibilidade e adaptabilidade ao ambiente corporativo. <br>
+- [x] Tela do Técnico, contendo a possibilidade de visualizar os chamados disponíveis para serem atendidos, os chamados que já estão atribuídos a ele e a chance de alterar o status dos chamados.<br>
+- [x] Tela do Administrador, disponibilizando uma visão abrangente do uso do sistema, fornecendo dados essenciais, como números de chamados em aberto, em execução e aguardando. Além disso, nessa tela permite o gerenciamento de elementos-chaves do sistema, como o cadastramento de informações vitais, garantido flexibilidade e adaptabilidade ao ambiente corporativo.<br>
 
 ## Instalação
 
@@ -40,7 +39,7 @@ Essa aplicação teve os seguintes requisitos:
 git@github.com:JessicaArf/help-delas.git
 ```
 
-2. Instalar as dependências com Maven
+2. Instalar as dependências com Maven.
 
 3. Configure o arquivo application.properties com seus dados pessoais do Banco de dados MySql.
 
@@ -96,7 +95,7 @@ A aplicação pode ser acessada em: `http://localhost:8080`.
   <li>Visualização de todos os setores.</li>
   <li>Cadastro de prioridade.</li>
   <li>Edição de uma prioridade.</li>
-  <li>Deletar uma prioridade</li>
+  <li>Deletar uma prioridade.</li>
   <li>Visualização de todas as prioridades.</li>
 </ul>
 
