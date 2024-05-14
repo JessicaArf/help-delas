@@ -88,13 +88,17 @@
 
 .disabled-link {
     pointer-events: none; /* Impede cliques */
-    color: gray; /* Altera a cor para indicar que está desativado */
+    /*color: gray;  Altera a cor para indicar que está desativado */
     text-decoration: none; /* Remove sublinhado */
     cursor: default; /* Remove o cursor de link */
+    color: #0d6efd;
+    text-align: center;
 }
 
 .icon {
-background-color: transparent;
-border: none;
+    background-color: transparent;
+    border: none;
+    color: #0d6efd;
+
 }
 

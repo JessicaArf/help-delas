@@ -124,10 +124,9 @@
                               th:object="${priority}">
                             <input type="hidden" th:name="_method" th:value="PUT"/>
                             <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="inputNamePriority">Nome da Prioridade</label>
-                                    <input class="form-control" id="inputNamePriority"
-                                           th:value="${priority.namePriority}" th:field="*{namePriority}" /
+                                <div class="col-md-12">
+                                    <label for="inputNamePriority">Nome da Prioridade:</label>
+                                    <input class="form-control" id="inputNamePriority" th:value="${priority.namePriority}"  th:field="*{namePriority}"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
