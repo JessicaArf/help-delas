@@ -13,24 +13,25 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RequestPasswordDTO {
 
-    private Long tokenId;
-
+    private Long requestId; // Renomeado de tokenId para requestId
     private String token;
     private UserModel user;
     private LocalDateTime expireTime;
     private boolean isUsed;
 
     public RequestPasswordDTO(RequestPasswordModel requestPasswordModel) {
-        this.tokenId = requestPasswordModel.getTokenId();
+        this.requestId = requestPasswordModel.getRequestId(); // Certifique-se de que o campo está mapeado corretamente
         this.token = requestPasswordModel.getToken();
         this.user = requestPasswordModel.getUser();
         this.expireTime = requestPasswordModel.getExpireTime();
         this.isUsed = requestPasswordModel.isUsed();
     }
 
+    // Método de conversão para converter de DTO para modelo
     public static RequestPasswordModel convert(RequestPasswordDTO requestPasswordDTO) {
         RequestPasswordModel requestPasswordModel = new RequestPasswordModel();
-        requestPasswordModel.setTokenId(requestPasswordDTO.getTokenId());
+        requestPasswordModel.setRequestId(requestPasswordDTO.getRequestId());
+        requestPasswordModel.setToken(requestPasswordDTO.getToken());
         requestPasswordModel.setUser(requestPasswordDTO.getUser());
         requestPasswordModel.setExpireTime(requestPasswordDTO.getExpireTime());
         requestPasswordModel.setUsed(requestPasswordDTO.isUsed());

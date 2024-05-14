@@ -1,6 +1,5 @@
 package com.elastech.helpdelas.service;
 
-import com.elastech.helpdelas.dtos.ApiTicketDTO;
 import com.elastech.helpdelas.model.TicketModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
