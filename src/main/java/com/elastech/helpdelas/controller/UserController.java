@@ -1,6 +1,5 @@
 package com.elastech.helpdelas.controller;
 
-import com.elastech.helpdelas.dtos.PriorityDTO;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.service.UserService;

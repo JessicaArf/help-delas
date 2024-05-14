@@ -47,7 +47,8 @@
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <select class="form-control" id="inputDepartament" type="text" name="sector" placeholder="Setor" required>
+                                                <select class="form-control" id="inputDepartament" type="text"
+                                                        name="sector" placeholder="Setor" required>
                                                     <option th:each="sector : ${sectors}"
                                                             th:value="${sector.sectorId}"
                                                             th:text="${sector.nameSector}"></option>
@@ -57,7 +58,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="inputSupervisor" type="text" name="supervisor" placeholder="Supervisor"/>
+                                                <input class="form-control" id="inputSupervisor" type="text"
+                                                       name="supervisor" placeholder="Supervisor"/>
                                                 <label for="inputSupervisor">Supervisor</label>
                                             </div>
                                         </div>
@@ -72,13 +74,15 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="confirmPassword" type="password" placeholder="Confirmar senha" required/>
+                                                <input class="form-control" id="confirmPassword" type="password"
+                                                       placeholder="Confirmar senha" required/>
                                                 <label for="confirmPassword">Confirmar Senha</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mt-4 mb-0">
-                                        <span id="errorMessage" style="color: red;"></span>
+                                        <div id="errorMessage" class="alert alert-danger d-none" role="alert">
+                                        </div>
                                         <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
                                             <button class="btn-login" type="submit">Criar Conta</button>
                                         </div>
@@ -111,15 +115,20 @@
 </div>
 <script>
     function validateForm() {
-       var password = document.getElementById("password").value.trim();
-       var confirmPassword = document.getElementById("confirmPassword").value.trim();
+     var password = document.getElementById("password").value.trim();
+     var confirmPassword = document.getElementById("confirmPassword").value.trim();
+     var errorMessage = document.getElementById("errorMessage");
 
-       if (password !== confirmPassword) {
-           document.getElementById("errorMessage").innerHTML = "As senhas precisam ser iguais.";
-           return false;
+     if (password !== confirmPassword) {
+        errorMessage.textContent = "As senhas precisam ser iguais.";
+        errorMessage.classList.remove("d-none");
+        errorMessage.classList.add("text-danger");
+        return false;
        } else {
-           document.getElementById("errorMessage").innerHTML = "";
-           return true;
+        errorMessage.textContent = "";
+        errorMessage.classList.add("d-none");
+        errorMessage.classList.remove("text-danger");
+        return true;
        }
    }
 </script>
