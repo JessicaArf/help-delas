@@ -85,7 +85,6 @@ public class RequestPasswordController {
     public String saveResetPassword(HttpServletRequest request, HttpSession session, Model model) {
         String password = request.getParameter("password");
         String token = (String) session.getAttribute("token");
-        System.out.println("token do post");
         RequestPasswordDTO requestPassword = forgotPasswordService.getRequestByToken(token);
         // Resetar a senha
         forgotPasswordService.resetPassword(requestPassword, password);

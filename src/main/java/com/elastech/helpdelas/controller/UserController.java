@@ -1,6 +1,5 @@
 package com.elastech.helpdelas.controller;
 
-import com.elastech.helpdelas.dtos.PriorityDTO;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.UserDTO;
 import com.elastech.helpdelas.service.UserService;
@@ -156,6 +155,7 @@ public class UserController {
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
             model.addAttribute("name", userDb.getName());
+            model.addAttribute("success","Usuário desativado com sucesso!");
             return "admin/showAll-user";
         } catch (Exception e) {
             System.out.println(e);
@@ -172,6 +172,7 @@ public class UserController {
             List<UserDTO> users = userService.findAll();
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
+            model.addAttribute("success","Usuário ativado com sucesso!");
             return "admin/showAll-user";
         } catch (Exception e) {
             System.out.println(e);
