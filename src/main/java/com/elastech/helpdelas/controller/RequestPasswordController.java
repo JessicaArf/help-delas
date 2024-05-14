@@ -64,17 +64,34 @@ public class RequestPasswordController {
     public String resetPassword(@Param(value = "token") String token, Model model, HttpSession session) {
         session.setAttribute("token", token);
         RequestPasswordDTO request = forgotPasswordService.getRequestByToken(token);
-        return forgotPasswordService.checkValidity(request, model);
+        if (request == null) {
+            model.addAttribute("error", "Token inválido.");
+            return "/default/error-page";
+        }
+        // Verificar se o token expirou
+        else if (forgotPasswordService.isExpired(request)) {
+            model.addAttribute("error", "O token está expirado.");
+            return "/default/error-page";
+        }  // Verificar se a solicitação já foi usada
+        else if (request.isUsed()) {
+            model.addAttribute("error", "O token já foi utilizado.");
+            return "/default/error-page";
+        } else {
+            return "/default/reset-password";
+        }
     }
 
     @PostMapping(("/resetar-senha"))
     public String saveResetPassword(HttpServletRequest request, HttpSession session, Model model) {
         String password = request.getParameter("password");
         String token = (String) session.getAttribute("token");
+        System.out.println("token do post");
         RequestPasswordDTO requestPassword = forgotPasswordService.getRequestByToken(token);
+        // Resetar a senha
         forgotPasswordService.resetPassword(requestPassword, password);
-        model.addAttribute("message", "Senha alterada com sucesso!");
-        return "/default/reset-password";
+
+        session.setAttribute("senhaAlterada", true);
+        return "redirect:/login?senhaAlterada=true";
     }
 
 }

@@ -16,17 +16,17 @@ public class PageController {
     private UserService userService;
 
     @GetMapping("/")
-    public String loadSite(){
+    public String loadSite() {
         return "index";
     }
 
     @GetMapping("/login")
-    public String loadSystem(){
+    public String loadSystem() {
         return "default/login";
     }
 
     @GetMapping("/dashboard-admin")
-    public String showPage(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         try {
             UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
             if (userDb != null) {
@@ -39,8 +39,10 @@ public class PageController {
         }
     }
 
-    @GetMapping("/chamados-admin")
-    public String tiketsAdmin() {
-        return "admin/tickets-admin";
+
+    @GetMapping("/acesso-negado")
+    public String pageUnauthorized() {
+        return "/default/403";
     }
+
 }

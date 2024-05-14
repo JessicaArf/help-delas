@@ -13,10 +13,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,7 +26,7 @@ public class RequestPasswordService {
     private JavaMailSender javaMailSender;
 
     @Autowired
-    private RequestPasswordRepository forgotPasswordRepository;
+    private RequestPasswordRepository requestPasswordRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -42,13 +42,16 @@ public class RequestPasswordService {
         forgotPassword.setToken(generateToken());
         forgotPassword.setUser(userModel);
         forgotPassword.setUsed(false);
-        forgotPasswordRepository.save(forgotPassword);
+        requestPasswordRepository.save(forgotPassword);
         return new RequestPasswordDTO(forgotPassword);
     }
 
     public RequestPasswordDTO getRequestByToken(String token) {
-        RequestPasswordModel request = forgotPasswordRepository.findByToken(token);
-        return new RequestPasswordDTO(request);
+       Optional<RequestPasswordModel> request = requestPasswordRepository.findByToken(token);
+       if(request.isEmpty()){
+           return null;
+       }
+        return new RequestPasswordDTO(request.get());
     }
 
     public void resetPassword(RequestPasswordDTO request, String password) {
@@ -57,7 +60,7 @@ public class RequestPasswordService {
         request.setUsed(true);
         userRepository.save(user);
         RequestPasswordModel requestModel = RequestPasswordDTO.convert(request);
-        forgotPasswordRepository.save(requestModel);
+        requestPasswordRepository.save(requestModel);
     }
 
     public String generateToken() {
@@ -78,35 +81,13 @@ public class RequestPasswordService {
                 + "<br>"
                 + "Ignore esse email se você não fez essa solicitação.";
         helper.setText(emailContent, true);
-        helper.setFrom("helpdelas@outlook.com", "HelpDelas Suporte");
         helper.setSubject(subject);
         helper.setTo(to);
         javaMailSender.send(message);
     }
 
-    public boolean isExpired(RequestPasswordModel forgotPasswordModel) {
-        return LocalDateTime.now().isAfter(forgotPasswordModel.getExpireTime());
-    }
-
-    public String checkValidity(RequestPasswordDTO forgotPassword, Model model) {
-
-        if (forgotPassword == null) {
-            model.addAttribute("error", "Token inválido.");
-            return "/default/error-page";
-        }
-
-        RequestPasswordModel requestPassword = RequestPasswordDTO.convert(forgotPassword);
-
-        if (requestPassword.isUsed()) {
-            model.addAttribute("error", "O token já foi utilizado.");
-            return "/default/error-page";
-        } else if (isExpired(requestPassword)) {
-            model.addAttribute("error", "O token está expirado.");
-            return "/default/error-page";
-        } else {
-            return "/default/reset-password";
-        }
-
+    public boolean isExpired(RequestPasswordDTO forgotPassword) {
+        return LocalDateTime.now().isAfter(forgotPassword.getExpireTime());
     }
 
 }

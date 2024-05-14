@@ -1,6 +1,5 @@
 package com.elastech.helpdelas.controller;
 
-
 import com.elastech.helpdelas.dtos.PriorityDTO;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.TicketDTO;
@@ -9,6 +8,7 @@ import com.elastech.helpdelas.service.PriorityService;
 import com.elastech.helpdelas.service.SectorService;
 import com.elastech.helpdelas.service.TicketService;
 import com.elastech.helpdelas.service.UserService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -45,7 +45,7 @@ public class TicketsController {
     }
 
     @PostMapping("/criar-chamado")
-    public String createTicket(TicketDTO ticketDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) {
+    public String createTicket(TicketDTO ticketDTO, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails userDetails) throws MessagingException, UnsupportedEncodingException {
         // pegando o usuário logado através do userdetails e puxando o usuário do banco de dados pelo email
         UserDTO basicUser = userService.getUserByEmail(userDetails.getUsername());
         // passando o ticket e o usuário para que o ticket seja salvo
@@ -63,11 +63,6 @@ public class TicketsController {
         // pegando a lista de tickets pelo id do usuário
         List<TicketDTO> tickets = ticketService.showTicketsByUser(userBasic.getUserId());
 
-        // Verifica se a lista de tickets é nula ou vazia
-        if (tickets == null || tickets.isEmpty()) {
-            // Se não houver tickets, cria uma lista vazia
-            tickets = new ArrayList<>();
-        }
         // Adiciona os tickets ao modelo
         model.addAttribute("tickets", tickets);
         return "user/dashboard-user";
@@ -87,7 +82,7 @@ public class TicketsController {
     }
 
     @PutMapping("/usuario/editar-chamado/{ticketId}")
-    public String userUpdateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket) {
+    public String userUpdateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket) throws MessagingException, UnsupportedEncodingException {
         ticketService.updateTicketUser(ticketId, ticket);
         return "redirect:/dashboard-usuario";
     }
@@ -102,7 +97,7 @@ public class TicketsController {
     }
 
     @DeleteMapping("/usuario/chamado/{ticketId}")
-    public String deleteTicket(@PathVariable Long ticketId) {
+    public String deleteTicket(@PathVariable Long ticketId) throws MessagingException, UnsupportedEncodingException {
         ticketService.deleteTicket(ticketId);
         return "redirect:/dashboard-usuario";
     }
@@ -112,10 +107,6 @@ public class TicketsController {
         UserDTO techUser = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("name", techUser.getName());
         List<TicketDTO> tickets = ticketService.showTicketsAvailable();
-        if (tickets == null || tickets.isEmpty()) {
-
-            tickets = new ArrayList<>();
-        }
         model.addAttribute("ticketsAvailable", tickets);
         return "tech/dashboard-tech";
     }
@@ -126,10 +117,6 @@ public class TicketsController {
         model.addAttribute("name", techUser.getName());
         List<TicketDTO> tickets = ticketService.showTicketsAssigned(techUser.getUserId());
 
-        if (tickets == null || tickets.isEmpty()) {
-
-            tickets = new ArrayList<>();
-        }
         model.addAttribute("ticketsAssigned", tickets);
         return "tech/dashboard-tech-assigned";
     }
@@ -159,7 +146,7 @@ public class TicketsController {
     }
 
     @PutMapping("/tecnico/editar-chamado/{ticketId}")
-    public String techUpdateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket) {
+    public String techUpdateTicket(@PathVariable Long ticketId, @AuthenticationPrincipal UserDetails userDetails, @ModelAttribute TicketDTO ticket) throws MessagingException, UnsupportedEncodingException {
         UserDTO userTech = userService.getUserByEmail(userDetails.getUsername());
         ticketService.updateTicketTech(ticketId, ticket, userTech);
         return "redirect:/dashboard-tecnico/meus-chamados";
@@ -175,7 +162,7 @@ public class TicketsController {
     }
 
     @GetMapping("/admin/chamados-tecnico")
-    public String showAllTicketsTech(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showAllTicketsTech(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO adminUser = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("name", adminUser.getName());
         List<TicketDTO> allTicketTech = ticketService.showAllTicketsTech();
@@ -184,7 +171,7 @@ public class TicketsController {
     }
 
     @GetMapping("/admin/chamados-nao-atribuido")
-    public String showAllTicketsNotAssigned(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showAllTicketsNotAssigned(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO adminUser = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("name", adminUser.getName());
         List<TicketDTO> allTicketsNotAssigned = ticketService.showTicketsAvailable();
@@ -200,6 +187,7 @@ public class TicketsController {
         model.addAttribute("ticket", ticket);
         return "ticket/view-one-ticket-admin";
     }
+
 }
 
 
