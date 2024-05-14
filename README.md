@@ -5,12 +5,14 @@
 
 # Índice
 <!--ts-->
-   * [Sobre](#sobre)
+
+   * [Sobre](#sistema-de-chamados-técnicos-em-informática)
    * [Requisitos](#requisitos)
-   * [Modelo de Entidade e Relacionamento](#mer)
-   * [Documentação do Sistema](#documentação-do-sistema)
-   * [Ferramentas e Tecnologias](#ferramentas-e-tecnologias)
-   * [Ferramentas e Tecnologias](#Grupo)
+   * [Instalação](#instalação)
+   * [Telas](#telas)
+   * [Modelo de Entidade e Relacionamento](#modelo-de-entidade-e-relacionamento)
+   * [Tecnologias](#tecnologias)
+   * [Grupo](#grupo)
  
 <!--te-->
 
