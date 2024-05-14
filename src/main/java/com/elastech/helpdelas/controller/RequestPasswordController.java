@@ -48,7 +48,6 @@ public class RequestPasswordController {
         }
 
         RequestPasswordDTO request = forgotPasswordService.saveToken(userDto);
-
         String emailLink = "http://localhost:8080/resetar-senha?token=" + request.getToken();
 
         try {
@@ -86,9 +85,7 @@ public class RequestPasswordController {
         String password = request.getParameter("password");
         String token = (String) session.getAttribute("token");
         RequestPasswordDTO requestPassword = forgotPasswordService.getRequestByToken(token);
-        // Resetar a senha
         forgotPasswordService.resetPassword(requestPassword, password);
-
         session.setAttribute("senhaAlterada", true);
         return "redirect:/login?senhaAlterada=true";
     }

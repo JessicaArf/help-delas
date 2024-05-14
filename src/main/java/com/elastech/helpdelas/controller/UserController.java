@@ -21,7 +21,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/salvar-usuario")
-    public String showRegister(Model model){
+    public String showRegister(Model model) {
         List<SectorDTO> sectors = userService.findAllSector();
         sectors.remove(0);
         model.addAttribute("sectors", sectors);
@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/todos-usuarios")
-    public String allUsers(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String allUsers(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         List<UserDTO> users = userService.findAll();
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         users.remove(0); //remove o index do admin
@@ -40,17 +40,17 @@ public class UserController {
 
     @PostMapping("/salvar-usuario")
     public String register(UserDTO userDTO, RedirectAttributes redirectAttributes) throws Exception {
-        try{
+        try {
             userService.save(userDTO);
             return "redirect:/login";
         } catch (Exception e) {
             redirectAttributes.addAttribute("error", true);
-            return "redirect:/user/register";
+            return "redirect:/salvar-usuario";
         }
     }
-    
+
     @GetMapping("/mostrar-usuario")
-    public String showUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showUser(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         try {
             UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
             if (userDb != null) {
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @GetMapping("/editar-usuario")
-    public String showEditUser(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showEditUser(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         try {
             UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
             List<SectorDTO> sectors = userService.findAllSector();
@@ -78,7 +78,7 @@ public class UserController {
     }
 
     @GetMapping("/editar-tecnico/{id}")
-    public String showEditTech(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showEditTech(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         try {
             UserDTO userDb = userService.getUserById(id);
             List<SectorDTO> sectors = userService.findAllSector();
@@ -122,7 +122,7 @@ public class UserController {
                 model.addAttribute("user", userAtualizado);
                 model.addAttribute("name", login.getName());
                 return "redirect:/mostrar-usuario/{id}";
-            }else{
+            } else {
                 redirectAttributes.addAttribute("errorEdit", true);
             }
             return "redirect:/editar-tecnico/{id}";
@@ -135,7 +135,7 @@ public class UserController {
     }
 
     @GetMapping("/mostrar-usuario/{id}")
-    public String showUserId(@PathVariable Long id, Model model){
+    public String showUserId(@PathVariable Long id, Model model) {
         try {
             UserDTO userDb = userService.getUserById(id);
             model.addAttribute("user", userDb);
@@ -147,7 +147,7 @@ public class UserController {
     }
 
     @GetMapping("/desativar-usuario/{id}")
-    public String disableById(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String disableById(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         try {
             userService.updateStatus(id, "desativar");
@@ -155,7 +155,7 @@ public class UserController {
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
             model.addAttribute("name", userDb.getName());
-            model.addAttribute("success","Usuário desativado com sucesso!");
+            model.addAttribute("success", "Usuário desativado com sucesso!");
             return "admin/showAll-user";
         } catch (Exception e) {
             System.out.println(e);
@@ -164,7 +164,7 @@ public class UserController {
     }
 
     @GetMapping("/ativar-usuario/{id}")
-    public String activateById(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String activateById(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         try {
             userService.updateStatus(id, "ativar");
@@ -172,7 +172,7 @@ public class UserController {
             List<UserDTO> users = userService.findAll();
             users.remove(0); //remove o index do admin
             model.addAttribute("users", users);
-            model.addAttribute("success","Usuário ativado com sucesso!");
+            model.addAttribute("success", "Usuário ativado com sucesso!");
             return "admin/showAll-user";
         } catch (Exception e) {
             System.out.println(e);
@@ -181,7 +181,7 @@ public class UserController {
     }
 
     @GetMapping("/mostrar-tecnico")
-    public String showTech(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showTech(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         try {
             UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
             if (userDb != null) {
@@ -195,7 +195,7 @@ public class UserController {
     }
 
     @GetMapping("/cadastrar-tecnico")
-    public String showPageRegister(Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String showPageRegister(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         List<SectorDTO> sectors = userService.findAllSector();
         model.addAttribute("name", userDb.getName());

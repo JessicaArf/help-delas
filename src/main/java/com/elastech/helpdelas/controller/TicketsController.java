@@ -38,7 +38,6 @@ public class TicketsController {
     @GetMapping("/criar-chamado")
     public String showPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO basicUser = userService.getUserByEmail(userDetails.getUsername());
-        List<SectorDTO> sectors = sectorService.findAllSector();
         model.addAttribute("user", basicUser);
         model.addAttribute("sector", basicUser.getSector());
         return "ticket/create-ticket";
@@ -72,7 +71,6 @@ public class TicketsController {
     public String showUserEditTicket(@PathVariable Long ticketId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         TicketDTO ticket = ticketService.showTicketById(ticketId);
         UserDTO userBasic = userService.getUserByEmail(userDetails.getUsername());
-        List<SectorDTO> sectors = userService.findAllSector();
 
         model.addAttribute("sector", userBasic.getSector());
         model.addAttribute("user", userBasic);
@@ -116,7 +114,6 @@ public class TicketsController {
         UserDTO techUser = userService.getUserByEmail(userDetails.getUsername());
         model.addAttribute("name", techUser.getName());
         List<TicketDTO> tickets = ticketService.showTicketsAssigned(techUser.getUserId());
-
         model.addAttribute("ticketsAssigned", tickets);
         return "tech/dashboard-tech-assigned";
     }

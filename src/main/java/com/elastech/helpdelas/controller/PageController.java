@@ -39,7 +39,6 @@ public class PageController {
         }
     }
 
-
     @GetMapping("/acesso-negado")
     public String pageUnauthorized() {
         return "/default/403";

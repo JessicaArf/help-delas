@@ -9,12 +9,11 @@ import com.elastech.helpdelas.repositories.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -39,7 +38,7 @@ public class UserService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public UserDTO save(UserDTO userDTO) throws Exception {
+    public void save(UserDTO userDTO) throws Exception {
         Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
         RoleModel role = roleRepository.findByName(RoleModel.Values.USER.name());
         if (!byEmail.isPresent()) {
@@ -50,13 +49,12 @@ public class UserService {
             UserModel userModel = UserDTO.convert(userDTO);
             userRepository.save(userModel);
             sendNewUser(userModel);
-            return new UserDTO(userModel);
         } else {
             throw new Exception("Já existe um usuário cadastrado com esse e-mail.");
         }
     }
 
-    public UserDTO saveTech(UserDTO userDTO) throws Exception {
+    public void saveTech(UserDTO userDTO) throws Exception {
         Optional<UserModel> byEmail = userRepository.findByEmail(userDTO.getEmail());
         RoleModel role = roleRepository.findByName(RoleModel.Values.TECH.name());
         if (!byEmail.isPresent()) {
@@ -67,9 +65,8 @@ public class UserService {
             UserModel userModel = UserDTO.convert(userDTO);
             userRepository.save(userModel);
             sendNewTech(userModel);
-            return new UserDTO(userModel);
         } else {
-            throw new Exception("Já existe um usuário cadastrado com esse e-mail.");
+            throw new RuntimeException("Já existe um usuário cadastrado com esse e-mail.");
         }
     }
 
@@ -82,25 +79,24 @@ public class UserService {
         return users.stream().map(UserDTO::new).collect(Collectors.toList());
     }
 
-    public UserDTO updateUserById(Long id, UserDTO userDTO) throws Exception {
-        Optional<UserModel> userExistente = userRepository.findById(id);
-        Optional<UserModel> emailExistente = userRepository.findByEmail(userExistente.get().getEmail());
-        Boolean userDTO1 = getUserByEmailIgnoringCaseAndUser(userDTO.getEmail(), id);
+    public UserDTO updateUserById(Long userId, UserDTO userDTO) throws Exception {
+        Optional<UserModel> existingUser = userRepository.findById(userId);
+        Optional<UserModel> existingEmail = userRepository.findByEmail(existingUser.get().getEmail());
+        Boolean userIgnoring = getUserByEmailIgnoringCaseAndUser(userDTO.getEmail(), userId);
 
-        if (userDTO1) {
+        if (userIgnoring) {
             throw new Exception("Já existe um usuário cadastrado com esse e-mail.");
         } else {
-            UserModel user = emailExistente.get();
+            UserModel user = existingEmail.get();
             user.setEmail(userDTO.getEmail());
             user.setName(userDTO.getName());
             if (user.getRole().getName().equals("TECH")) {
-                user.setSector(userExistente.get().getSector());
+                user.setSector(existingUser.get().getSector());
             } else {
                 user.setSector(userDTO.getSector());
             }
             user.setSupervisor(userDTO.getSupervisor());
             userRepository.save(user);
-            System.out.println(user);
             return new UserDTO(user);
         }
     }
@@ -116,8 +112,7 @@ public class UserService {
     public UserDTO getUserByEmail(String email) {
         Optional<UserModel> user = userRepository.findByEmail(email);
         if (user.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Usuário não encontrado");
+            throw new RuntimeException("Usuário não encontrado");
         }
         return new UserDTO(user.get());
     }
@@ -125,29 +120,26 @@ public class UserService {
     public UserDTO getUserById(Long id) {
         Optional<UserModel> user = userRepository.findById(id);
         if (user.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Usuário não encontrado");
+            throw new RuntimeException("Usuário não encontrado");
         }
         return new UserDTO(user.get());
     }
 
-    public UserDTO updateStatus(Long id, String status) {
+    public void updateStatus(Long id, String status) {
         Optional<UserModel> userExistente = userRepository.findById(id);
         if (userExistente.isPresent()) {
             if (status.equals("desativar")) {
                 UserModel user = userExistente.get();
                 user.setStatus("INATIVO");
                 userRepository.save(user);
-                return new UserDTO(user);
+                new UserDTO(user);
             } else {
                 UserModel user = userExistente.get();
                 user.setStatus("ATIVO");
                 userRepository.save(user);
-                return new UserDTO(user);
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Usuário não encontrado");
+            throw new RuntimeException("Usuário não encontrado");
         }
     }
 

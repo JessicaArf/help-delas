@@ -31,16 +31,18 @@ public class TicketService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public TicketDTO createTicket(TicketDTO ticketDTO, UserDTO userBasic) throws MessagingException, UnsupportedEncodingException {
+    public void createTicket(TicketDTO ticketDTO, UserDTO userBasic) throws MessagingException, UnsupportedEncodingException {
         UserModel userBasicModel = UserDTO.convert(userBasic);
         ticketDTO.setUserBasic(userBasicModel);
         ticketDTO.setSector(userBasicModel.getSector());
         ticketDTO.setStatus(TicketModel.TicketStatus.OPEN);
         TicketModel ticketModel = TicketDTO.convert(ticketDTO);
+
         ticketRepository.save(ticketModel);
+
         sendNewTicketEmail(ticketModel);
+
         sendNewTicketEmailTech(ticketModel);
-        return ticketDTO;
     }
 
     public List<TicketDTO> showTicketsByUser(Long userBasicId) {
@@ -61,16 +63,15 @@ public class TicketService {
     public TicketDTO showTicketById(Long id) {
         Optional<TicketModel> ticketModel = ticketRepository.findById(id);
         if (ticketModel.isEmpty()) {
-            throw new EntityNotFoundException("Chamado não encontrado");
+            throw new RuntimeException("Chamado não encontrado");
         }
         return new TicketDTO(ticketModel.get());
     }
 
-    public TicketDTO updateTicketUser(Long id, TicketDTO updateTicket) throws MessagingException, UnsupportedEncodingException {
+    public void updateTicketUser(Long id, TicketDTO updateTicket) throws MessagingException, UnsupportedEncodingException {
         Optional<TicketModel> ticketModel = ticketRepository.findById(id);
-
         if (ticketModel.isEmpty()) {
-            throw new EntityNotFoundException("Chamado não encontrado");
+            throw new RuntimeException("Chamado não encontrado");
         }
         ticketModel.get().setDescription(updateTicket.getDescription());
         ticketModel.get().setSubject(updateTicket.getSubject());
@@ -78,30 +79,25 @@ public class TicketService {
         ticketRepository.save(ticketModel.get());
 
         sendUpdatedUserTicketEmail(ticketModel.get());
-
-        return new TicketDTO(ticketModel.get());
-
     }
 
-    public TicketDTO updateTicketTech(Long id, TicketDTO updateTicket, UserDTO userTech) throws MessagingException, UnsupportedEncodingException {
+    public void updateTicketTech(Long id, TicketDTO updateTicket, UserDTO userTech) throws MessagingException, UnsupportedEncodingException {
         Optional<TicketModel> ticketModel = ticketRepository.findById(id);
-
         if (ticketModel.isEmpty()) {
-            throw new EntityNotFoundException("Chamado não encontrado");
+            throw new RuntimeException("Chamado não encontrado");
         }
-
         UserModel userTechModel = UserDTO.convert(userTech);
-
         ticketModel.get().setStatus(updateTicket.getStatus());
         ticketModel.get().setSector(updateTicket.getSector());
         ticketModel.get().setPriority(updateTicket.getPriority());
         ticketModel.get().setAnnotation(updateTicket.getAnnotation());
         ticketModel.get().setUserTech(userTechModel);
+
         ticketRepository.save(ticketModel.get());
 
         sendUpdatedTechTicketEmail(ticketModel.get());
 
-        return new TicketDTO(ticketModel.get());
+        new TicketDTO(ticketModel.get());
     }
 
 
@@ -109,7 +105,7 @@ public class TicketService {
         Optional<TicketModel> ticketModel = ticketRepository.findById(id);
 
         if (ticketModel.isEmpty()) {
-            throw new EntityNotFoundException("Chamado não encontrado");
+            throw new RuntimeException("Chamado não encontrado");
         }
         sendDeletedTicketEmail(ticketModel.get());
 
