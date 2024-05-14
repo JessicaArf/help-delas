@@ -16,9 +16,9 @@ public class SecurityConfig {
 
     @Autowired
     private CustomDetailsService customDetailsService;
+
     @Autowired
     private CustomSuccessHandler customSuccessHandler;
-
 
     @Bean // essa anotação indica que o método vai retornar um bean que o spring vai gerenciar
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -26,12 +26,17 @@ public class SecurityConfig {
                 .authorizeHttpRequests( authorize -> authorize //para poder configurar como as requisições são autorizadas
                         .requestMatchers( "/", "/assets/**", "/css/**", "/js/**", "/portfolio/**").permitAll()
                         .requestMatchers( "/salvar-usuario", "/login", "/solicitar-nova-senha", "resetar-senha").permitAll()
+                        .requestMatchers("/dashboard-tecnico","/dashboard-tecnico/meus-chamados", "/tecnico/chamado/{ticketId}", "/tecnico/editar-chamado/{ticketId}","/mostrar-tecnico").hasAuthority("TECH")
+                        .requestMatchers("/criar-chamado", "/dashboard-usuario", "/usuario/editar-chamado/{ticketId}", "/usuario/chamado/{ticketId}", "/mostrar-usuario", "/editar-usuario").hasAuthority("USER")
+                        .requestMatchers("/todos-usuarios", "/mostrar-usuario/{id}", "/desativar-usuario/{id}", "/ativar-usuario/{id}","/cadastrar-tecnico", "/dashboard-admin" ).hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
                         .successHandler(customSuccessHandler).permitAll())
                 .logout(form -> form.invalidateHttpSession(true).clearAuthentication(true)
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/login?logout").permitAll())
+                .exceptionHandling(exception -> exception
+                        .accessDeniedPage("/acesso-negado"))
                 .csrf(AbstractHttpConfigurer::disable);
         return http.build(); // aqui retorna o objeto HttpSecurityConfigurado, para criar a cadeia de filtros de segurança
     }
@@ -48,7 +53,6 @@ public class SecurityConfig {
     public void configure (AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
-
 
     @Bean
     public HiddenHttpMethodFilter hiddenHttpMethodFilter() {

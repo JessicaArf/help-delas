@@ -1,6 +1,5 @@
 package com.elastech.helpdelas.controller;
 
-
 import com.elastech.helpdelas.dtos.PriorityDTO;
 import com.elastech.helpdelas.dtos.SectorDTO;
 import com.elastech.helpdelas.dtos.TicketDTO;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -189,6 +187,7 @@ public class TicketsController {
         model.addAttribute("ticket", ticket);
         return "ticket/view-one-ticket-admin";
     }
+
 }
 
 

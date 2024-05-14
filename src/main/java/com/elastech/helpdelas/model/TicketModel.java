@@ -32,7 +32,7 @@ public class TicketModel {
     private SectorModel sector;
 
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_priority")
     private PriorityModel priority;
 
