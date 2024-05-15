@@ -103,12 +103,11 @@ A aplicação pode ser acessada em: `http://localhost:8080`.
 
 ![image](https://github.com/JessicaArf/help-delas/assets/106780748/b83b2e7e-30b7-4049-94c5-af924fb0f910)
 
-
 ## Tecnologias
 <div align="left">
 <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Java-Dark.svg" width=80"/>
 <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Maven-Dark.svg" width="80"/>
-  <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Spring-Dark.svg" width="80"/>
+<img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Spring-Dark.svg" width="80"/>
 <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/MySQL-Dark.svg" width="80"/>
 <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/CSS.svg" width="80"/>
 <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/HTML.svg" width="80"/> 
