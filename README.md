@@ -125,4 +125,6 @@ A aplicação pode ser acessada em: `http://localhost:8080`.
    </td>
    <td align="center"> <img src="https://avatars.githubusercontent.com/u/161541448?v=4" width=175/></br><a href="https://github.com/DevSuellen">Suellen Abreu</a>
    </td>
+   <td align="center"> <img src="https://avatars.githubusercontent.com/u/98675367?v=4" width=175/></br><a href="https://github.com/yasmin-aline">Yasmin Aline</a>
+   </td>
 </table>
