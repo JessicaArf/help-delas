@@ -35,28 +35,23 @@ public class RequestPasswordController {
 
     @PostMapping("solicitar-nova-senha")
     public String savePasswordRequest(@RequestParam("email") String email, Model model, RedirectAttributes redirectAttributes) throws MessagingException, UnsupportedEncodingException {
-        UserDTO userDto = userService.getUserByEmail(email);
-
-        if (userDto == null) {
+        try {
+            UserDTO userDto = userService.getUserByEmail(email);
+            if (userDto.getRole().getName().equals("ADMIN")) {
+                model.addAttribute("error", "Não é possível solicitar uma nova senha para um usuário admin.");
+                return "/default/password-request";
+            }
+            RequestPasswordDTO request = forgotPasswordService.saveToken(userDto);
+            String emailLink = "http://localhost:8080/resetar-senha?token=" + request.getToken();
+            forgotPasswordService.sendEmail(userDto.getEmail(), "Redefinição de Senha", emailLink);
+            return "redirect:/solicitar-nova-senha?success";
+        } catch (RuntimeException e) {
             model.addAttribute("error", "Esse email não está cadastrado.");
             return "/default/password-request";
-        }
-
-        if (userDto.getRole().getName().equals("ADMIN")) {
-            model.addAttribute("error", "Não é possível solicitar uma nova senha para um usuário admin.");
-            return "/default/password-request";
-        }
-
-        RequestPasswordDTO request = forgotPasswordService.saveToken(userDto);
-        String emailLink = "http://localhost:8080/resetar-senha?token=" + request.getToken();
-
-        try {
-            forgotPasswordService.sendEmail(userDto.getEmail(), "Redefinição de Senha", emailLink);
         } catch (UnsupportedEncodingException | MessagingException e) {
             model.addAttribute("error", "Erro ao enviar email.");
             return "/default/password-request";
         }
-        return "redirect:/solicitar-nova-senha?success";
     }
 
     @GetMapping("/resetar-senha")
