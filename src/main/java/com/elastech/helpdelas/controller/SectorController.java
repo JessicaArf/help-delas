@@ -52,12 +52,11 @@ public class SectorController {
         return "sector/find-sector";
     }
 
-
     @GetMapping("/editar-setor/{sectorId}")
     public String showEditSector(@PathVariable Long sectorId, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO userAdmin = userService.getUserByEmail(userDetails.getUsername());
         SectorDTO sectorDTO = sectorService.findById(sectorId);
-        model.addAttribute("name", userAdmin.getEmail());
+        model.addAttribute("name", userAdmin.getName());
         model.addAttribute("sector", sectorDTO);
         return "sector/update-sector";
     }
