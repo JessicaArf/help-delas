@@ -38,8 +38,9 @@ public class TicketsController {
     @GetMapping("/criar-chamado")
     public String showPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         UserDTO basicUser = userService.getUserByEmail(userDetails.getUsername());
+        List<SectorDTO> sectors = sectorService.findAllSector();
         model.addAttribute("user", basicUser);
-        model.addAttribute("sector", basicUser.getSector());
+        model.addAttribute("sectors", sectors.get(0));
         return "ticket/create-ticket";
     }
 

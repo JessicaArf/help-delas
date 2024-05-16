@@ -65,11 +65,11 @@ public class UserController {
 
     @GetMapping("/editar-usuario")
     public String showEditUser(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-            UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
-            List<SectorDTO> sectors = userService.findAllSector();
-            model.addAttribute("sectors", sectors);
-            model.addAttribute("user", userDb);
-            return "user/edit-user";
+        UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
+        List<SectorDTO> sectors = userService.findAllSector();
+        model.addAttribute("sectors", sectors);
+        model.addAttribute("user", userDb);
+        return "user/edit-user";
     }
 
     @GetMapping("/editar-tecnico/{id}")
