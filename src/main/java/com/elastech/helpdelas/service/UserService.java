@@ -79,34 +79,21 @@ public class UserService {
         return users.stream().map(UserDTO::new).collect(Collectors.toList());
     }
 
-    public UserDTO updateUserById(Long userId, UserDTO userDTO) throws Exception {
-        Optional<UserModel> existingUser = userRepository.findById(userId);
-        Optional<UserModel> existingEmail = userRepository.findByEmail(existingUser.get().getEmail());
-        Boolean userIgnoring = getUserByEmailIgnoringCaseAndUser(userDTO.getEmail(), userId);
+    public UserDTO updateUserById(Long userId, UserDTO userDTO) {
+        Optional<UserModel> user = userRepository.findById(userId);
 
-        if (userIgnoring) {
-            throw new Exception("Já existe um usuário cadastrado com esse e-mail.");
-        } else {
-            UserModel user = existingEmail.get();
-            user.setEmail(userDTO.getEmail());
-            user.setName(userDTO.getName());
-            if (user.getRole().getName().equals("TECH")) {
-                user.setSector(existingUser.get().getSector());
+        if (user.isEmpty()) {
+            throw new RuntimeException("Usuário não encontrado.");
+        }
+            user.get().setName(userDTO.getName());
+            if (user.get().getRole().getName().equals("TECH")) {
+                user.get().setSector(user.get().getSector());
             } else {
-                user.setSector(userDTO.getSector());
+                user.get().setSector(userDTO.getSector());
             }
-            user.setSupervisor(userDTO.getSupervisor());
-            userRepository.save(user);
-            return new UserDTO(user);
-        }
-    }
-
-    public Boolean getUserByEmailIgnoringCaseAndUser(String email, Long idUser) {
-        UserModel byEmailIgnoringCaseAndIdNot = userRepository.findByEmailIgnoringCaseAndUserIdNot(email, idUser);
-        if (byEmailIgnoringCaseAndIdNot != null) {
-            return true;
-        }
-        return false;
+            user.get().setSupervisor(userDTO.getSupervisor());
+            userRepository.save(user.get());
+            return new UserDTO(user.get());
     }
 
     public UserDTO getUserByEmail(String email) {

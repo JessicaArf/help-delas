@@ -10,5 +10,4 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
     Optional<UserModel> findByEmail(String username);
     List<UserModel> findBySectorSectorId(Long sectorId);
     List<UserModel> findByRoleName(String name);
-    UserModel findByEmailIgnoringCaseAndUserIdNot(String email, Long id);
 }

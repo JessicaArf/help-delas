@@ -65,16 +65,11 @@ public class UserController {
 
     @GetMapping("/editar-usuario")
     public String showEditUser(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        try {
             UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
             List<SectorDTO> sectors = userService.findAllSector();
             model.addAttribute("sectors", sectors);
             model.addAttribute("user", userDb);
             return "user/edit-user";
-        } catch (Exception e) {
-            System.out.println(e);
-            return "user/edit-user";
-        }
     }
 
     @GetMapping("/editar-tecnico/{id}")
@@ -94,7 +89,7 @@ public class UserController {
     }
 
     @PutMapping("/editar-usuario")
-    public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
+    public String editUser(Model model, @AuthenticationPrincipal UserDetails userDetails, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) {
         UserDTO userDb = userService.getUserByEmail(userDetails.getUsername());
         Long userId = userDb.getUserId();
         try {
@@ -105,14 +100,13 @@ public class UserController {
             return "user/show-user";
 
         } catch (Exception e) {
-            redirectAttributes.addAttribute("error", true);
             model.addAttribute("user", userDb);
-            return "user/edit-user";
+            return "redirect:/editar-usuario";
         }
     }
 
     @PutMapping("/editar-tecnico/{id}")
-    public String editTech(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, Model model, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) throws Exception {
+    public String editTech(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long id, Model model, RedirectAttributes redirectAttributes, @ModelAttribute UserDTO userModel) {
         UserDTO login = userService.getUserByEmail(userDetails.getUsername());
         UserDTO userDb = userService.getUserById(id);
         try {
@@ -122,13 +116,10 @@ public class UserController {
                 model.addAttribute("user", userAtualizado);
                 model.addAttribute("name", login.getName());
                 return "redirect:/mostrar-usuario/{id}";
-            } else {
-                redirectAttributes.addAttribute("errorEdit", true);
             }
             return "redirect:/editar-tecnico/{id}";
 
         } catch (Exception e) {
-            redirectAttributes.addAttribute("errorEdit", true);
             model.addAttribute("user", userDb);
             return "redirect:/editar-tecnico/{id}";
         }
