@@ -29,7 +29,9 @@
                aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="/mostrar-usuario">Meus Dados</a></li>
-                <li><hr class="dropdown-divider" /></li>
+                <li>
+                    <hr class="dropdown-divider"/>
+                </li>
                 <li>
                     <form action="/logout" method="post">
                         <button class="dropdown-item" type="submit">Sair</button>
@@ -105,13 +107,21 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputSector">Setor</label>
-                                    <input class="form-control" id="inputSector" type="text" th:value="${user.sector.nameSector}" th:disabled="true"/>
+                                    <select class="form-control" id="inputSector" type="text" name="sector"
+                                            placeholder="Setor">
+                                        <option th:each="sector : ${sectors}"
+                                                th:value="${sector.sectorId}"
+                                                th:text="${sector.nameSector}"
+                                        >
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="inputDescription">Descrição</label>
-                                    <textarea class="form-control" id="inputDescription" type="text" name="description"></textarea>
+                                    <textarea class="form-control" id="inputDescription" type="text"
+                                              name="description"></textarea>
                                 </div>
                             </div>
                             <div class="mt-4 mb-0">

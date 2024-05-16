@@ -34,7 +34,7 @@ public class TicketService {
     public void createTicket(TicketDTO ticketDTO, UserDTO userBasic) throws MessagingException, UnsupportedEncodingException {
         UserModel userBasicModel = UserDTO.convert(userBasic);
         ticketDTO.setUserBasic(userBasicModel);
-        ticketDTO.setSector(userBasicModel.getSector());
+        ticketDTO.setSector(ticketDTO.getSector());
         ticketDTO.setStatus(TicketModel.TicketStatus.OPEN);
         TicketModel ticketModel = TicketDTO.convert(ticketDTO);
 
